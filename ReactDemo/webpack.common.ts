@@ -43,6 +43,7 @@ const config: webpack.Configuration = {
         }),
 
         new AssetsWebpackPlugin({
+            fullPath: true,
             prettyPrint: true
         }),
 
