@@ -3,8 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-ReactDemo/Scripts/appts/**/*.js
-ReactDemo/Scripts/appts/**/*.js.map
+ReactDemo/app/**/*.js
+ReactDemo/app/**/*.js.map
+ReactDemo/dist
+ReactDemo/webpack-assets.json
 
 # User-specific files
 *.suo
