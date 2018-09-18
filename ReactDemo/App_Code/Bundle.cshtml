@@ -1,0 +1,17 @@
+﻿@using ReactDemo.Helpers
+
+@helper RenderCss(string entryPoint)
+{
+    foreach (var file in BundleHelper.GetAssets(entryPoint, "css"))
+    {
+        <link href="@file" rel="stylesheet"/>
+    }
+}
+
+@helper RenderScripts(string entryPoint)
+{
+    foreach (var file in BundleHelper.GetAssets(entryPoint, "js"))
+    {
+        <script src="@file" type="text/javascript"></script>
+    }
+}

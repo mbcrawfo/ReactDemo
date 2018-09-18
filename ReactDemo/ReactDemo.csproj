@@ -190,14 +190,12 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="package.json" />
+    <Content Include="App_Code\Bundle.cshtml" />
     <None Include="packages.config" />
     <Content Include="tsconfig.json" />
-    <Content Include="tsconfig.webpack.json" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app\index.ts" />
-    <TypeScriptCompile Include="webpack.common.ts" />
-    <TypeScriptCompile Include="webpack.dev.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

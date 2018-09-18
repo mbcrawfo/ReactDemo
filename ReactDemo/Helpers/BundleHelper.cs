@@ -1,37 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Web;
 using System.Web.Hosting;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace ReactDemo.Helpers
 {
     public static class BundleHelper
     {
-        private const string BundleMapFile = "~/webpack-assets.json";
+        private const string ManifestFile = "~/webpack-assets.json";
+        private const string ManifestKey = "WebpackManifest";
 
-        public static string GetPath(string bundleName, string type = "js")
+        public static IEnumerable<string> GetAssets(string entryPoint, string type)
         {
-            var filePath = HostingEnvironment.MapPath(BundleMapFile);
-            if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
+            if (!(HttpContext.Current?.Items[ManifestKey] is Manifest manifest))
             {
-                throw new InvalidOperationException();
-            }
+                manifest = LoadManifest();
 
-            using (var file = File.OpenText(filePath))
-            using (var reader = new JsonTextReader(file))
-            {
-                var json = JObject.Load(reader);
-
-                var path = json.SelectToken(bundleName)?.Value<string>(type);
-                if (string.IsNullOrEmpty(path))
+                if (HttpContext.Current != null)
                 {
-                    throw new InvalidOperationException();
+                    HttpContext.Current.Items[ManifestKey] = manifest;
                 }
-
-                return path;
             }
+
+            return manifest.Entrypoints?[entryPoint]?[type] ?? Enumerable.Empty<string>();
+        }
+
+        private static Manifest LoadManifest()
+        {
+            var filePath = HostingEnvironment.MapPath(ManifestFile);
+
+            using (var stream = File.OpenText(filePath))
+            using (var reader = new JsonTextReader(stream))
+            {
+                return JsonSerializer.Create().Deserialize<Manifest>(reader);
+            }
+        }
+
+        private class Manifest
+        {
+            public Dictionary<string, Dictionary<string, List<string>>> Entrypoints { get; set; }
         }
     }
 }

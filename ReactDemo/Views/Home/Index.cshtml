@@ -1,6 +1,6 @@
-﻿@using ReactDemo.Helpers
-@{
+﻿@{
     ViewBag.Title = "Home Page";
+    ViewBag.EntryPoint = "index";
 }
 
 <div class="jumbotron">
@@ -30,8 +30,3 @@
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
 </div>
-
-@section Scripts
-{
-    <script src="~/dist/@BundleHelper.GetPath("index")"></script>
-}
