@@ -10,7 +10,7 @@ type Props = {
     links: Array<Link>
 };
 
-const TopBarLinks = ({ links }: Props) =>
+export const TopBarLinks = ({ links }: Props) =>
 {
     const linkItems = links.map((link, index) => (
         <NavBarLink key={index} link={link} />

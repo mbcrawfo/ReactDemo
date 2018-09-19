@@ -1,12 +1,12 @@
 import React, { ReactNode } from 'react';
-import '../bootstrap.less';
+import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
 type NavBarNavProps = {
     children: ReactNode
 };
 
-const NavBarNav = ({ children }: NavBarNavProps) => (
-    <ul className='nav navbar-nav'>
+export const NavBarNav = ({ children }: NavBarNavProps) => (
+    <ul className="nav navbar-nav">
         {children}
     </ul>
 );

@@ -1,16 +1,18 @@
 import 'babel-polyfill';
 import 'bootstrap';
-import '../bootstrap.less';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import '../../node_modules/bootstrap/dist/css/bootstrap.css';
+import '../site.css';
 
-import TopBarLinks, { Link } from '../components/TopBarLinks';
+// import React from 'react';
+// import ReactDOM from 'react-dom';
 
-declare var topBarLinks: Array<Link>;
-window.onload = () =>
-{
-    ReactDOM.render(
-        <TopBarLinks links={topBarLinks} />,
-        document.getElementById('top-bar')
-    );
-};
+// import TopBarLinks, { Link } from '../components/TopBarLinks';
+
+// declare var topBarLinks: Array<Link>;
+// window.onload = () =>
+// {
+//     ReactDOM.render(
+//         <TopBarLinks links={topBarLinks} />,
+//         document.getElementById('top-bar')
+//     );
+// };

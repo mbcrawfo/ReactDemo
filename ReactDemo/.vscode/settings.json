@@ -3,8 +3,6 @@
         "**/bin": true,
         "**/dist": true,
         "**/node_modules": true,
-        "**/obj": true,
-        "app/**/*.js": true,
-        "app/**/*.js.map": true
+        "**/obj": true
     }
 }

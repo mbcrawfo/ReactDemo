@@ -25,13 +25,18 @@ namespace ReactDemo.Helpers
                 }
             }
 
-            var files = manifest.Entrypoints?[entryPoint]?[type];
-            if (files == null || entryPoint == LayoutEntryPoint)
+            if (!manifest.Entrypoints.TryGetValue(entryPoint, out var fileTypes) ||
+                !fileTypes.TryGetValue(type, out var filePaths))
             {
-                return files ?? Enumerable.Empty<string>();
+                return Enumerable.Empty<string>();
             }
 
-            return files.FilterLayoutItems(manifest, type);
+            if (entryPoint == LayoutEntryPoint)
+            {
+                return filePaths;
+            }
+
+            return filePaths.FilterLayoutItems(manifest, type);
         }
 
         private static IEnumerable<string> FilterLayoutItems(

@@ -4,11 +4,32 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Bundle.RenderCss("layout")
-    @Bundle.RenderCss(ViewBag.EntryPoint)
+    @Bundle.RenderCss(ViewBag.EntryPoint ?? "")
     <title>@ViewBag.Title - My ASP.NET Application</title>
 </head>
 <body>
-    <div id="top-bar"></div>
+    @Html.React("Components.TopBarLinks", new
+    {
+        links = new[]
+        {
+            new 
+            {
+                text = "Home",
+                url = Url.Action("Index", "Home")
+            },
+            new 
+            {
+                text = "About",
+                url = Url.Action("About", "Home")
+            },
+            new
+            {
+                text = "Contact",
+                url =Url.Action("Contact", "Home")
+            }
+        }
+    }, serverOnly: true);
+
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -18,24 +39,7 @@
     </div>
     
     @Bundle.RenderScripts("layout")
-    @Bundle.RenderScripts(ViewBag.EntryPoint)
+    @Bundle.RenderScripts(ViewBag.EntryPoint ?? "")
     @RenderSection("scripts", required: false)
-
-    <script type="text/javascript">
-        var topBarLinks = [
-            {
-                text: "Home",
-                url: "@Url.Action("Index", "Home")"
-            },
-            {
-                text: "About",
-                url: "@Url.Action("About", "Home")"
-            },
-            {
-                text: "Contact",
-                url: "@Url.Action("Contact", "Home")"
-            }
-        ];
-    </script>
 </body>
 </html>
