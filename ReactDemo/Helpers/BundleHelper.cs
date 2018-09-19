@@ -11,6 +11,7 @@ namespace ReactDemo.Helpers
     {
         private const string ManifestFile = "~/webpack-assets.json";
         private const string ManifestKey = "WebpackManifest";
+        private const string LayoutEntryPoint = "layout";
 
         public static IEnumerable<string> GetAssets(string entryPoint, string type)
         {
@@ -24,7 +25,30 @@ namespace ReactDemo.Helpers
                 }
             }
 
-            return manifest.Entrypoints?[entryPoint]?[type] ?? Enumerable.Empty<string>();
+            var files = manifest.Entrypoints?[entryPoint]?[type];
+            if (files == null || entryPoint == LayoutEntryPoint)
+            {
+                return files ?? Enumerable.Empty<string>();
+            }
+
+            return files.FilterLayoutItems(manifest, type);
+        }
+
+        private static IEnumerable<string> FilterLayoutItems(
+            this IEnumerable<string> files, 
+            Manifest manifest,
+            string type)
+        {
+            var layoutFiles = manifest.Entrypoints[LayoutEntryPoint][type];
+            var layoutHash = new HashSet<string>(layoutFiles);
+
+            foreach (var file in files)
+            {
+                if (!layoutHash.Contains(file))
+                {
+                    yield return file;
+                }
+            }
         }
 
         private static Manifest LoadManifest()

@@ -1,10 +1,9 @@
 import path from 'path';
+import glob from 'glob';
 import webpack from 'webpack';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import WebpackAssetsManifest from 'webpack-assets-manifest';
-
-import entrypoints from "./webpack.entrypoints";
 
 export default function()
 {
@@ -25,19 +24,38 @@ export default function()
 
     const config: webpack.Configuration = {
         mode: isDev ? 'development' : 'production',
-        cache: true,
         target: 'web',
         devtool: isDev ? 'inline-source-map' : 'hidden-source-map',
 
-        entry: entrypoints,
+        entry: function()
+        {
+            const pageGlob = path.resolve('./app/pages', '**/*.@(ts|tsx|js)');
+            const ignoredPaths = [ '**/_*', '**/_*/**' ];
+            const entries = {};
+
+            glob.sync(pageGlob, { ignore: ignoredPaths }).forEach(file =>
+            {
+                const pathSegments = path.dirname(file).split('/');
+                const pagesIndex = pathSegments.indexOf('pages');
+                const prefix = pathSegments.slice(pagesIndex + 1).join('_');
+                let entrypoint = path.basename(file, path.extname(file));
+
+                if (prefix)
+                {
+                    entrypoint = `${prefix}_${entrypoint}`;
+                }
+
+                entries[entrypoint] = file;
+            });
+
+            return entries;
+        },
 
         output: {
             path: outputPath,
-            filename: isDev ? '[name].[chunkhash].js' : '[name].[chunkhash].min.js',
-            chunkFilename: isDev ? '[name].[chunkhash].js' : '[name].[chunkhash].min.js',
-            publicPath: `/${outputPathName}/`,
-            library: 'MyTest',
-            libraryTarget: 'var'
+            filename: isDev ? '[name].js' : '[name].[chunkhash].min.js',
+            chunkFilename: isDev ? '[name].chunk.js' : '[name].chunk.[chunkhash].min.js',
+            publicPath: `/${outputPathName}/`
         },
 
         resolve: {
@@ -55,6 +73,12 @@ export default function()
                 {
                     test: /\.js$/,
                     use: [ babelLoader ]
+                },
+
+                {
+                    test: /\.js$/,
+                    use: [ 'source-map-loader' ],
+                    enforce: 'pre'
                 },
 
                 {
@@ -87,10 +111,6 @@ export default function()
         },
 
         plugins: [
-            new CleanWebpackPlugin(outputPath, {
-                verbose: true
-            }),
-
             new webpack.ProvidePlugin({
                 $: 'jquery',
                 jQuery: 'jquery',
@@ -98,8 +118,8 @@ export default function()
             }),
 
             new MiniCssExtractPlugin({
-                filename: isDev ? '[name].[contenthash].css' : '[name].[contenthash].min.css',
-                chunkFilename: isDev ? '[name].[contenthash].css' : '[name].[contenthash].min.css'
+                filename: isDev ? '[name].css' : '[name].[contenthash].min.css',
+                chunkFilename: isDev ? '[name].chunk.css' : '[name].chunk.[contenthash].min.css'
             }),
 
             new WebpackAssetsManifest({
@@ -122,6 +142,21 @@ export default function()
             colors: true
         }
     };
+
+    if (isDev)
+    {
+        config.watchOptions = {
+            aggregateTimeout: 500,
+            ignored: /node_modules/,
+        };
+    }
+
+    if (!isDev)
+    {
+        config.plugins.push(new CleanWebpackPlugin(outputPath, {
+            verbose: true
+        }));
+    }
 
     return config;
 };

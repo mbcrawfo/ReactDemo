@@ -8,6 +8,8 @@ ReactDemo/app/**/*.js.map
 ReactDemo/dist
 ReactDemo/webpack-assets.json
 
+**/.vscode/**
+
 # User-specific files
 *.suo
 *.user

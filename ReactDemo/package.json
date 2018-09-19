@@ -4,15 +4,19 @@
   "description": "Demo",
   "main": "index.js",
   "scripts": {
+    "watch": "cross-env TS_NODE_PROJECT=\"tsconfig.webpack.json\" NODE_ENV=development webpack --watch",
     "build-dev": "cross-env TS_NODE_PROJECT=\"tsconfig.webpack.json\" NODE_ENV=development webpack"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "bootstrap": "^3.3.7",
     "jquery": "^3.3.1",
     "jquery-validation": "^1.18.0",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2"
   },
   "devDependencies": {
     "@types/bootstrap": "^3.3.33",
@@ -23,6 +27,8 @@
     "@types/lodash": "^4.14.116",
     "@types/mini-css-extract-plugin": "^0.2.0",
     "@types/node": "^10.10.0",
+    "@types/react": "^16.4.14",
+    "@types/react-dom": "^16.0.7",
     "@types/source-map": "^0.5.2",
     "@types/webpack": "^4.4.11",
     "@types/webpack-assets-manifest": "^3.0.0",

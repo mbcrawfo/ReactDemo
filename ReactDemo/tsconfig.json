@@ -1,16 +1,22 @@
 {
   "compilerOptions": {
-    "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
     "noEmitOnError": true,
     "removeComments": false,
+    "jsx": "react",
     "sourceMap": true,
     "target": "es5",
     "module": "es6",
     "lib": [
-      "es6", "dom", "scripthost"
+      "es6",
+      "dom",
+      "scripthost"
     ]
   },
   "include": [
-    "./app/**/*.ts"
+    "./app/**/*.ts",
+    "./app/**/*.tsx"
   ]
 }
