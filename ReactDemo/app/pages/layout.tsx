@@ -1,7 +1,7 @@
 import 'babel-polyfill';
 import 'bootstrap';
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
-import '../site.css';
+import './site.css';
 
 // import React from 'react';
 // import ReactDOM from 'react-dom';

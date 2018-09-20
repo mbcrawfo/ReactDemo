@@ -7,14 +7,20 @@ import CleanWebpackPlugin from 'clean-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import WebpackAssetsManifest from 'webpack-assets-manifest';
 
-const entryPointPagesPath = path.resolve(__dirname, './app/pages');
+// files in this folder are loaded as webpack entry points
+const entryPointsPath = path.resolve(__dirname, 'app/pages');
+// ...except files and folders starting with underscore
+const ignoredEntryPointsPaths = [ '**/_*', '**/_*/**' ];
+// destination for scripts and assets
 const outputPath = path.resolve(__dirname, 'dist');
 const outputPublicPath = '/dist/';
+// destination for the manifest mapping entrypoints to output files
 const manifestOutputPath = path.resolve(__dirname, 'webpack-assets.json');
+const serverEntryPoint = 'serverSideRender';
 
-export default () =>
+export default env =>
 {
-    const isDev = process.env.NODE_ENV === 'development';
+    const isDev = <boolean> env.dev;
 
     const babelLoader: webpack.RuleSetUseItem = {
         loader: 'babel-loader',
@@ -28,10 +34,13 @@ export default () =>
 
     const baseConfig: webpack.Configuration = {
         target: 'web',
+
         mode: isDev ? 'development' : 'production',
+
         devtool: isDev ? 'inline-source-map' : 'hidden-source-map',
 
         stats: {
+            builtAt: true,
             colors: true
         },
 
@@ -39,18 +48,20 @@ export default () =>
             extensions: ['.ts', '.tsx', '.js', '.json', '.html']
         },
 
+        // Entries are built based on their relative path joined by underscores.  For example
+        // {entryPointsPath}/foo/bar/index.ts => foo_bar_index
         entry: () =>
         {
-            const pageGlob = path.resolve(entryPointPagesPath, '**/*.@(ts|tsx|js)');
-            const ignoredPaths = [ '**/_*', '**/_*/**' ];
-            const lastParentSegment = _.last(entryPointPagesPath.split(path.sep));
             const entries = {
-                serverSideRender: './app/server.js'
+                [serverEntryPoint]: './app/server.js'
             };
 
-            glob.sync(pageGlob, { ignore: ignoredPaths }).forEach(file =>
+            const entriesGlob = path.resolve(entryPointsPath, '**/*.@(ts|tsx|js|jsx)');
+            const lastParentSegment = _.last(entryPointsPath.split(path.sep));
+
+            glob.sync(entriesGlob, { ignore: ignoredEntryPointsPaths }).forEach(file =>
             {
-                // file always uses unix separators
+                // file uses unix separators
                 const pathSegments = path.dirname(file).split('/');
                 const prefixStart = pathSegments.lastIndexOf(lastParentSegment) + 1;
                 let entrypoint = path.basename(file, path.extname(file));
@@ -76,23 +87,24 @@ export default () =>
 
         module: {
             rules: [
+                // typescript
                 {
                     test: /\.tsx?$/,
                     exclude: /node_modules/,
-                    use: [ babelLoader, 'ts-loader' ]
+                    use: [
+                        // babel generates source maps
+                        babelLoader,
+                        'ts-loader'
+                    ]
                 },
 
+                // javascript
                 {
-                    test: /\.js$/,
+                    test: /\.jsx?$/,
                     use: [ babelLoader ]
                 },
 
-                {
-                    test: /\.js$/,
-                    use: [ 'source-map-loader' ],
-                    enforce: 'pre'
-                },
-
+                // css
                 {
                     test: /\.css$/,
                     use: [
@@ -101,6 +113,7 @@ export default () =>
                     ]
                 },
 
+                // less
                 {
                     test: /\.less$/,
                     use: [
@@ -110,11 +123,13 @@ export default () =>
                     ]
                 },
 
+                // images
                 {
                     test: /\.(png|svg|jpg|gif)$/,
                     use: [ 'file-loader' ]
                 },
 
+                // fonts
                 {
                     test: /\.(woff|woff2|eot|ttf|otf)$/,
                     use: [ 'file-loader' ]
@@ -125,6 +140,7 @@ export default () =>
         plugins: [
             new webpack.NoEmitOnErrorsPlugin(),
 
+            // make jquery globally available
             new webpack.ProvidePlugin({
                 $: 'jquery',
                 jQuery: 'jquery',
@@ -136,30 +152,42 @@ export default () =>
                 chunkFilename: isDev ? '[name].chunk.css' : '[name].chunk.[contenthash].min.css'
             }),
 
+            // output the manifest the server will use to generate css and script includes
             new WebpackAssetsManifest({
                 output: manifestOutputPath,
                 writeToDisk: true,
                 publicPath: true,
                 entrypoints: true
             })
-        ]
+        ],
+
+        // always split chunks to avoid duplicate code between the layout and page entrypoints
+        optimization: {
+            splitChunks: {
+                // a slight hack for the server entrypoint.  since we are using target='web',
+                // chunked files won't load in Reactjs.NET (using node), they would need a
+                // seperate config using target='node'.  to avoid this, disable chunking of
+                // the server code.
+                // this isn't really a loss, since a separate config would only have one
+                // entry and would output one file anyway
+                chunks: chunk => chunk.name !== serverEntryPoint
+            }
+        }
     };
 
-    const environmentConfig = isDev ? buildDevAdditions() : buildProdAdditions();
+    const environmentConfig = isDev ? devAdditionalConfig() : prodAdditionalConfig();
     return merge(baseConfig, environmentConfig);
 };
 
-const buildDevAdditions = (): webpack.Configuration => ({
+const devAdditionalConfig = (): webpack.Configuration => ({
     watchOptions: {
         aggregateTimeout: 500,
         ignored: /node_modules/,
     }
 });
 
-const buildProdAdditions = (): webpack.Configuration => ({
+const prodAdditionalConfig = (): webpack.Configuration => ({
     plugins: [
-        new CleanWebpackPlugin(outputPath, {
-            verbose: true
-        })
+        new CleanWebpackPlugin(outputPath, { verbose: true })
     ]
 });

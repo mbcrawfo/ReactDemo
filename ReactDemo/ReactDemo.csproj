@@ -192,16 +192,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\pages\site.css" />
     <Content Include="app\server.js" />
-    <Content Include="app\site.css" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -225,14 +219,6 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="package.json" />
     <Content Include="App_Code\Bundle.cshtml" />
     <None Include="packages.config" />
@@ -242,7 +228,6 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="app\components\index.ts" />
     <TypeScriptCompile Include="app\components\NavBar.tsx" />
     <TypeScriptCompile Include="app\components\NavBarLink.tsx" />
     <TypeScriptCompile Include="app\components\NavBarNav.tsx" />
@@ -250,6 +235,7 @@
     <TypeScriptCompile Include="app\pages\index.ts" />
     <TypeScriptCompile Include="app\pages\layout.tsx" />
     <TypeScriptCompile Include="app\pages\test1\test2\test.ts" />
+    <TypeScriptCompile Include="app\ServerComponents.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
