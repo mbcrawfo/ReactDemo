@@ -4,7 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Bundle.RenderCss("layout")
-    @Bundle.RenderCss(ViewBag.EntryPoint ?? "")
+    @if (ViewBag.EntryPoint != null)
+    {
+        @Bundle.RenderCss(ViewBag.EntryPoint)
+    }
     <title>@ViewBag.Title - My ASP.NET Application</title>
 </head>
 <body>
@@ -39,7 +42,10 @@
     </div>
     
     @Bundle.RenderScripts("layout")
-    @Bundle.RenderScripts(ViewBag.EntryPoint ?? "")
+    @if (ViewBag.EntryPoint != null)
+    {
+        @Bundle.RenderScripts(ViewBag.EntryPoint)
+    }
     @RenderSection("scripts", required: false)
 </body>
 </html>
