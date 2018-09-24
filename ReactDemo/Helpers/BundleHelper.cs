@@ -36,24 +36,9 @@ namespace ReactDemo.Helpers
                 return filePaths;
             }
 
-            return filePaths.FilterLayoutItems(manifest, type);
-        }
-
-        private static IEnumerable<string> FilterLayoutItems(
-            this IEnumerable<string> files, 
-            Manifest manifest,
-            string type)
-        {
             var layoutFiles = manifest.Entrypoints[LayoutEntryPoint][type];
             var layoutHash = new HashSet<string>(layoutFiles);
-
-            foreach (var file in files)
-            {
-                if (!layoutHash.Contains(file))
-                {
-                    yield return file;
-                }
-            }
+            return filePaths.Where(f => !layoutHash.Contains(f));
         }
 
         private static Manifest LoadManifest()
