@@ -1,8 +1,8 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
-type NavBarNavProps = {
-    children: ReactNode
+export type NavBarNavProps = {
+    children: React.ReactNode
 };
 
 export const NavBarNav = ({ children }: NavBarNavProps) => (

@@ -6,11 +6,11 @@ import NavBarLink, { Link } from './NavBarLink';
 
 export { Link } from './NavBarLink';
 
-type Props = {
+export type TopBarLinksProps = {
     links: Array<Link>
 };
 
-export const TopBarLinks = ({ links }: Props) =>
+export const TopBarLinks = ({ links }: TopBarLinksProps) =>
 {
     const linkItems = links.map((link, index) => (
         <NavBarLink key={index} link={link} />

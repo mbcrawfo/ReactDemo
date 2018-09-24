@@ -1,15 +1,16 @@
 import React from 'react';
 
-export type Link = {
+export interface Link
+{
     text: string,
     url: string
 };
 
-type Props = {
+export type NavBarLinkProps = {
     link: Link
 };
 
-export const NavBarLink = ({ link }: Props) => (
+export const NavBarLink = ({ link }: NavBarLinkProps) => (
     <li>
         <a href={link.url}>{link.text}</a>
     </li>

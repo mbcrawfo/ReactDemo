@@ -26,5 +26,10 @@ namespace ReactDemo.Controllers
 
             return View();
         }
+
+        public ActionResult Lorem()
+        {
+            return View();
+        }
     }
 }

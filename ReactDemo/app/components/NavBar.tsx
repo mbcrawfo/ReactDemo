@@ -1,11 +1,11 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
-type Props = {
-    children: ReactNode
+export type NavBarProps = {
+    children: React.ReactNode
 };
 
-export const NavBar = ({ children }: Props) => (
+export const NavBar = ({ children }: NavBarProps) => (
     <div className="navbar navbar-inverse navbar-fixed-top">
         <div className="container">
             <div className="navbar-header">
