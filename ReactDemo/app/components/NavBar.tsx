@@ -1,18 +1,19 @@
 import React from 'react';
-import '../../node_modules/bootstrap/dist/css/bootstrap.css';
+import '@bootstrap-css';
 
-export type NavBarProps = {
-    children: React.ReactNode
-};
+export interface INavBarProps
+{
+    readonly children: React.ReactNode;
+}
 
-export const NavBar = ({ children }: NavBarProps) => (
+export const NavBar = ({ children }: INavBarProps) => (
     <div className="navbar navbar-inverse navbar-fixed-top">
         <div className="container">
             <div className="navbar-header">
                 <button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span className="icon-bar"></span>
-                    <span className="icon-bar"></span>
-                    <span className="icon-bar"></span>
+                    <span className="icon-bar" />
+                    <span className="icon-bar" />
+                    <span className="icon-bar" />
                 </button>
             </div>
 

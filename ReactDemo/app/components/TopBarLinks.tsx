@@ -2,15 +2,16 @@ import React from 'react';
 
 import NavBar from './NavBar';
 import NavBarNav from './NavBarNav';
-import NavBarLink, { Link } from './NavBarLink';
+import NavBarLink, { ILink } from './NavBarLink';
 
-export { Link } from './NavBarLink';
+export { ILink } from './NavBarLink';
 
-export type TopBarLinksProps = {
-    links: Array<Link>
-};
+export interface ITopBarLinksProps
+{
+    readonly links: ReadonlyArray<ILink>;
+}
 
-export const TopBarLinks = ({ links }: TopBarLinksProps) =>
+export const TopBarLinks = ({ links }: ITopBarLinksProps) =>
 {
     const linkItems = links.map((link, index) => (
         <NavBarLink key={index} link={link} />

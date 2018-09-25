@@ -27,7 +27,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -224,6 +224,7 @@
     <None Include="packages.config" />
     <Content Include="tsconfig.json" />
     <Content Include="Views\Home\Lorem.cshtml" />
+    <Content Include="Views\Home\Todo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
@@ -235,9 +236,20 @@
     <TypeScriptCompile Include="app\components\TopBarLinks.tsx" />
     <TypeScriptCompile Include="app\pages\home\index.tsx" />
     <TypeScriptCompile Include="app\pages\home\lorem.tsx" />
+    <TypeScriptCompile Include="app\pages\home\todo.tsx" />
     <TypeScriptCompile Include="app\pages\layout.tsx" />
-    <TypeScriptCompile Include="app\pages\test1\test2\test.ts" />
-    <TypeScriptCompile Include="app\ServerComponents.ts" />
+    <TypeScriptCompile Include="app\serverComponents.ts" />
+    <TypeScriptCompile Include="app\TodoList\actions.ts" />
+    <TypeScriptCompile Include="app\TodoList\components\App.tsx" />
+    <TypeScriptCompile Include="app\TodoList\components\Button.tsx" />
+    <TypeScriptCompile Include="app\TodoList\components\Footer.tsx" />
+    <TypeScriptCompile Include="app\TodoList\components\Todo.tsx" />
+    <TypeScriptCompile Include="app\TodoList\components\TodoList.tsx" />
+    <TypeScriptCompile Include="app\TodoList\containers\AddTodo.tsx" />
+    <TypeScriptCompile Include="app\TodoList\containers\FilterButton.tsx" />
+    <TypeScriptCompile Include="app\TodoList\containers\VisibleTodoList.ts" />
+    <TypeScriptCompile Include="app\TodoList\reducers.ts" />
+    <TypeScriptCompile Include="app\TodoList\state.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

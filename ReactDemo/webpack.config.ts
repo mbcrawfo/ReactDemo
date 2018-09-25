@@ -16,20 +16,20 @@ const outputPath = path.resolve(__dirname, 'dist');
 const outputPublicPath = '/dist/';
 // destination for the manifest mapping entrypoints to output files
 const manifestOutputPath = path.resolve(__dirname, 'webpack-assets.json');
-const serverEntryPoint = 'serverSideRender';
+const serverEntryPoint = 'serverComponentPackage';
 
 export default env =>
 {
-    const isDev = <boolean> env.dev;
+    const isDev = env.dev as boolean;
 
     const babelLoader: webpack.RuleSetUseItem = {
         loader: 'babel-loader',
         options: {
             cacheDirectory: true,
             presets: [
-                "env"
-            ]
-        }
+                'env',
+            ],
+        },
     };
 
     const baseConfig: webpack.Configuration = {
@@ -41,11 +41,16 @@ export default env =>
 
         stats: {
             builtAt: true,
-            colors: true
+            colors: true,
         },
 
         resolve: {
-            extensions: ['.ts', '.tsx', '.js', '.json', '.html']
+            // must be kept in sync with the tsconfig paths setting
+            alias: {
+                '@app': path.resolve(__dirname, 'app'),
+                '@bootstrap-css': path.resolve(__dirname, 'node_modules/bootstrap/dist/css/bootstrap.css'),
+            },
+            extensions: ['.ts', '.tsx', '.js', '.json', '.html'],
         },
 
         // Entries are built based on their relative path joined by underscores.  For example
@@ -53,7 +58,7 @@ export default env =>
         entry: () =>
         {
             const entries = {
-                [serverEntryPoint]: './app/server.js'
+                [serverEntryPoint]: './app/server.js',
             };
 
             const entriesGlob = path.resolve(entryPointsPath, '**/*.@(ts|tsx|js|jsx)');
@@ -82,7 +87,7 @@ export default env =>
             path: outputPath,
             filename: isDev ? '[name].js' : '[name].[chunkhash].min.js',
             chunkFilename: isDev ? '[name].chunk.js' : '[name].chunk.[chunkhash].min.js',
-            publicPath: outputPublicPath
+            publicPath: outputPublicPath,
         },
 
         module: {
@@ -94,14 +99,14 @@ export default env =>
                     use: [
                         // babel generates source maps
                         babelLoader,
-                        'ts-loader'
-                    ]
+                        'ts-loader',
+                    ],
                 },
 
                 // javascript
                 {
                     test: /\.jsx?$/,
-                    use: [ babelLoader ]
+                    use: [ babelLoader ],
                 },
 
                 // css
@@ -109,8 +114,8 @@ export default env =>
                     test: /\.css$/,
                     use: [
                         MiniCssExtractPlugin.loader,
-                        'css-loader'
-                    ]
+                        'css-loader',
+                    ],
                 },
 
                 // less
@@ -119,22 +124,22 @@ export default env =>
                     use: [
                         MiniCssExtractPlugin.loader,
                         'css-loader',
-                        'less-loader'
-                    ]
+                        'less-loader',
+                    ],
                 },
 
                 // images
                 {
                     test: /\.(png|svg|jpg|gif)$/,
-                    use: [ 'file-loader' ]
+                    use: [ 'file-loader' ],
                 },
 
                 // fonts
                 {
                     test: /\.(woff|woff2|eot|ttf|otf)$/,
-                    use: [ 'file-loader' ]
-                }
-            ]
+                    use: [ 'file-loader' ],
+                },
+            ],
         },
 
         plugins: [
@@ -142,14 +147,14 @@ export default env =>
 
             // make jquery globally available
             new webpack.ProvidePlugin({
-                $: 'jquery',
-                jQuery: 'jquery',
-                "window.jQuery": 'jquery'
+                '$': 'jquery',
+                'jQuery': 'jquery',
+                'window.jQuery': 'jquery',
             }),
 
             new MiniCssExtractPlugin({
                 filename: isDev ? '[name].css' : '[name].[contenthash].min.css',
-                chunkFilename: isDev ? '[name].chunk.css' : '[name].chunk.[contenthash].min.css'
+                chunkFilename: isDev ? '[name].chunk.css' : '[name].chunk.[contenthash].min.css',
             }),
 
             // output the manifest the server will use to generate css and script includes
@@ -157,22 +162,19 @@ export default env =>
                 output: manifestOutputPath,
                 writeToDisk: true,
                 publicPath: true,
-                entrypoints: true
-            })
+                entrypoints: true,
+            }),
         ],
 
-        // always split chunks to avoid duplicate code between the layout and page entrypoints
+        // always split chunks to avoid duplicating code between the layout and page entrypoints
         optimization: {
             splitChunks: {
-                // a slight hack for the server entrypoint.  since we are using target='web',
-                // chunked files won't load in Reactjs.NET (using node), they would need a
-                // seperate config using target='node'.  to avoid this, disable chunking of
-                // the server code.
-                // this isn't really a loss, since a separate config would only have one
-                // entry and would output one file anyway
-                chunks: chunk => chunk.name !== serverEntryPoint
-            }
-        }
+                // A slight hack for the server entrypoint... if it is split, webpack generates
+                // code to load the split chunks using the window global.  This fails because window
+                // isn't present in the server side environment (basically node within .NET)
+                chunks: chunk => chunk.name !== serverEntryPoint,
+            },
+        },
     };
 
     const environmentConfig = isDev ? devAdditionalConfig() : prodAdditionalConfig();
@@ -183,11 +185,11 @@ const devAdditionalConfig = (): webpack.Configuration => ({
     watchOptions: {
         aggregateTimeout: 500,
         ignored: /node_modules/,
-    }
+    },
 });
 
 const prodAdditionalConfig = (): webpack.Configuration => ({
     plugins: [
-        new CleanWebpackPlugin(outputPath, { verbose: true })
-    ]
+        new CleanWebpackPlugin(outputPath, { verbose: true }),
+    ],
 });

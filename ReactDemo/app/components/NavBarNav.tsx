@@ -1,11 +1,12 @@
 import React from 'react';
-import '../../node_modules/bootstrap/dist/css/bootstrap.css';
+import '@bootstrap-css';
 
-export type NavBarNavProps = {
-    children: React.ReactNode
-};
+export interface INavBarNavProps
+{
+    readonly children: React.ReactNode;
+}
 
-export const NavBarNav = ({ children }: NavBarNavProps) => (
+export const NavBarNav = ({ children }: INavBarNavProps) => (
     <ul className="nav navbar-nav">
         {children}
     </ul>

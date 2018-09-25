@@ -1,4 +1,6 @@
+// tslint:disable-next-line:no-import-side-effect
 import 'babel-polyfill';
+// tslint:disable-next-line:no-import-side-effect
 import 'bootstrap';
 import './site.css';
 

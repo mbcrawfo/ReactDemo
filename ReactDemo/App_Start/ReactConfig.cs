@@ -29,7 +29,7 @@ namespace ReactDemo
                 .SetLoadBabel(false)
                 .SetLoadReact(false);
 
-            foreach (var file in BundleHelper.GetAssets("serverSideRender", "js"))
+            foreach (var file in BundleHelper.GetAssets("serverComponentPackage", "js"))
             {
                 ReactSiteConfiguration.Configuration.AddScriptWithoutTransform(file);
             }
