@@ -1,0 +1,30 @@
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+@model ReactDemo.Models.PagedData<ReactDemo.Models.FoodTruck>
+
+@{
+    ViewBag.Title = "Food Trucks";
+    ViewBag.EntryPoint = "FoodTruck_index";
+
+    var modelJson = JsonConvert.SerializeObject(Model, new JsonSerializerSettings {ContractResolver = new CamelCasePropertyNamesContractResolver()});
+}
+
+<div id="app"></div>
+
+@section scriptdata
+{
+    <script type="text/javascript">
+        var routes = {
+            getTrucks: '@Url.Action("GetTrucks", "FoodTrucks")'
+        };
+
+        var preloadedState = {
+            truckList: {
+                selectedTruckId: @(Model.CurrentPage.FirstOrDefault()?.Id.ToString())
+            },
+            data: {
+                trucks: @Html.Raw(modelJson)
+            }
+        };
+    </script>
+}

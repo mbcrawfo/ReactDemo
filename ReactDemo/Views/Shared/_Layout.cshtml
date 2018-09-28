@@ -20,16 +20,6 @@
                 text = "Home",
                 url = Url.Action("Index", "Home")
             },
-            new 
-            {
-                text = "About",
-                url = Url.Action("About", "Home")
-            },
-            new
-            {
-                text = "Contact",
-                url = Url.Action("Contact", "Home")
-            },
             new
             {
                 text = "Lorem",
@@ -39,6 +29,11 @@
             {
                 text = "Todo List",
                 url= Url.Action("Todo", "Home")
+            },
+            new
+            {
+                text = "Food Trucks",
+                url = Url.Action("Index", "FoodTrucks")
             }
         }
     }, serverOnly: true);
@@ -50,7 +45,9 @@
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
-    
+
+    @RenderSection("scriptdata", required: false)
+
     @Bundle.RenderScripts("layout")
     @if (ViewBag.EntryPoint != null)
     {

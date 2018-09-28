@@ -86,7 +86,7 @@ export default env =>
         output: {
             path: outputPath,
             filename: isDev ? '[name].js' : '[name].[chunkhash].min.js',
-            chunkFilename: isDev ? '[name].chunk.js' : '[name].chunk.[chunkhash].min.js',
+            chunkFilename: isDev ? 'chunk.[chunkhash].js' : '[hash].chunk.[chunkhash].min.js',
             publicPath: outputPublicPath,
         },
 
@@ -154,7 +154,7 @@ export default env =>
 
             new MiniCssExtractPlugin({
                 filename: isDev ? '[name].css' : '[name].[contenthash].min.css',
-                chunkFilename: isDev ? '[name].chunk.css' : '[name].chunk.[contenthash].min.css',
+                chunkFilename: isDev ? 'chunk.[contenthash].css' : 'chunk.[contenthash].min.css',
             }),
 
             // output the manifest the server will use to generate css and script includes

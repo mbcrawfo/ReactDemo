@@ -184,11 +184,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\ReactConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\FoodTruckController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\BundleHelper.cs" />
+    <Compile Include="Models\FoodTruck.cs" />
+    <Compile Include="Models\PagedData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -216,7 +219,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="package.json" />
@@ -225,20 +227,39 @@
     <Content Include="tsconfig.json" />
     <Content Include="Views\Home\Lorem.cshtml" />
     <Content Include="Views\Home\Todo.cshtml" />
+    <Content Include="Views\FoodTrucks\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="app\components\LoadingIndicator.tsx" />
     <TypeScriptCompile Include="app\components\NavBar.tsx" />
     <TypeScriptCompile Include="app\components\NavBarLink.tsx" />
     <TypeScriptCompile Include="app\components\NavBarNav.tsx" />
+    <TypeScriptCompile Include="app\components\SearchBox.tsx" />
+    <TypeScriptCompile Include="app\components\SortHeader.tsx" />
+    <TypeScriptCompile Include="app\components\StarRating.tsx" />
     <TypeScriptCompile Include="app\components\TopBarLinks.tsx" />
+    <TypeScriptCompile Include="app\FoodTruck\actions.ts" />
+    <TypeScriptCompile Include="app\FoodTruck\api.ts" />
+    <TypeScriptCompile Include="app\FoodTruck\components\App.tsx" />
+    <TypeScriptCompile Include="app\FoodTruck\components\TruckList.tsx" />
+    <TypeScriptCompile Include="app\FoodTruck\components\TruckListItem.tsx" />
+    <TypeScriptCompile Include="app\FoodTruck\containers\BoundSortHeader.tsx" />
+    <TypeScriptCompile Include="app\FoodTruck\containers\TruckListLoadingIndicator.ts" />
+    <TypeScriptCompile Include="app\FoodTruck\containers\TruckListSearch.ts" />
+    <TypeScriptCompile Include="app\FoodTruck\containers\VisibleTruckList.ts" />
+    <TypeScriptCompile Include="app\FoodTruck\epics.ts" />
+    <TypeScriptCompile Include="app\FoodTruck\reducers.ts" />
+    <TypeScriptCompile Include="app\FoodTruck\state.ts" />
+    <TypeScriptCompile Include="app\pages\FoodTruck\index.tsx" />
     <TypeScriptCompile Include="app\pages\home\index.tsx" />
     <TypeScriptCompile Include="app\pages\home\lorem.tsx" />
     <TypeScriptCompile Include="app\pages\home\todo.tsx" />
     <TypeScriptCompile Include="app\pages\layout.tsx" />
     <TypeScriptCompile Include="app\serverComponents.ts" />
+    <TypeScriptCompile Include="app\SortDirection.ts" />
     <TypeScriptCompile Include="app\TodoList\actions.ts" />
     <TypeScriptCompile Include="app\TodoList\components\App.tsx" />
     <TypeScriptCompile Include="app\TodoList\components\Button.tsx" />
@@ -250,6 +271,7 @@
     <TypeScriptCompile Include="app\TodoList\containers\VisibleTodoList.ts" />
     <TypeScriptCompile Include="app\TodoList\reducers.ts" />
     <TypeScriptCompile Include="app\TodoList\state.ts" />
+    <TypeScriptCompile Include="app\utilities.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

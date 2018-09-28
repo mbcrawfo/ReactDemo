@@ -1,7 +1,8 @@
-// tslint:disable-next-line:no-import-side-effect
+// tslint:disable:no-import-side-effect
 import 'babel-polyfill';
-// tslint:disable-next-line:no-import-side-effect
+import 'whatwg-fetch';
 import 'bootstrap';
+// tslint:enable:no-import-side-effect
 import './site.css';
 
 // import React from 'react';

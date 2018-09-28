@@ -8,8 +8,7 @@ export type TodoAction = ActionType<typeof actions>;
 
 let nextTodoId = 1;
 
-type itemListType = ITodoState['items'];
-const itemListReducer = (state: itemListType = [], action: TodoAction): itemListType =>
+const itemListReducer = (state: ReadonlyArray<ITodoListItem> = [], action: TodoAction) =>
 {
     switch (action.type)
     {
@@ -40,8 +39,7 @@ const itemListReducer = (state: itemListType = [], action: TodoAction): itemList
     }
 };
 
-type filterType = ITodoState['visibilityFilter'];
-const visibilityFilterReducer = (state: filterType = VisibilityFilter.Active, action: TodoAction): filterType =>
+const visibilityFilterReducer = (state = VisibilityFilter.Active, action: TodoAction) =>
 {
     switch (action.type)
     {
