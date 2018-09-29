@@ -1,9 +1,8 @@
-import { connect } from 'react-redux';
-import { Dispatch, bindActionCreators } from 'redux';
-
-import { setTruckSearch } from '@app/FoodTruck/actions';
 import { SearchBox } from '@app/components/SearchBox';
+import { setTruckSearch } from '@app/FoodTruck/actions';
 import { IFoodTruckState } from '@app/FoodTruck/state';
+import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
 
 const mapStateToProps = (state: IFoodTruckState) => ({
     currentTerm: state.truckList.request.searchTerm,
@@ -13,4 +12,5 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     setSearchTerm: bindActionCreators(setTruckSearch, dispatch),
 });
 
-export const TruckListSearch = connect(mapStateToProps, mapDispatchToProps)(SearchBox);
+const TruckListSearch = connect(mapStateToProps, mapDispatchToProps)(SearchBox);
+export { TruckListSearch };

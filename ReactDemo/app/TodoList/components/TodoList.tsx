@@ -1,7 +1,6 @@
-import React from 'react';
-
-import Todo from './Todo';
+import { Todo } from '@app/TodoList/components/Todo';
 import { ITodoListItem } from '@app/TodoList/state';
+import React from 'react';
 
 export interface ITodoListProps
 {
@@ -9,7 +8,7 @@ export interface ITodoListProps
     readonly onItemClick: (id: number) => void;
 }
 
-export const TodoList = ({ items: itemData, onItemClick }: ITodoListProps) =>
+const TodoList = ({ items: itemData, onItemClick }: ITodoListProps) =>
 {
     const items = itemData.map(item => (
         <Todo key={item.id} {...item} onClick={() => onItemClick(item.id)}/>
@@ -23,4 +22,4 @@ export const TodoList = ({ items: itemData, onItemClick }: ITodoListProps) =>
     return <ul>{items}</ul>;
 };
 
-export default TodoList;
+export { TodoList };

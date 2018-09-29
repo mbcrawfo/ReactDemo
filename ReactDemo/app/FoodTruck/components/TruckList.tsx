@@ -1,8 +1,7 @@
+import { TruckListItem } from '@app/FoodTruck/components/TruckListItem';
+import { IFoodTruck } from '@app/FoodTruck/state';
 import React from 'react';
 import { ListGroup } from 'react-bootstrap';
-
-import { IFoodTruck } from '@app/FoodTruck/state';
-import { TruckListItem } from '@app/FoodTruck/components/TruckListItem';
 
 export interface ITruckListProps
 {
@@ -11,7 +10,7 @@ export interface ITruckListProps
     readonly onTruckClick: (id: number) => void;
 }
 
-export const TruckList = ({ trucks, selectedId, onTruckClick }: ITruckListProps) =>
+const TruckList = ({ trucks, selectedId, onTruckClick }: ITruckListProps) =>
 {
     const items = trucks.map(truck =>
     {
@@ -28,9 +27,7 @@ export const TruckList = ({ trucks, selectedId, onTruckClick }: ITruckListProps)
         );
     });
 
-    return (
-        <ListGroup>
-            {items}
-        </ListGroup>
-    );
+    return <ListGroup>{items}</ListGroup>;
 };
+
+export { TruckList };

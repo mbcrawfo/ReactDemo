@@ -11,10 +11,10 @@ export interface INavBarLinkProps
     readonly link: ILink;
 }
 
-export const NavBarLink = ({ link }: INavBarLinkProps) => (
+const NavBarLink = ({ link }: INavBarLinkProps) => (
     <li>
         <a href={link.url}>{link.text}</a>
     </li>
 );
 
-export default NavBarLink;
+export { NavBarLink };

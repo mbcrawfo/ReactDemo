@@ -1,17 +1,16 @@
+import { NavBar } from '@app/components/NavBar';
+import { ILink, NavBarLink } from '@app/components/NavBarLink';
+import { NavBarNav } from '@app/components/NavBarNav';
 import React from 'react';
 
-import NavBar from './NavBar';
-import NavBarNav from './NavBarNav';
-import NavBarLink, { ILink } from './NavBarLink';
-
-export { ILink } from './NavBarLink';
+export { ILink } from '@app/components/NavBarLink';
 
 export interface ITopBarLinksProps
 {
     readonly links: ReadonlyArray<ILink>;
 }
 
-export const TopBarLinks = ({ links }: ITopBarLinksProps) =>
+const TopBarLinks = ({ links }: ITopBarLinksProps) =>
 {
     const linkItems = links.map((link, index) => (
         <NavBarLink key={index} link={link} />
@@ -26,4 +25,4 @@ export const TopBarLinks = ({ links }: ITopBarLinksProps) =>
     );
 };
 
-export default TopBarLinks;
+export { TopBarLinks };

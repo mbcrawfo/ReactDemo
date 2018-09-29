@@ -1,10 +1,9 @@
+import * as actions from '@app/TodoList/actions';
+import { Button } from '@app/TodoList/components/Button';
+import { TodoAction } from '@app/TodoList/reducers';
+import { ITodoState, VisibilityFilter } from '@app/TodoList/state';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-
-import { ITodoState, VisibilityFilter } from '@app/TodoList/state';
-import * as actions from '@app/TodoList/actions';
-import { TodoAction } from '@app/TodoList/reducers';
-import ButtonComponent from '@app/TodoList/components/Button';
 
 export interface IFilterButtonProps
 {
@@ -22,5 +21,5 @@ const mapDispatchToProps = (dispatch: Dispatch<TodoAction>, ownProps: IFilterBut
     },
 });
 
-export const FilterButton = connect(mapStateToProps, mapDispatchToProps)(ButtonComponent);
-export default FilterButton;
+const FilterButton = connect(mapStateToProps, mapDispatchToProps)(Button);
+export { FilterButton };

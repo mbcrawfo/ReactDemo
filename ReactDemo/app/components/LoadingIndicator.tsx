@@ -1,5 +1,6 @@
-import React from 'react';
 import '@bootstrap-css';
+
+import React from 'react';
 
 export interface ILoadingIndicatorProps
 {
@@ -7,7 +8,7 @@ export interface ILoadingIndicatorProps
     readonly children: React.ReactNode;
 }
 
-export const LoadingIndicator = ({ show, children }: ILoadingIndicatorProps) =>
+const LoadingIndicator = ({ show, children }: ILoadingIndicatorProps) =>
 {
     if (show)
     {
@@ -20,3 +21,5 @@ export const LoadingIndicator = ({ show, children }: ILoadingIndicatorProps) =>
 
     return React.Children.only(children);
 };
+
+export { LoadingIndicator };

@@ -1,10 +1,9 @@
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-
-import { IFoodTruckState } from '@app/FoodTruck/state';
+import { setSelectedTruck } from '@app/FoodTruck/actions';
 import { TruckList } from '@app/FoodTruck/components/TruckList';
 import { FoodTruckAction } from '@app/FoodTruck/reducers';
-import { setSelectedTruck } from '@app/FoodTruck/actions';
+import { IFoodTruckState } from '@app/FoodTruck/state';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 const mapStateToProps = (state: IFoodTruckState) => ({
     selectedId: state.truckList.selectedTruckId,
@@ -18,4 +17,5 @@ const mapDispatchToProps = (dispatch: Dispatch<FoodTruckAction>) => ({
     },
 });
 
-export const VisibleTruckList = connect(mapStateToProps, mapDispatchToProps)(TruckList);
+const FilteredTruckList = connect(mapStateToProps, mapDispatchToProps)(TruckList);
+export { FilteredTruckList };

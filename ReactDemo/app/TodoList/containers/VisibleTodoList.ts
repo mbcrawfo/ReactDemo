@@ -1,10 +1,9 @@
+import * as actions from '@app/TodoList/actions';
+import { TodoList } from '@app/TodoList/components/TodoList';
+import { TodoAction } from '@app/TodoList/reducers';
+import { ITodoListItem, ITodoState, VisibilityFilter } from '@app/TodoList/state';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-
-import { ITodoState, ITodoListItem, VisibilityFilter } from '@app/TodoList/state';
-import * as actions from '@app/TodoList/actions';
-import { TodoAction } from '@app/TodoList/reducers';
-import TodoList from '@app/TodoList/components/TodoList';
 
 const getVisibleItems = (items: ReadonlyArray<ITodoListItem>, filter: VisibilityFilter)  =>
 {
@@ -33,5 +32,5 @@ const mapDispatchToProps = (dispatch: Dispatch<TodoAction>) => ({
     },
 });
 
-export const VisibleTodoList = connect(mapStateToProps, mapDispatchToProps)(TodoList);
-export default VisibleTodoList;
+const VisibleTodoList = connect(mapStateToProps, mapDispatchToProps)(TodoList);
+export { VisibleTodoList };

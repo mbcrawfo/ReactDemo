@@ -1,6 +1,7 @@
-import React from 'react';
-import classNames from 'classnames';
 import '@bootstrap-css';
+
+import classNames from 'classnames';
+import React from 'react';
 
 export interface IButtonProps
 {
@@ -9,7 +10,7 @@ export interface IButtonProps
     readonly onClick: () => void;
 }
 
-export const ButtonComponent = ({ active, children, onClick }: IButtonProps) =>
+const Button = ({ active, children, onClick }: IButtonProps) =>
 {
     const buttonClass = classNames('btn', 'btn-default', {
         active: active,
@@ -22,4 +23,4 @@ export const ButtonComponent = ({ active, children, onClick }: IButtonProps) =>
     );
 };
 
-export default ButtonComponent;
+export { Button };

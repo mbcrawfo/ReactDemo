@@ -1,11 +1,10 @@
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-
-import { IFoodTruckState, ITruckRequest } from '@app/FoodTruck/state';
-import { FoodTruckAction } from '@app/FoodTruck/reducers';
 import { SortHeader } from '@app/components/SortHeader';
 import { setTruckSort } from '@app/FoodTruck/actions';
+import { FoodTruckAction } from '@app/FoodTruck/reducers';
+import { IFoodTruckState, ITruckRequest } from '@app/FoodTruck/state';
 import SortDirection from '@app/SortDirection';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 interface IBoundSortHeaderProps
 {
@@ -49,4 +48,5 @@ const mergeProps = (
     ...ownProps,
 });
 
-export const BoundSortHeader = connect(mapStateToProps, mapDispatchToProps, mergeProps)(SortHeader);
+const BoundSortHeader = connect(mapStateToProps, mapDispatchToProps, mergeProps)(SortHeader);
+export { BoundSortHeader };

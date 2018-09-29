@@ -1,17 +1,17 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import '@app/pages/site.css';
 
 import * as actions from '@app/TodoList/actions';
 import { TodoAction } from '@app/TodoList/reducers';
-import '@app/pages/site.css';
+import React from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 interface IAddTodoProps
 {
     readonly dispatch: Dispatch<TodoAction>;
 }
 
-const AddTodoComponent = ({ dispatch }: IAddTodoProps) =>
+const _AddTodo = ({ dispatch }: IAddTodoProps) =>
 {
     const inputRef = React.createRef<HTMLInputElement>();
 
@@ -45,5 +45,5 @@ const AddTodoComponent = ({ dispatch }: IAddTodoProps) =>
     );
 };
 
-export const AddTodo = connect()(AddTodoComponent);
-export default AddTodo;
+const AddTodo = connect()(_AddTodo);
+export { AddTodo };

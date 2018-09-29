@@ -1,12 +1,13 @@
-import React from 'react';
 import '@bootstrap-css';
+
+import React from 'react';
 
 export interface INavBarProps
 {
     readonly children: React.ReactNode;
 }
 
-export const NavBar = ({ children }: INavBarProps) => (
+const NavBar = ({ children }: INavBarProps) => (
     <div className="navbar navbar-inverse navbar-fixed-top">
         <div className="container">
             <div className="navbar-header">
@@ -24,4 +25,4 @@ export const NavBar = ({ children }: INavBarProps) => (
     </div>
 );
 
-export default NavBar;
+export { NavBar };

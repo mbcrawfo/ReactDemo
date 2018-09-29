@@ -1,8 +1,8 @@
-import React from 'react';
-import { ListGroupItem } from 'react-bootstrap';
 import '@bootstrap-css';
 
 import { StarRating } from '@app/components/StarRating';
+import React from 'react';
+import { ListGroupItem } from 'react-bootstrap';
 
 export interface ITruckListItemProps
 {
@@ -12,7 +12,7 @@ export interface ITruckListItemProps
     readonly onClick: () => void;
 }
 
-export const TruckListItem = ({ name, rating, selected, onClick }: ITruckListItemProps) => (
+const TruckListItem = ({ name, rating, selected, onClick }: ITruckListItemProps) => (
     <ListGroupItem href="" active={selected} onClick={onClick}>
         <h4>
             {name}
@@ -22,3 +22,5 @@ export const TruckListItem = ({ name, rating, selected, onClick }: ITruckListIte
         </h4>
     </ListGroupItem>
 );
+
+export { TruckListItem };

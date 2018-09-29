@@ -1,6 +1,5 @@
-import React from 'react';
-
 import SortDirection from '@app/SortDirection';
+import React from 'react';
 
 export interface ISortHeaderProps
 {
@@ -9,7 +8,7 @@ export interface ISortHeaderProps
     readonly toggleSortDirection: () => void;
 }
 
-export const SortHeader = ({ text, sortDirection, toggleSortDirection }: ISortHeaderProps) =>
+const SortHeader = ({ text, sortDirection, toggleSortDirection }: ISortHeaderProps) =>
 {
     const sortIcon = sortDirection === null
         ? ''
@@ -23,3 +22,5 @@ export const SortHeader = ({ text, sortDirection, toggleSortDirection }: ISortHe
         </h4>
     );
 };
+
+export { SortHeader };

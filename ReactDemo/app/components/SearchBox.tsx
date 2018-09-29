@@ -1,5 +1,6 @@
-import React from 'react';
 import '@bootstrap-css';
+
+import React from 'react';
 
 export interface ISearchBoxProps
 {
@@ -7,7 +8,7 @@ export interface ISearchBoxProps
     readonly setSearchTerm: (term: string) => void;
 }
 
-export const SearchBox = ({ currentTerm, setSearchTerm }: ISearchBoxProps) =>
+const SearchBox = ({ currentTerm, setSearchTerm }: ISearchBoxProps) =>
 {
     const inputRef = React.createRef<HTMLInputElement>();
 
@@ -24,3 +25,5 @@ export const SearchBox = ({ currentTerm, setSearchTerm }: ISearchBoxProps) =>
 
     return <input className="form-control" ref={inputRef} type="text" placeholder="Type to Search" onKeyUp={onKeyUp} />;
 };
+
+export { SearchBox };

@@ -1,5 +1,5 @@
-import React from 'react';
 import { repeat } from 'lodash';
+import React from 'react';
 
 export interface IStarRatingProps
 {
@@ -8,7 +8,7 @@ export interface IStarRatingProps
     readonly showEmpty?: boolean;
 }
 
-export const StarRating = ({ rating, maxRating = 5, showEmpty = true}: IStarRatingProps) =>
+const StarRating = ({ rating, maxRating = 5, showEmpty = true}: IStarRatingProps) =>
 {
     const filledStars = repeat('\u2605', rating);
     const emptyStar = showEmpty ? '\u2606' : ' ';
@@ -21,3 +21,5 @@ export const StarRating = ({ rating, maxRating = 5, showEmpty = true}: IStarRati
         </span>
     );
 };
+
+export { StarRating };
