@@ -1,5 +1,7 @@
 // expose-loader doesn't work in a typescript file
 
+import 'babel-polyfill';
+
 // expose react for the server to use
 import React from 'expose-loader?React!../node_modules/react';
 import ReactDOM from 'expose-loader?ReactDOM!../node_modules/react-dom';

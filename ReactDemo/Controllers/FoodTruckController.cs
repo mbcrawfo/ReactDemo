@@ -1,30 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Hosting;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using ReactDemo.Models;
+using IOFile = System.IO.File;
 
 namespace ReactDemo.Controllers
 {
     public class FoodTrucksController : Controller
     {
-        private static readonly List<FoodTruck> FoodTrucks = new List<FoodTruck>
+        private static readonly List<FoodTruck> Trucks;
+
+        static FoodTrucksController()
         {
-            new FoodTruck
+            var path = HostingEnvironment.MapPath("~/mock_data.json");
+
+            using (var stream = IOFile.OpenText(path))
+            using (var reader = new JsonTextReader(stream))
             {
-                Id = 1,
-                Name = "Wandering Moose",
-                Description = "Serving slow cooked meats, scratch-made sauces, and fresh sides",
-                Rating = 5
-            },
-            new FoodTruck
-            {
-                Id = 2,
-                Name = "Cow and Oak",
-                Description = "Oak City's premier mac & grilled cheese truck",
-                Rating = 4
+                var data = JsonSerializer.Create().Deserialize<MockData>(reader);
+                Trucks = data.Trucks;
             }
-        };
+        }
+
+        private class MockData
+        {
+            public List<FoodTruck> Trucks { get; set; }
+        }
+
 
         [HttpGet]
         public ActionResult Index()
@@ -42,7 +47,7 @@ namespace ReactDemo.Controllers
 
         private PagedData<FoodTruck> GetTruckData(int page, int pageSize, string sortDirection, string sortName, string searchTerm)
         {
-            var truckData = FoodTrucks.AsEnumerable();
+            var truckData = Trucks.AsEnumerable();
 
             if (!string.IsNullOrEmpty(searchTerm))
             {
@@ -72,7 +77,7 @@ namespace ReactDemo.Controllers
             var skipCount = (page - 1) * pageSize;
             return new PagedData<FoodTruck>
             {
-                TotalItems = FoodTrucks.Count,
+                TotalItems = Trucks.Count,
                 // ReSharper disable once PossibleMultipleEnumeration
                 MatchingItems = truckData.Count(),
                 // ReSharper disable once PossibleMultipleEnumeration

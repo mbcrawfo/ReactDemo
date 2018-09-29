@@ -28,11 +28,9 @@ const mapDispatchToProps =
         },
     });
 
-type TSP = ReturnType<typeof mapStateToProps>;
-type TDP = ReturnType<typeof mapDispatchToProps>;
 const mergeProps = (
-    { sortDirection }: TSP,
-    { setSortDirection }: TDP,
+    { sortDirection }: ReturnType<typeof mapStateToProps>,
+    { setSortDirection }: ReturnType<typeof mapDispatchToProps>,
     ownProps: IBoundSortHeaderProps) =>
 ({
     toggleSortDirection: () =>
