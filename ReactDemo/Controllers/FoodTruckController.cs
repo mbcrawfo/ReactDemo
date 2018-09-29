@@ -79,7 +79,7 @@ namespace ReactDemo.Controllers
             {
                 TotalItems = Trucks.Count,
                 // ReSharper disable once PossibleMultipleEnumeration
-                MatchingItems = truckData.Count(),
+                FilteredItems = truckData.Count(),
                 // ReSharper disable once PossibleMultipleEnumeration
                 CurrentPage = truckData.Skip(skipCount).Take(pageSize)
             };

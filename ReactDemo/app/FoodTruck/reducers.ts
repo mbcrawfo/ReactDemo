@@ -1,9 +1,8 @@
-import { ActionType, getType } from 'typesafe-actions';
-import { combineReducers } from 'redux';
-
 import * as actions from '@app/FoodTruck/actions';
-import { IFoodTruckState, IFoodTruck, IPagedData, ITruckRequest } from '@app/FoodTruck/state';
+import { IFoodTruck, IFoodTruckState, IPagedData, ITruckRequest } from '@app/FoodTruck/state';
 import SortDirection from '@app/SortDirection';
+import { combineReducers } from 'redux';
+import { ActionType, getType } from 'typesafe-actions';
 
 export type FoodTruckAction = ActionType<typeof actions>;
 
@@ -35,12 +34,23 @@ const truckListRequestReducer = (state = defaultTruckRequest, action: FoodTruckA
     switch (action.type)
     {
         case getType(actions.setTruckSort):
-            return { ...state, ...action.payload };
+            return {
+                ...state,
+                ...action.payload,
+                page: 1,
+            };
 
         case getType(actions.setTruckSearch):
             return {
                 ...state,
-                searchTerm: action.payload.trim(),
+                searchTerm: action.payload,
+                page: 1,
+            };
+
+        case getType(actions.setTruckPage):
+            return {
+                ...state,
+                page: action.payload,
             };
 
         default:
@@ -62,7 +72,7 @@ const selectedTruckIdReducer = (state: number | null = null, action: FoodTruckAc
 
 const defaultTruckData: IPagedData<IFoodTruck> = {
     totalItems: 0,
-    matchingItems: 0,
+    filteredItems: 0,
     currentPage: [],
 };
 const truckDataReducer = (state = defaultTruckData, action: FoodTruckAction) =>

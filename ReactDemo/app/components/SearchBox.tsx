@@ -20,7 +20,7 @@ const SearchBox = ({ currentTerm, setSearchTerm }: ISearchBoxProps) =>
             return;
         }
 
-        setSearchTerm(input.value);
+        setSearchTerm(input.value.trim());
     };
 
     return <input className="form-control" ref={inputRef} type="text" placeholder="Type to Search" onKeyUp={onKeyUp} />;

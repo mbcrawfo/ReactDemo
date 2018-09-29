@@ -1,7 +1,6 @@
-import { createAsyncAction, createAction } from 'typesafe-actions';
-
 import { IFoodTruck, IPagedData, ITruckRequest } from '@app/FoodTruck/state';
 import SortDirection from '@app/SortDirection';
+import { createAction, createAsyncAction } from 'typesafe-actions';
 
 export const fetchTrucks = createAsyncAction(
     'trucks/fetch/request',
@@ -19,4 +18,8 @@ export const setTruckSort = createAction('trucks/sort', resolve => {
 
 export const setTruckSearch = createAction('trucks/search', resolve => {
     return (term: string) => resolve(term);
+});
+
+export const setTruckPage = createAction('trucks/page', resolve => {
+    return (page: number) => resolve(page);
 });

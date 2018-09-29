@@ -6,7 +6,7 @@ namespace ReactDemo.Models
     {
         public int TotalItems { get; set; }
 
-        public int MatchingItems { get; set; }
+        public int FilteredItems { get; set; }
 
         public IEnumerable<T> CurrentPage { get; set; }
     }

@@ -8,7 +8,6 @@ import { Dispatch } from 'redux';
 
 interface IBoundSortHeaderProps
 {
-    readonly text: string;
     readonly sortName: ITruckRequest['sortName'];
     readonly initialSortDirection?: SortDirection;
 }
@@ -19,19 +18,13 @@ const mapStateToProps = (state: IFoodTruckState, { sortName }: IBoundSortHeaderP
         : null,
 });
 
-const mapDispatchToProps =
-    (dispatch: Dispatch<FoodTruckAction>, { sortName }: IBoundSortHeaderProps) => ({
-        setSortDirection: (sortDirection: SortDirection) =>
-        {
-            dispatch(setTruckSort(sortDirection, sortName));
-        },
-    });
+const mapDispatchToProps = (dispatch: Dispatch<FoodTruckAction>, { sortName }: IBoundSortHeaderProps) => ({
+    setSortDirection: (sort: SortDirection) => dispatch(setTruckSort(sort, sortName)),
+});
 
-const mergeProps = (
-    { sortDirection }: ReturnType<typeof mapStateToProps>,
-    { setSortDirection }: ReturnType<typeof mapDispatchToProps>,
-    ownProps: IBoundSortHeaderProps) =>
-({
+const mergeProps = ({ sortDirection }: ReturnType<typeof mapStateToProps>,
+                    { setSortDirection }: ReturnType<typeof mapDispatchToProps>,
+                    ownProps: IBoundSortHeaderProps) => ({
     toggleSortDirection: () =>
     {
         let newSortDirection = ownProps.initialSortDirection || SortDirection.Asc;
@@ -48,5 +41,5 @@ const mergeProps = (
     ...ownProps,
 });
 
-const BoundSortHeader = connect(mapStateToProps, mapDispatchToProps, mergeProps)(SortHeader);
-export { BoundSortHeader };
+const TruckListSortHeader = connect(mapStateToProps, mapDispatchToProps, mergeProps)(SortHeader);
+export { TruckListSortHeader };

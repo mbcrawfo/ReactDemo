@@ -12,7 +12,7 @@ export interface ITruckRequest
 export interface IPagedData<T>
 {
     readonly totalItems: number;
-    readonly matchingItems: number;
+    readonly filteredItems: number;
     readonly currentPage: ReadonlyArray<T>;
 }
 

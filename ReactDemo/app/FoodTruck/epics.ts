@@ -1,13 +1,12 @@
-import { Epic, combineEpics } from 'redux-observable';
-import { isActionOf } from 'typesafe-actions';
-import { from, of } from 'rxjs';
-import { filter, switchMap, map, catchError, flatMap, debounceTime } from 'rxjs/operators';
-import { head } from 'lodash';
-
-import { IFoodTruckState } from '@app/FoodTruck/state';
 import * as actions from '@app/FoodTruck/actions';
 import { FoodTruckApi } from '@app/FoodTruck/api';
 import { FoodTruckAction } from '@app/FoodTruck/reducers';
+import { IFoodTruckState } from '@app/FoodTruck/state';
+import { head } from 'lodash';
+import { combineEpics, Epic } from 'redux-observable';
+import { from, of } from 'rxjs';
+import { catchError, debounceTime, filter, flatMap, map, switchMap } from 'rxjs/operators';
+import { isActionOf } from 'typesafe-actions';
 
 export interface IEpicServices
 {
@@ -16,7 +15,7 @@ export interface IEpicServices
 
 const truckParamsEpic: Epic<FoodTruckAction, FoodTruckAction, IFoodTruckState> = (action$, state) =>
     action$.pipe(
-        filter(isActionOf([actions.setTruckSort, actions.setTruckSearch])),
+        filter(isActionOf([actions.setTruckSort, actions.setTruckSearch, actions.setTruckPage])),
         map(action => actions.fetchTrucks.request(state.value.truckList.request))
     );
 
