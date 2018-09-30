@@ -1,5 +1,6 @@
 import { IFoodTruck, IPagedData, ITruckRequest } from '@app/FoodTruck/state';
 import { mapKeysToCamelCase } from '@app/utilities';
+import axios from 'axios';
 
 export interface IFoodTruckApiRoutes
 {
@@ -8,27 +9,13 @@ export interface IFoodTruckApiRoutes
 
 export class FoodTruckApi
 {
-    constructor(readonly routes: IFoodTruckApiRoutes)
+    constructor(private readonly routes: IFoodTruckApiRoutes)
     {
     }
 
-    public readonly fetchTrucks = ({page, pageSize, sortDirection, sortName, searchTerm}: ITruckRequest) =>
+    public readonly fetchTrucks = async (request: ITruckRequest) =>
     {
-        let url = `${this.routes.getTrucks}?page=${page}&pageSize=${pageSize}`;
-        url = `${url}&sortDirection=${sortDirection}&sortName=${sortName}`;
-
-        if (searchTerm)
-        {
-            url = `${url}&searchTerm=${searchTerm}`;
-        }
-
-        return this.fetchJson<IPagedData<IFoodTruck>>(url);
-    }
-
-    private readonly fetchJson = async <T>(url: string) =>
-    {
-        const response = await fetch(url);
-        const data = await response.json();
-        return mapKeysToCamelCase(data) as T;
+        const response = await axios.get(this.routes.getTrucks, { params: { ...request } });
+        return mapKeysToCamelCase(response.data) as IPagedData<IFoodTruck>;
     }
 }

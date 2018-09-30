@@ -1,10 +1,9 @@
 // tslint:disable:no-import-side-effect
-import 'babel-polyfill';
-import 'whatwg-fetch';
-import 'bootstrap';
-// tslint:enable:no-import-side-effect
 import './site.css';
+import 'babel-polyfill';
+import 'bootstrap';
 
+// tslint:enable:no-import-side-effect
 // import React from 'react';
 // import ReactDOM from 'react-dom';
 

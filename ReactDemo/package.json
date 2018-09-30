@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^3.3.7",
     "classnames": "^2.2.6",
@@ -28,8 +29,7 @@
     "redux-thunk": "^2.3.0",
     "rxjs": "^6.3.3",
     "tslib": "^1.9.3",
-    "typesafe-actions": "^2.0.4",
-    "whatwg-fetch": "^2.0.4"
+    "typesafe-actions": "^2.0.4"
   },
   "devDependencies": {
     "@types/bootstrap": "^3.3.33",
