@@ -1,11 +1,11 @@
-import path from 'path';
-import glob from 'glob';
-import _ from 'lodash';
-import webpack from 'webpack';
-import merge from 'webpack-merge';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
+import glob from 'glob';
+import { last } from 'lodash';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import path from 'path';
+import webpack from 'webpack';
 import WebpackAssetsManifest from 'webpack-assets-manifest';
+import merge from 'webpack-merge';
 
 // files in this folder are loaded as webpack entry points
 const entryPointsPath = path.resolve(__dirname, 'app/pages');
@@ -21,16 +21,6 @@ const serverEntryPoint = 'serverComponentPackage';
 export default env =>
 {
     const isDev = env.dev as boolean;
-
-    const babelLoader: webpack.RuleSetUseItem = {
-        loader: 'babel-loader',
-        options: {
-            cacheDirectory: true,
-            presets: [
-                'env',
-            ],
-        },
-    };
 
     const baseConfig: webpack.Configuration = {
         target: 'web',
@@ -62,7 +52,7 @@ export default env =>
             };
 
             const entriesGlob = path.resolve(entryPointsPath, '**/*.@(ts|tsx|js|jsx)');
-            const lastParentSegment = _.last(entryPointsPath.split(path.sep));
+            const lastParentSegment = last(entryPointsPath.split(path.sep));
 
             glob.sync(entriesGlob, { ignore: ignoredEntryPointsPaths }).forEach(file =>
             {
@@ -85,8 +75,6 @@ export default env =>
 
         output: {
             path: outputPath,
-            filename: isDev ? '[name].js' : '[name].[chunkhash].min.js',
-            chunkFilename: isDev ? 'chunk.[chunkhash].js' : '[hash].chunk.[chunkhash].min.js',
             publicPath: outputPublicPath,
         },
 
@@ -96,17 +84,28 @@ export default env =>
                 {
                     test: /\.tsx?$/,
                     exclude: /node_modules/,
-                    use: [
-                        // babel generates source maps
-                        babelLoader,
-                        'ts-loader',
-                    ],
+                    use: [ 'ts-loader' ],
                 },
 
                 // javascript
                 {
-                    test: /\.jsx?$/,
-                    use: [ babelLoader ],
+                    test: /\.js$/,
+                    use: [
+                        {
+                            loader: 'babel-loader',
+                            options: {
+                                cacheDirectory: true,
+                                presets: [ 'env' ],
+                            },
+                        },
+                    ],
+                },
+
+                // process source maps for all js files
+                {
+                    test: /\.js$/,
+                    enforce: 'pre',
+                    use: [ 'source-map-loader' ],
                 },
 
                 // css
@@ -131,13 +130,27 @@ export default env =>
                 // images
                 {
                     test: /\.(png|svg|jpg|gif)$/,
-                    use: [ 'file-loader' ],
+                    use: [
+                        {
+                            loader: 'file-loader',
+                            options: {
+                                name: 'images/[name].[ext]',
+                            },
+                        },
+                     ],
                 },
 
                 // fonts
                 {
                     test: /\.(woff|woff2|eot|ttf|otf)$/,
-                    use: [ 'file-loader' ],
+                    use: [
+                        {
+                            loader: 'file-loader',
+                            options: {
+                                name: 'fonts/[name].[ext]',
+                            },
+                        },
+                     ],
                 },
             ],
         },
@@ -150,11 +163,6 @@ export default env =>
                 '$': 'jquery',
                 'jQuery': 'jquery',
                 'window.jQuery': 'jquery',
-            }),
-
-            new MiniCssExtractPlugin({
-                filename: isDev ? '[name].css' : '[name].[contenthash].min.css',
-                chunkFilename: isDev ? 'chunk.[contenthash].css' : 'chunk.[contenthash].min.css',
             }),
 
             // output the manifest the server will use to generate css and script includes
@@ -182,6 +190,18 @@ export default env =>
 };
 
 const devAdditionalConfig = (): webpack.Configuration => ({
+    output: {
+        filename: 'scripts/[name].js',
+        chunkFilename: 'scripts/vendors/chunk.[chunkhash].js',
+    },
+
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'css/[name].css',
+            chunkFilename: 'css/chunk.[contenthash].css',
+        }),
+    ],
+
     watchOptions: {
         aggregateTimeout: 500,
         ignored: /node_modules/,
@@ -189,7 +209,17 @@ const devAdditionalConfig = (): webpack.Configuration => ({
 });
 
 const prodAdditionalConfig = (): webpack.Configuration => ({
+    output: {
+        filename: 'scripts/[name].[chunkhash].min.js',
+        chunkFilename: 'scripts/vendors/chunk.[chunkhash].min.js',
+    },
+
     plugins: [
         new CleanWebpackPlugin(outputPath, { verbose: true }),
+
+        new MiniCssExtractPlugin({
+            filename: 'css/[name].[contenthash].min.css',
+            chunkFilename: 'css/chunk.[contenthash].min.css',
+        }),
     ],
 });
