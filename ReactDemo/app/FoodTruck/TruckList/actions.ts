@@ -11,19 +11,19 @@ export const fetchTrucks = createAsyncAction(
     'trucks/fetch/failure'
 )<IFetchTruckRequest, IPagedData<IFoodTruck>, AxiosError>();
 
-export const setSelectedTruck = createAction('trucks/select', resolve => {
+export const selectTruck = createAction('trucks/select', resolve => {
     return (id: number | null) => resolve(id);
 });
 
-export const setTruckSort = createAction('trucks/sort', resolve => {
+export const setSort = createAction('trucks/sort', resolve => {
     return (sortDirection: SortDirection, sortName: IFetchTruckRequest['sortName']) =>
         resolve({ sortDirection, sortName });
 });
 
-export const setTruckSearch = createAction('trucks/search', resolve => {
+export const setSearch = createAction('trucks/search', resolve => {
     return (term: string) => resolve(term);
 });
 
-export const setTruckPage = createAction('trucks/page', resolve => {
+export const setPage = createAction('trucks/page', resolve => {
     return (page: number) => resolve(page);
 });

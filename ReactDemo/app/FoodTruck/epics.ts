@@ -15,7 +15,7 @@ export interface IEpicServices
 
 const truckParamsEpic: Epic<TruckListAction, TruckListAction, IFoodTruckAppState> = (action$, state) =>
     action$.pipe(
-        filter(isActionOf([actions.setTruckSort, actions.setTruckSearch, actions.setTruckPage])),
+        filter(isActionOf([actions.setSort, actions.setSearch, actions.setPage])),
         map(action => actions.fetchTrucks.request(state.value.truckList.request))
     );
 

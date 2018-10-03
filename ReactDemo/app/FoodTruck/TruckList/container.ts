@@ -18,8 +18,8 @@ export const mapStateToTruckListProps = (state: ITruckListState) => ({
 });
 
 export const mapDispatchToTruckListProps = (dispatch: Dispatch) => bindActionCreators({
-    setSearchTerm: actions.setTruckSearch,
-    setSort: actions.setTruckSort,
-    setSelectedTruck: actions.setSelectedTruck,
-    setPage: actions.setTruckPage,
+    setSearchTerm: actions.setSearch,
+    setSort: actions.setSort,
+    setSelectedTruck: actions.selectTruck,
+    setPage: actions.setPage,
 }, dispatch);

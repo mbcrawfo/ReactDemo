@@ -28,7 +28,7 @@ const selectedTruckIdReducer = (state: number | null = null, action: TruckListAc
 {
     switch (action.type)
     {
-        case getType(Actions.setSelectedTruck):
+        case getType(Actions.selectTruck):
             return action.payload;
 
         case getType(Actions.fetchTrucks.success):
@@ -53,21 +53,21 @@ const requestReducer = (state = defaultTruckRequest, action: TruckListAction) =>
 {
     switch (action.type)
     {
-        case getType(Actions.setTruckSort):
+        case getType(Actions.setSort):
             return {
                 ...state,
                 ...action.payload,
                 page: 1,
             };
 
-        case getType(Actions.setTruckSearch):
+        case getType(Actions.setSearch):
             return {
                 ...state,
                 searchTerm: action.payload,
                 page: 1,
             };
 
-        case getType(Actions.setTruckPage):
+        case getType(Actions.setPage):
             return {
                 ...state,
                 page: action.payload,
