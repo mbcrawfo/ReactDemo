@@ -1,9 +1,9 @@
-import * as actions from '@app/TodoList/actions';
-import { Button } from '@app/TodoList/components/Button';
-import { TodoAction } from '@app/TodoList/reducers';
-import { ITodoState, VisibilityFilter } from '@app/TodoList/state';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+
+import * as actions from '../actions';
+import { Button } from '../components/Button';
+import { ITodoState, TodoAction, VisibilityFilter } from '../types';
 
 export interface IFilterButtonProps
 {

@@ -1,3 +1,5 @@
+import '@bootstrap-css';
+
 import { LoadingSpinner } from '@app/components/LoadingSpinner';
 import { Pager } from '@app/components/Pager';
 import { SearchBox } from '@app/components/SearchBox';

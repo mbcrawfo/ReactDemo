@@ -1,6 +1,6 @@
 import { createAction } from 'typesafe-actions';
 
-import { VisibilityFilter } from '@app/TodoList/state';
+import { VisibilityFilter } from './types';
 
 export const add = createAction('todo/add', resolve => {
     return (text: string) => resolve(text);

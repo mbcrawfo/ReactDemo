@@ -1,4 +1,4 @@
-import '@app/components/LoadingSpinner.css';
+import './LoadingSpinner.css';
 
 import React from 'react';
 

@@ -1,9 +1,9 @@
-import * as actions from '@app/TodoList/actions';
-import { TodoList } from '@app/TodoList/components/TodoList';
-import { TodoAction } from '@app/TodoList/reducers';
-import { ITodoListItem, ITodoState, VisibilityFilter } from '@app/TodoList/state';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+
+import * as actions from '../actions';
+import { TodoList } from '../components/TodoList';
+import { ITodoListItem, ITodoState, TodoAction, VisibilityFilter } from '../types';
 
 const getVisibleItems = (items: ReadonlyArray<ITodoListItem>, filter: VisibilityFilter)  =>
 {

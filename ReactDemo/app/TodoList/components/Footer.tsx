@@ -1,8 +1,9 @@
 import '@bootstrap-css';
 
-import { FilterButton } from '@app/TodoList/containers/FilterButton';
-import { VisibilityFilter } from '@app/TodoList/state';
 import React from 'react';
+
+import { FilterButton } from '../containers/FilterButton';
+import { VisibilityFilter } from '../types';
 
 const Footer = () => (
     <div className="btn-group">

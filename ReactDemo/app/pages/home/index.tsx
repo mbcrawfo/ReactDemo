@@ -1,6 +1,7 @@
+import '../site.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import '@app/pages/site.css';
 
 const IndexPage = () => (
     <div>

@@ -1,10 +1,11 @@
-import '@app/pages/site.css';
+import '@bootstrap-css';
 
-import * as actions from '@app/TodoList/actions';
-import { TodoAction } from '@app/TodoList/reducers';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+
+import * as actions from '../actions';
+import { TodoAction } from '../types';
 
 interface IAddTodoProps
 {

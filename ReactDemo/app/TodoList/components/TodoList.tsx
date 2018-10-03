@@ -1,6 +1,7 @@
-import { Todo } from '@app/TodoList/components/Todo';
-import { ITodoListItem } from '@app/TodoList/state';
 import React from 'react';
+
+import { ITodoListItem } from '../types';
+import { Todo } from './Todo';
 
 export interface ITodoListProps
 {

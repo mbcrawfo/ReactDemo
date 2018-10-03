@@ -1,9 +1,12 @@
-import { NavBar } from '@app/components/NavBar';
-import { ILink, NavBarLink } from '@app/components/NavBarLink';
-import { NavBarNav } from '@app/components/NavBarNav';
+import '@bootstrap-css';
+
 import React from 'react';
 
-export { ILink } from '@app/components/NavBarLink';
+import { NavBar } from './NavBar';
+import { ILink, NavBarLink } from './NavBarLink';
+import { NavBarNav } from './NavBarNav';
+
+export { ILink } from './NavBarLink';
 
 export interface ITopBarLinksProps
 {

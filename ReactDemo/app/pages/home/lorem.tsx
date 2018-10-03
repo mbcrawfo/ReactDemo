@@ -1,7 +1,8 @@
+import '@bootstrap-css';
+
+import classNames from 'classnames';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import classNames from 'classnames';
-import '@bootstrap-css';
 
 interface ILoremProps
 {

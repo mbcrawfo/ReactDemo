@@ -1,3 +1,5 @@
+import '@bootstrap-css';
+
 import React from 'react';
 import { Col, Grid, Row } from 'react-bootstrap';
 

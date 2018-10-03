@@ -1,10 +1,8 @@
-import { ActionType, getType } from 'typesafe-actions';
-import { combineReducers } from 'redux';
-
-import { VisibilityFilter, ITodoState, ITodoListItem } from '@app/TodoList/state';
 import * as actions from '@app/TodoList/actions';
+import { combineReducers } from 'redux';
+import { getType } from 'typesafe-actions';
 
-export type TodoAction = ActionType<typeof actions>;
+import { ITodoListItem, ITodoState, TodoAction, VisibilityFilter } from './types';
 
 let nextTodoId = 1;
 
