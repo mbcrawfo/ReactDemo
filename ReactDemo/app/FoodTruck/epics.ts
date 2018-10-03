@@ -1,25 +1,25 @@
-import * as actions from '@app/FoodTruck/actions';
-import { FoodTruckApi } from '@app/FoodTruck/api';
-import { FoodTruckAction } from '@app/FoodTruck/reducers';
-import { IFoodTruckState } from '@app/FoodTruck/state';
-import { head } from 'lodash';
 import { combineEpics, Epic } from 'redux-observable';
 import { from, of } from 'rxjs';
-import { catchError, debounceTime, filter, flatMap, map, switchMap } from 'rxjs/operators';
+import { catchError, debounceTime, filter, map, switchMap } from 'rxjs/operators';
 import { isActionOf } from 'typesafe-actions';
+
+import { FoodTruckApi } from './api';
+import { TruckListAction } from './TruckList';
+import * as actions from './TruckList/actions';
+import { IFoodTruckAppState, RootAction } from './types';
 
 export interface IEpicServices
 {
     readonly api: FoodTruckApi;
 }
 
-const truckParamsEpic: Epic<FoodTruckAction, FoodTruckAction, IFoodTruckState> = (action$, state) =>
+const truckParamsEpic: Epic<TruckListAction, TruckListAction, IFoodTruckAppState> = (action$, state) =>
     action$.pipe(
         filter(isActionOf([actions.setTruckSort, actions.setTruckSearch, actions.setTruckPage])),
         map(action => actions.fetchTrucks.request(state.value.truckList.request))
     );
 
-const fetchTrucksEpic: Epic<FoodTruckAction, FoodTruckAction, IFoodTruckState, IEpicServices> =
+const fetchTrucksEpic: Epic<RootAction, RootAction, IFoodTruckAppState, IEpicServices> =
     (action$, state, { api }) =>
         action$.pipe(
             filter(isActionOf(actions.fetchTrucks.request)),
@@ -27,12 +27,8 @@ const fetchTrucksEpic: Epic<FoodTruckAction, FoodTruckAction, IFoodTruckState, I
             map(action => action.payload),
             switchMap(request =>
                 from(api.fetchTrucks({...request})).pipe(
-                    flatMap(data => [
-                        actions.fetchTrucks.success(data),
-                        actions.setSelectedTruck(
-                            (head(data.currentPage) || { id: null }).id),
-                    ]),
-                    catchError(error => of(actions.fetchTrucks.failure(error as Response)))
+                    map(actions.fetchTrucks.success),
+                    catchError(error => of(actions.fetchTrucks.failure(error)))
                 )
             )
         );

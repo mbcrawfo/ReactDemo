@@ -20,11 +20,13 @@
 
         var preloadedState = {
             truckList: {
-                selectedTruckId: @(Model.CurrentPage.FirstOrDefault()?.Id.ToString())
+                selectedTruckId: @(Model.CurrentPage.FirstOrDefault()?.Id.ToString()),
+                response: @Html.Raw(modelJson)
             },
             data: {
-                trucks: @Html.Raw(modelJson)
+                foodTrucks: null
             }
         };
+        preloadedState.data.foodTrucks = preloadedState.truckList.response.currentPage;
     </script>
 }

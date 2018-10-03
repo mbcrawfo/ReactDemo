@@ -1,16 +1,17 @@
-import { TruckListItem } from '@app/FoodTruck/components/TruckListItem';
-import { IFoodTruck } from '@app/FoodTruck/state';
 import React from 'react';
 import { ListGroup } from 'react-bootstrap';
 
-export interface ITruckListProps
+import { IFoodTruck } from '../../types';
+import { TruckListItem } from './TruckListItem';
+
+export interface ITruckListBodyProps
 {
     readonly trucks: ReadonlyArray<IFoodTruck>;
     readonly selectedId: number | null;
     readonly onTruckClick: (id: number) => void;
 }
 
-const TruckList = ({ trucks, selectedId, onTruckClick }: ITruckListProps) =>
+const TruckListBody = ({ trucks, selectedId, onTruckClick }: ITruckListBodyProps) =>
 {
     const items = trucks.map(truck =>
     {
@@ -30,4 +31,4 @@ const TruckList = ({ trucks, selectedId, onTruckClick }: ITruckListProps) =>
     return <ListGroup>{items}</ListGroup>;
 };
 
-export { TruckList };
+export { TruckListBody };

@@ -4,18 +4,18 @@ import { Pagination } from 'react-bootstrap';
 
 export interface IPagerProps
 {
-    readonly currentPage: number;
+    readonly page: number;
     readonly pageSize: number;
-    readonly totalItems: number;
+    readonly items: number;
     readonly setPage: (page: number) => void;
 }
 
-const Pager = ({currentPage, pageSize, totalItems, setPage}: IPagerProps) =>
+const Pager = ({page, pageSize, items, setPage}: IPagerProps) =>
 {
     const buttonCount = 5;
-    const pageCount = Math.max(1, Math.ceil(totalItems / pageSize));
+    const pageCount = Math.max(1, Math.ceil(items / pageSize));
     const buttonStartPage = Math.min(
-        Math.max(1, currentPage - 2),
+        Math.max(1, page - 2),
         Math.max(1, pageCount - buttonCount + 1)
     );
 
@@ -27,7 +27,7 @@ const Pager = ({currentPage, pageSize, totalItems, setPage}: IPagerProps) =>
     const pageButtons = range(0, buttonCount).map(i =>
     {
         const pageNumber = buttonStartPage + i;
-        const isActive = pageNumber === currentPage;
+        const isActive = pageNumber === page;
         const clickable = pageNumber <= pageCount;
 
         return (
@@ -37,15 +37,15 @@ const Pager = ({currentPage, pageSize, totalItems, setPage}: IPagerProps) =>
         );
     });
 
-    const isFirstPage = currentPage === 1;
-    const isLastPage = currentPage === pageCount;
+    const isFirstPage = page === 1;
+    const isLastPage = page === pageCount;
 
     return (
         <Pagination>
             <Pagination.First {...setPageWhen(!isFirstPage, 1)} />
-            <Pagination.Prev {...setPageWhen(!isFirstPage, currentPage - 1)} />
+            <Pagination.Prev {...setPageWhen(!isFirstPage, page - 1)} />
             {pageButtons}
-            <Pagination.Next {...setPageWhen(!isLastPage, currentPage + 1)} />
+            <Pagination.Next {...setPageWhen(!isLastPage, page + 1)} />
             <Pagination.Last {...setPageWhen(!isLastPage, pageCount)} />
         </Pagination>
     );
