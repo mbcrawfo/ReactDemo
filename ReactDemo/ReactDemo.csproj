@@ -191,6 +191,7 @@
     </Compile>
     <Compile Include="Helpers\BundleHelper.cs" />
     <Compile Include="Models\FoodTruck.cs" />
+    <Compile Include="Models\FoodTruckMenuItem.cs" />
     <Compile Include="Models\PagedData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

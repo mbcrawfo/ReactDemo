@@ -15,12 +15,12 @@
 {
     <script type="text/javascript">
         var routes = {
-            getTrucks: '@Url.Action("GetTrucks", "FoodTrucks")'
+            getFoodTrucks: '@Url.Action("GetTrucks", "FoodTrucks")',
+            getFoodTruckMenu: '@Url.Action("GetMenu", "FoodTrucks")'
         };
 
         var preloadedState = {
             truckList: {
-                selectedTruckId: @(Model.CurrentPage.FirstOrDefault()?.Id.ToString()),
                 response: @Html.Raw(modelJson)
             },
             data: {

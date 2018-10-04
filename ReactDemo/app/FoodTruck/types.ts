@@ -1,6 +1,7 @@
+import { TruckDetailsAction } from './TruckDetails';
 import { ITruckListState, TruckListAction } from './TruckList';
 
-export type RootAction = TruckListAction;
+export type RootAction = TruckListAction | TruckDetailsAction;
 
 export interface IFoodTruck
 {
@@ -10,6 +11,14 @@ export interface IFoodTruck
     readonly rating: number;
 }
 
+export interface IFoodTruckMenuItem
+{
+    readonly foodTruckId: number;
+    readonly name: string;
+    readonly description: string;
+    readonly price: number;
+}
+
 export interface IFoodTruckAppState
 {
     readonly truckList: ITruckListState;
@@ -17,5 +26,6 @@ export interface IFoodTruckAppState
     readonly data:
     {
         readonly foodTrucks: ReadonlyArray<IFoodTruck>;
+        readonly menuItems: ReadonlyMap<number, ReadonlyArray<IFoodTruckMenuItem>>;
     };
 }

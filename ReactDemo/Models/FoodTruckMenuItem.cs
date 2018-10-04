@@ -1,0 +1,13 @@
+﻿namespace ReactDemo.Models
+{
+    public class FoodTruckMenuItem
+    {
+        public int FoodTruckId { get; set; }
+
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public decimal Price { get; set; }
+    }
+}

@@ -5,18 +5,18 @@ import { getType } from 'typesafe-actions';
 
 import { IFetchTruckRequest, IPagedData } from '../api';
 import { IFoodTruck } from '../types';
-import * as Actions from './actions';
-import { ITruckListState, TruckListAction } from './types';
+import * as actions from './actions';
+import { TruckListAction } from './types';
 
 const trucksLoadingReducer = (state = false, action: TruckListAction) =>
 {
     switch (action.type)
     {
-        case getType(Actions.fetchTrucks.request):
+        case getType(actions.fetchTrucks.request):
             return true;
 
-        case getType(Actions.fetchTrucks.success):
-        case getType(Actions.fetchTrucks.failure):
+        case getType(actions.fetchTrucks.success):
+        case getType(actions.fetchTrucks.failure):
             return false;
 
         default:
@@ -28,13 +28,13 @@ const selectedTruckIdReducer = (state: number | null = null, action: TruckListAc
 {
     switch (action.type)
     {
-        case getType(Actions.selectTruck):
+        case getType(actions.selectTruck):
             return action.payload;
 
-        case getType(Actions.fetchTrucks.success):
+        case getType(actions.fetchTrucks.success):
             return (head(action.payload.currentPage) || { id: null }).id;
 
-        case getType(Actions.fetchTrucks.failure):
+        case getType(actions.fetchTrucks.failure):
             return null;
 
         default:
@@ -53,21 +53,21 @@ const requestReducer = (state = defaultTruckRequest, action: TruckListAction) =>
 {
     switch (action.type)
     {
-        case getType(Actions.setSort):
+        case getType(actions.setSort):
             return {
                 ...state,
                 ...action.payload,
                 page: 1,
             };
 
-        case getType(Actions.setSearch):
+        case getType(actions.setSearch):
             return {
                 ...state,
                 searchTerm: action.payload,
                 page: 1,
             };
 
-        case getType(Actions.setPage):
+        case getType(actions.setPage):
             return {
                 ...state,
                 page: action.payload,
@@ -87,10 +87,10 @@ const responseReducer = (state = defaultTruckData, action: TruckListAction) =>
 {
     switch (action.type)
     {
-        case getType(Actions.fetchTrucks.success):
+        case getType(actions.fetchTrucks.success):
             return action.payload;
 
-        case getType(Actions.fetchTrucks.failure):
+        case getType(actions.fetchTrucks.failure):
             return defaultTruckData;
 
         default:
@@ -102,10 +102,10 @@ const errorMessageReducer = (state = '', action: TruckListAction) =>
 {
     switch (action.type)
     {
-        case getType(Actions.fetchTrucks.request):
+        case getType(actions.fetchTrucks.request):
             return '';
 
-        case getType(Actions.fetchTrucks.failure):
+        case getType(actions.fetchTrucks.failure):
             return action.payload.message;
 
         default:
@@ -113,7 +113,7 @@ const errorMessageReducer = (state = '', action: TruckListAction) =>
     }
 };
 
-export const truckListReducer = combineReducers<ITruckListState, TruckListAction>({
+export const truckListReducer = combineReducers({
     isLoading: trucksLoadingReducer,
     selectedTruckId: selectedTruckIdReducer,
     request: requestReducer,

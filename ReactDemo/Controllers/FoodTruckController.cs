@@ -11,7 +11,8 @@ namespace ReactDemo.Controllers
 {
     public class FoodTrucksController : Controller
     {
-        private static readonly List<FoodTruck> Trucks;
+        private static readonly List<FoodTruck> FoodTrucks;
+        private static readonly Dictionary<int, List<FoodTruckMenuItem>> FoodTruckMenuItems;
 
         static FoodTrucksController()
         {
@@ -21,13 +22,18 @@ namespace ReactDemo.Controllers
             using (var reader = new JsonTextReader(stream))
             {
                 var data = JsonSerializer.Create().Deserialize<MockData>(reader);
-                Trucks = data.Trucks;
+                FoodTrucks = data.Trucks;
+                FoodTruckMenuItems = data.MenuItems
+                    .GroupBy(m => m.FoodTruckId)
+                    .ToDictionary(g => g.Key, g => g.ToList());
             }
         }
 
         private class MockData
         {
             public List<FoodTruck> Trucks { get; set; }
+
+            public List<FoodTruckMenuItem> MenuItems { get; set; }
         }
 
 
@@ -45,9 +51,20 @@ namespace ReactDemo.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult GetMenu(int foodTruckId)
+        {
+            if (!FoodTruckMenuItems.TryGetValue(foodTruckId, out var menu))
+            {
+                return HttpNotFound();
+            }
+
+            return Json(menu, JsonRequestBehavior.AllowGet);
+        }
+
         private PagedData<FoodTruck> GetTruckData(int page, int pageSize, string sortDirection, string sortName, string searchTerm)
         {
-            var truckData = Trucks.AsEnumerable();
+            var truckData = FoodTrucks.AsEnumerable();
 
             if (!string.IsNullOrEmpty(searchTerm))
             {
@@ -77,7 +94,7 @@ namespace ReactDemo.Controllers
             var skipCount = (page - 1) * pageSize;
             return new PagedData<FoodTruck>
             {
-                TotalItems = Trucks.Count,
+                TotalItems = FoodTrucks.Count,
                 // ReSharper disable once PossibleMultipleEnumeration
                 FilteredItems = truckData.Count(),
                 // ReSharper disable once PossibleMultipleEnumeration
