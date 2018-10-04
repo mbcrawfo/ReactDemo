@@ -6,14 +6,14 @@ export interface IPagerProps
 {
     readonly page: number;
     readonly pageSize: number;
-    readonly items: number;
+    readonly totalItems: number;
     readonly setPage: (page: number) => void;
 }
 
-const Pager = ({page, pageSize, items, setPage}: IPagerProps) =>
+const Pager = ({page, pageSize, totalItems, setPage}: IPagerProps) =>
 {
     const buttonCount = 5;
-    const pageCount = Math.max(1, Math.ceil(items / pageSize));
+    const pageCount = Math.max(1, Math.ceil(totalItems / pageSize));
     const buttonStartPage = Math.min(
         Math.max(1, page - 2),
         Math.max(1, pageCount - buttonCount + 1)

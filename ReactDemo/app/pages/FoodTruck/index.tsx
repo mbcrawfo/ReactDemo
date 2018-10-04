@@ -3,10 +3,10 @@ import {
     FoodTruckApi,
     IEpicServices,
     IFoodTruckApiRoutes,
-    IFoodTruckAppState,
     RootAction,
     rootEpic,
     rootReducer,
+    RootState,
 } from '@app/FoodTruck';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -14,21 +14,20 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import { createEpicMiddleware } from 'redux-observable';
 
-// import { createLogger } from 'redux-logger';
-
 declare var routes: IFoodTruckApiRoutes;
-declare var preloadedState: IFoodTruckAppState;
+declare var preloadedState: RootState;
 
-const epicMiddleware = createEpicMiddleware<RootAction, RootAction, IFoodTruckAppState, IEpicServices>({
+const epicMiddleware = createEpicMiddleware<RootAction, RootAction, RootState, IEpicServices>({
     dependencies: {
         api: new FoodTruckApi(routes),
     },
 });
+
 const store = createStore(
     rootReducer,
     preloadedState,
-    applyMiddleware(epicMiddleware/*, createLogger()*/)
-    );
+    applyMiddleware(epicMiddleware)
+);
 
 epicMiddleware.run(rootEpic);
 

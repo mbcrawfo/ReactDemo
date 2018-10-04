@@ -2,7 +2,7 @@ import SortDirection from '@app/SortDirection';
 import { mapKeysToCamelCase } from '@app/utilities';
 import axios from 'axios';
 
-import { IFoodTruck, IFoodTruckMenuItem } from './types';
+import { IFoodTruck, IFoodTruckMenuItem } from './models';
 
 export interface IFoodTruckApiRoutes
 {
@@ -14,7 +14,7 @@ export interface IFetchTruckRequest
 {
     readonly searchTerm: string;
     readonly sortDirection: SortDirection;
-    readonly sortName: 'name' | 'rating';
+    readonly sortName: string;
     readonly page: number;
     readonly pageSize: number;
 }
