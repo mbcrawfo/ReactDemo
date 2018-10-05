@@ -1,5 +1,6 @@
+import { head } from 'lodash';
 import { Epic } from 'redux-observable';
-import { filter, map, withLatestFrom } from 'rxjs/operators';
+import { filter, map, mapTo, withLatestFrom } from 'rxjs/operators';
 import { isActionOf } from 'typesafe-actions';
 
 import { RootAction } from '../actions';
@@ -19,6 +20,21 @@ const fetchTrucksOnRequestChange: Epic<RootAction, RootAction, RootState> = (act
         map(([, state]) => entitiesActions.fetchTrucks.request(state.trucksList.request))
     );
 
+const selectFirstTruckOnLoad: Epic<RootAction, RootAction> = (action$) =>
+    action$.pipe(
+        filter(isActionOf(entitiesActions.fetchTrucks.success)),
+        map(action => (head(action.payload.currentPage) || { id: null }).id),
+        map(actions.select)
+    );
+
+const clearSelectionOnFailure: Epic<RootAction, RootAction> = (action$) =>
+    action$.pipe(
+        filter(isActionOf(entitiesActions.fetchTrucks.failure)),
+        mapTo(actions.select(null))
+    );
+
 export const trucksListEpics: ReadonlyArray<Epic> = [
     fetchTrucksOnRequestChange,
+    selectFirstTruckOnLoad,
+    clearSelectionOnFailure,
 ];
