@@ -1,4 +1,5 @@
 import { applyMiddleware, createStore } from 'redux';
+import { createLogger } from 'redux-logger';
 import { createEpicMiddleware } from 'redux-observable';
 
 import { RootAction } from './actions';
@@ -16,7 +17,7 @@ export const configureStore = (preloadedState: Partial<RootState>, services: IEp
     const store = createStore(
         rootReducer,
         preloadedState,
-        applyMiddleware(epicMiddleware)
+        applyMiddleware(epicMiddleware, createLogger())
     );
 
     epicMiddleware.run(rootEpic);

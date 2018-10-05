@@ -9,6 +9,7 @@ export interface IFoodTruck
 export interface IFoodTruckMenuItem
 {
     readonly foodTruckId: number;
+    readonly category: string;
     readonly name: string;
     readonly description: string;
     readonly price: number;

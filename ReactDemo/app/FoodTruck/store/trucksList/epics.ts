@@ -7,19 +7,18 @@ import { actions as entitiesActions } from '../entities';
 import { RootState } from '../reducers';
 import { actions } from './actions';
 
-const fetchTrucksOnRequestChange: Epic<RootAction, RootAction, RootState> =
-    (action$, state$) =>
-        action$.pipe(
-            filter(isActionOf([
-                actions.setSort,
-                actions.setSearch,
-                actions.setPage,
-                actions.setPageSize,
-            ])),
-            withLatestFrom(state$),
-            map(([, state]) => entitiesActions.fetchTrucks.request(state.trucksList.request))
-        );
+const fetchTrucksOnRequestChange: Epic<RootAction, RootAction, RootState> = (action$, state$) =>
+    action$.pipe(
+        filter(isActionOf([
+            actions.setSort,
+            actions.setSearch,
+            actions.setPage,
+            actions.setPageSize,
+        ])),
+        withLatestFrom(state$),
+        map(([, state]) => entitiesActions.fetchTrucks.request(state.trucksList.request))
+    );
 
-export const trucksEpics: ReadonlyArray<Epic> = [
+export const trucksListEpics: ReadonlyArray<Epic> = [
     fetchTrucksOnRequestChange,
 ];
