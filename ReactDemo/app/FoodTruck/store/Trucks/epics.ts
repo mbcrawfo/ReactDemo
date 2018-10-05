@@ -3,7 +3,9 @@ import { from, of } from 'rxjs';
 import { catchError, debounceTime, filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { isActionOf } from 'typesafe-actions';
 
-import { IEpicServices, RootAction, RootState } from '../..';
+import { RootAction } from '../actions';
+import { IEpicServices } from '../epics';
+import { RootState } from '../reducers';
 import { actions } from './actions';
 
 const fetchTrucksOnRequestChange: Epic<RootAction, RootAction, RootState> =
