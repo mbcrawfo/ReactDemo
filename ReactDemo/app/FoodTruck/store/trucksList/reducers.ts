@@ -1,21 +1,23 @@
 import SortDirection from '@app/SortDirection';
 import { head } from 'lodash';
 import { combineReducers } from 'redux';
-import { getType, StateType } from 'typesafe-actions';
+import { getType } from 'typesafe-actions';
 
 import { IFetchTruckRequest, IPagedData } from '../../api';
 import { IFoodTruck } from '../../models';
-import { actions, TrucksAction } from './actions';
+import { RootAction } from '../actions';
+import { actions as entitiesActions } from '../entities';
+import { actions } from './actions';
 
-const loadingReducer = (state = false, action: TrucksAction) =>
+const loadingReducer = (state = false, action: RootAction) =>
 {
     switch (action.type)
     {
-        case getType(actions.fetch.request):
+        case getType(entitiesActions.fetchTrucks.request):
             return true;
 
-        case getType(actions.fetch.success):
-        case getType(actions.fetch.failure):
+        case getType(entitiesActions.fetchTrucks.success):
+        case getType(entitiesActions.fetchTrucks.failure):
             return false;
 
         default:
@@ -23,32 +25,29 @@ const loadingReducer = (state = false, action: TrucksAction) =>
     }
 };
 
-const selectedTruckIdReducer = (state: number | null = null, action: TrucksAction) =>
+const selectedTruckIdReducer = (state: number | null = null, action: RootAction) =>
 {
     switch (action.type)
     {
         case getType(actions.select):
             return action.payload;
 
-        case getType(actions.fetch.success):
+        case getType(entitiesActions.fetchTrucks.success):
             return (head(action.payload.currentPage) || { id: null }).id;
-
-        case getType(actions.fetch.failure):
-            return null;
 
         default:
             return state;
     }
 };
 
-const defaultTruckRequest: IFetchTruckRequest = {
+const defaultkRequest: IFetchTruckRequest = {
     searchTerm: '',
     sortDirection: SortDirection.Asc,
     sortName: 'name',
     page: 1,
     pageSize: 10,
 };
-const requestReducer = (state = defaultTruckRequest, action: TrucksAction) =>
+const requestReducer = (state = defaultkRequest, action: RootAction) =>
 {
     switch (action.type)
     {
@@ -88,14 +87,14 @@ const defaultResponse: IPagedData<IFoodTruck> = {
     filteredItems: 0,
     currentPage: [],
 };
-const responseReducer = (state = defaultResponse, action: TrucksAction) =>
+const responseReducer = (state = defaultResponse, action: RootAction) =>
 {
     switch (action.type)
     {
-        case getType(actions.fetch.success):
+        case getType(entitiesActions.fetchTrucks.success):
             return action.payload;
 
-        case getType(actions.fetch.failure):
+        case getType(entitiesActions.fetchTrucks.failure):
             return defaultResponse;
 
         default:
@@ -109,5 +108,3 @@ export const trucksReducer = combineReducers({
     request: requestReducer,
     response: responseReducer,
 });
-
-export type TrucksState = StateType<typeof trucksReducer>;

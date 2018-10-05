@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { RootState } from '../../store';
-import { actions } from '../../store/Trucks';
+import { actions } from '../../store/trucksList';
 
 interface IOwnProps
 {
@@ -12,8 +12,8 @@ interface IOwnProps
 }
 
 const mapStateToProps = (state: RootState, { sortName }: IOwnProps) => ({
-    sort: state.foodTrucks.request.sortName === sortName
-        ? state.foodTrucks.request.sortDirection
+    sort: state.trucksList.request.sortName === sortName
+        ? state.trucksList.request.sortDirection
         : null,
 });
 

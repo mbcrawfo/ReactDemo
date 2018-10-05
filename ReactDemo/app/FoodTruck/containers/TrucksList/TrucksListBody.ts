@@ -3,11 +3,11 @@ import { bindActionCreators, Dispatch } from 'redux';
 
 import { ListBody } from '../../components/TrucksList/ListBody';
 import { RootState } from '../../store';
-import { actions } from '../../store/Trucks';
+import { actions } from '../../store/trucksList';
 
 const mapStateToProps = (state: RootState) => ({
-    trucks: state.foodTrucks.response.currentPage,
-    selectedId: state.foodTrucks.selectedTruckId,
+    trucks: state.trucksList.response.currentPage,
+    selectedId: state.trucksList.selectedTruckId,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({

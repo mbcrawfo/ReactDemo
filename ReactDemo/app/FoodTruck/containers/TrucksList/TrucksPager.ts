@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
 import { RootState } from '../../store';
-import { actions } from '../../store/Trucks';
+import { actions } from '../../store/trucksList';
 
 const mapStateToProps = (state: RootState) => ({
-    page: state.foodTrucks.request.page,
-    pageSize: state.foodTrucks.request.pageSize,
-    totalItems: state.foodTrucks.response.filteredItems,
+    page: state.trucksList.request.page,
+    pageSize: state.trucksList.request.pageSize,
+    totalItems: state.trucksList.response.filteredItems,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({

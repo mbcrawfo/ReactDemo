@@ -1,4 +1,4 @@
-import { TruckMenuAction } from './TruckMenu';
-import { TrucksAction } from './Trucks';
+import { EntitiesAction } from './entities';
+import { TrucksListAction } from './trucksList';
 
-export type RootAction = TrucksAction | TruckMenuAction;
+export type RootAction = EntitiesAction | TrucksListAction;

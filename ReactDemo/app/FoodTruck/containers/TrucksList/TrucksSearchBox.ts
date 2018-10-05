@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
 import { RootState } from '../../store';
-import { actions } from '../../store/Trucks';
+import { actions } from '../../store/trucksList';
 
 const mapStateToProps = (state: RootState) => ({
-    currentTerm: state.foodTrucks.request.searchTerm,
+    currentTerm: state.trucksList.request.searchTerm,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({

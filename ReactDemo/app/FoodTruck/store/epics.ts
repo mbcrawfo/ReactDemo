@@ -1,7 +1,8 @@
 import { combineEpics } from 'redux-observable';
 
 import { FoodTruckApi } from '../api';
-import { trucksEpics } from './Trucks';
+import { entitiesEpics } from './entities';
+import { trucksEpics } from './trucksList';
 
 export interface IEpicServices
 {
@@ -9,5 +10,6 @@ export interface IEpicServices
 }
 
 export const rootEpic = combineEpics(
+    ...entitiesEpics,
     ...trucksEpics
 );

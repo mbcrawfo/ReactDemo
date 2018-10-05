@@ -6,7 +6,22 @@
     ViewBag.Title = "Food Trucks";
     ViewBag.EntryPoint = "FoodTruck_index";
 
-    var modelJson = JsonConvert.SerializeObject(Model, new JsonSerializerSettings {ContractResolver = new CamelCasePropertyNamesContractResolver()});
+    Model.CurrentPage = Model.CurrentPage.ToList();
+
+    var state = new
+    {
+        TrucksList = new
+        {
+            SelectedTruckId = Model.CurrentPage.FirstOrDefault()?.Id,
+            Response = Model
+        },
+        Entities = new
+        {
+            FoodTrucks = Model.CurrentPage.ToDictionary(t => t.Id, t => t)
+        }
+    };
+
+    var stateJson = JsonConvert.SerializeObject(state, new JsonSerializerSettings {ContractResolver = new CamelCasePropertyNamesContractResolver()});
 }
 
 <div id="app"></div>
@@ -19,10 +34,6 @@
             getFoodTruckMenu: '@Url.Action("GetMenu", "FoodTrucks")'
         };
 
-        var preloadedState = {
-            foodTrucks: {
-                response: @Html.Raw(modelJson)
-            }
-        };
+        var preloadedState = @Html.Raw(stateJson);
     </script>
 }

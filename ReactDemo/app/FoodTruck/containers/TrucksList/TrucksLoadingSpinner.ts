@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { RootState } from '../../store';
 
 const mapStateToProps = (state: RootState) => ({
-    show: state.foodTrucks.loading,
+    show: state.trucksList.loading,
 });
 
 const TrucksLoadingSpinner = connect(mapStateToProps)(LoadingSpinner);
