@@ -15,5 +15,5 @@ const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
     setPage: actions.setPage,
 }, dispatch);
 
-const TrucksPager = connect(mapStateToProps, mapDispatchToProps)(Pager);
-export { TrucksPager };
+const PagerContainer = connect(mapStateToProps, mapDispatchToProps)(Pager);
+export { PagerContainer };

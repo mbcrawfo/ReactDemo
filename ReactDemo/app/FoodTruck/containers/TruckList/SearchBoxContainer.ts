@@ -13,5 +13,5 @@ const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
     setSearchTerm: actions.setSearch,
 }, dispatch);
 
-const TrucksSearchBox = connect(mapStateToProps, mapDispatchToProps)(SearchBox);
-export { TrucksSearchBox };
+const SearchBoxContainer = connect(mapStateToProps, mapDispatchToProps)(SearchBox);
+export { SearchBoxContainer };

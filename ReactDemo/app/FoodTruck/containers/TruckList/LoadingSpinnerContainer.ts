@@ -7,5 +7,5 @@ const mapStateToProps = (state: RootState) => ({
     show: state.trucksList.loading,
 });
 
-const TrucksLoadingSpinner = connect(mapStateToProps)(LoadingSpinner);
-export { TrucksLoadingSpinner };
+const LoadingSpinnerContainer = connect(mapStateToProps)(LoadingSpinner);
+export { LoadingSpinnerContainer };

@@ -4,13 +4,13 @@ import React from 'react';
 import { Button, ButtonToolbar, Col, Grid, Row } from 'react-bootstrap';
 
 import { TruckDetails } from './TruckDetails';
-import { TrucksList } from './TrucksList';
+import { TruckList } from './TruckList';
 
 const App = () => (
     <Grid>
         <Row>
             <Col md={4}>
-                <TrucksList />
+                <TruckList />
             </Col>
             <Col md={8}>
                 <Row>

@@ -24,5 +24,5 @@ const mapDispatchToProps = (dispatch: Dispatch, { sortName }: IOwnProps) => ({
     },
 });
 
-const TrucksSortHeader = connect(mapStateToProps, mapDispatchToProps)(SortHeader);
-export { TrucksSortHeader };
+const SortHeaderContainer = connect(mapStateToProps, mapDispatchToProps)(SortHeader);
+export { SortHeaderContainer };
