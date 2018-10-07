@@ -2,17 +2,16 @@ import { Pager } from '@app/components/Pager';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
-import { RootState } from '../../store';
-import { actions } from '../../store/trucksList';
+import { actions, RootState } from '../../store';
 
 const mapStateToProps = (state: RootState) => ({
-    page: state.trucksList.request.page,
-    pageSize: state.trucksList.request.pageSize,
-    totalItems: state.trucksList.response.filteredItems,
+    page: state.truckRequestParams.page,
+    pageSize: state.truckRequestParams.pageSize,
+    totalItems: state.truckPaging.trucksMatchingSearch,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
-    setPage: actions.setPage,
+    setPage: actions.setTruckPage,
 }, dispatch);
 
 const PagerContainer = connect(mapStateToProps, mapDispatchToProps)(Pager);

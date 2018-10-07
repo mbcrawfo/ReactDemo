@@ -2,15 +2,14 @@ import { SearchBox } from '@app/components/SearchBox';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
-import { RootState } from '../../store';
-import { actions } from '../../store/trucksList';
+import { actions, RootState } from '../../store';
 
 const mapStateToProps = (state: RootState) => ({
-    currentTerm: state.trucksList.request.searchTerm,
+    currentTerm: state.truckRequestParams.searchTerm,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
-    setSearchTerm: actions.setSearch,
+    setSearchTerm: actions.searchTrucks,
 }, dispatch);
 
 const SearchBoxContainer = connect(mapStateToProps, mapDispatchToProps)(SearchBox);

@@ -2,16 +2,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 
 import { ListBody } from '../../components/TruckList/ListBody';
-import { RootState } from '../../store';
-import { actions } from '../../store/trucksList';
+import { actions, getSortedVisibleTrucks, RootState } from '../../store';
 
 const mapStateToProps = (state: RootState) => ({
-    trucks: state.trucksList.response.currentPage,
-    selectedId: state.trucksList.selectedTruckId,
+    trucks: getSortedVisibleTrucks(state),
+    selectedId: state.selectedTruckId,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
-    selectTruck: actions.select,
+    selectTruck: actions.selectTruck,
 }, dispatch);
 
 const ListBodyContainer = connect(mapStateToProps, mapDispatchToProps)(ListBody);

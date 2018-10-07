@@ -3,8 +3,7 @@ import { SortDirection } from '@app/SortDirection';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { RootState } from '../../store';
-import { actions } from '../../store/trucksList';
+import { actions, RootState } from '../../store';
 
 interface IOwnProps
 {
@@ -12,15 +11,15 @@ interface IOwnProps
 }
 
 const mapStateToProps = (state: RootState, { sortName }: IOwnProps) => ({
-    sort: state.trucksList.request.sortName === sortName
-        ? state.trucksList.request.sortDirection
+    sort: state.truckRequestParams.sortName === sortName
+        ? state.truckRequestParams.sortDirection
         : null,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, { sortName }: IOwnProps) => ({
     setSort: (sortDirection: SortDirection) =>
     {
-        dispatch(actions.setSort(sortName, sortDirection));
+        dispatch(actions.sortTrucks(sortName, sortDirection));
     },
 });
 

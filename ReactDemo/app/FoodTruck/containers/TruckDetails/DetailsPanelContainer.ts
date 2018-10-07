@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 
 import { DetailsPanel } from '../../components/TruckDetails/DetailsPanel';
-import { RootState } from '../../store';
+import { getSelectedTruck, RootState } from '../../store';
 
 const mapStateToProps = (state: RootState) => ({
-    truck: state.truckDetails.truck,
+    truck: getSelectedTruck(state),
 });
 
 const DetailPanelContainer = connect(mapStateToProps)(DetailsPanel);

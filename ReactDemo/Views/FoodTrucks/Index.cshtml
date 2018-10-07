@@ -6,18 +6,19 @@
     ViewBag.Title = "Food Trucks";
     ViewBag.EntryPoint = "FoodTruck_index";
 
-    Model.CurrentPage = Model.CurrentPage.ToList();
+    var trucks = Model.CurrentPage.ToList();
 
     var state = new
     {
-        TrucksList = new
-        {
-            //SelectedTruckId = Model.CurrentPage.FirstOrDefault()?.Id,
-            Response = Model
-        },
         Entities = new
         {
-            FoodTrucks = Model.CurrentPage.ToDictionary(t => t.Id, t => t)
+            Trucks = trucks.ToDictionary(t => t.Id, t => t)
+        },
+        TruckPaging = new
+        {
+            SortedTruckIds = trucks.Select(t => t.Id),
+            TrucksMatchingSearch = Model.FilteredItems,
+            TotalTrucks = Model.TotalItems,
         }
     };
 

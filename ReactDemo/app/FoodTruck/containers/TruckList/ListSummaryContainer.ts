@@ -4,10 +4,10 @@ import { ListSummary } from '../../components/TruckList/ListSummary';
 import { RootState } from '../../store';
 
 const mapStateToProps = (state: RootState) => ({
-    page: state.trucksList.request.page,
-    pageSize: state.trucksList.request.pageSize,
-    count: state.trucksList.response.filteredItems,
-    isFiltered: state.trucksList.response.filteredItems < state.trucksList.response.totalItems,
+    page: state.truckRequestParams.page,
+    pageSize: state.truckRequestParams.pageSize,
+    count: state.truckPaging.trucksMatchingSearch,
+    isFiltered: state.truckPaging.trucksMatchingSearch < state.truckPaging.totalTrucks,
 });
 
 const ListSummaryContainer = connect(mapStateToProps)(ListSummary);
