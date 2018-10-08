@@ -12,7 +12,7 @@ const App = () => (
             <Col md={4}>
                 <TruckList />
             </Col>
-            <Col md={8}>
+            <Col mdOffset={1} md={7}>
                 <Row>
                     <Col md={12}>
                         <ButtonToolbar className="pull-right" style={{ paddingBottom: '5vh' }}>

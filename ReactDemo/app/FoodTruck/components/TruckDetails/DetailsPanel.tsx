@@ -33,8 +33,8 @@ const DetailsPanel = ({ truck, children }: IDetailsPanelProps) =>
                     {title}
                 </Panel.Title>
             </Panel.Heading>
-            <Panel.Body style={{ minHeight: '70vh' }}>
-                <p style={{ minHeight: '10vh' }}>{description}</p>
+            <Panel.Body style={{ minHeight: '70vh', maxHeight: '70vh', overflowY: 'scroll' }}>
+                <p style={{ minHeight: '5vh' }}>{description}</p>
                 {children}
             </Panel.Body>
         </Panel>
