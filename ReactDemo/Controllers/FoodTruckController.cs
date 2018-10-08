@@ -13,6 +13,7 @@ namespace ReactDemo.Controllers
     {
         private static readonly List<FoodTruck> FoodTrucks;
         private static readonly Dictionary<int, List<FoodTruckMenuItem>> FoodTruckMenuItems;
+        private static readonly Dictionary<int, List<FoodTruckScheduleEntry>> FoodTruckSchedules;
 
         static FoodTrucksController()
         {
@@ -23,8 +24,13 @@ namespace ReactDemo.Controllers
             {
                 var data = JsonSerializer.Create().Deserialize<MockData>(reader);
                 FoodTrucks = data.Trucks;
+                
                 FoodTruckMenuItems = data.MenuItems
                     .GroupBy(m => m.FoodTruckId)
+                    .ToDictionary(g => g.Key, g => g.ToList());
+
+                FoodTruckSchedules = data.Schedules
+                    .GroupBy(s => s.FoodTruckId)
                     .ToDictionary(g => g.Key, g => g.ToList());
             }
         }
@@ -34,6 +40,8 @@ namespace ReactDemo.Controllers
             public List<FoodTruck> Trucks { get; set; }
 
             public List<FoodTruckMenuItem> MenuItems { get; set; }
+
+            public List<FoodTruckScheduleEntry> Schedules { get; set; }
         }
 
 
@@ -60,6 +68,17 @@ namespace ReactDemo.Controllers
             }
 
             return Json(menu, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetSchedule(int foodTruckId)
+        {
+            if (!FoodTruckSchedules.TryGetValue(foodTruckId, out var schedule))
+            {
+                return HttpNotFound();
+            }
+
+            return Json(schedule, JsonRequestBehavior.AllowGet);
         }
 
         private PagedData<FoodTruck> GetTruckData(int page, int pageSize, string sortDirection, string sortName, string searchTerm)

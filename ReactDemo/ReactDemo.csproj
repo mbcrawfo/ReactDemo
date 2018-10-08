@@ -193,6 +193,7 @@
     <Compile Include="Helpers\JsonNetResult.cs" />
     <Compile Include="Models\FoodTruck.cs" />
     <Compile Include="Models\FoodTruckMenuItem.cs" />
+    <Compile Include="Models\FoodTruckScheduleEntry.cs" />
     <Compile Include="Models\PagedData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
