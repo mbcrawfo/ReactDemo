@@ -52,4 +52,9 @@ export class FoodTruckApi
         const response = await axios.get(getFoodTruckSchedule, { params: { foodTruckId } });
         return response.data as IFoodTruckScheduleEntry[];
     }
+
+    public readonly deleteTruck = async (foodTruckId: number) =>
+    {
+        await axios.post('', {});
+    }
 }

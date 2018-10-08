@@ -51,6 +51,18 @@ export const actions =
     setTruckPageSize: createAction('setTruckPageSize', resolve => {
         return (pageSize: number) => resolve(pageSize);
     }),
+
+    deleteTruck: {
+        request: createAction('deleteTruck/request'),
+        confirm: createAction('deleteTruck/confirm'),
+        cancel: createAction('deleteTruck/cancel'),
+    },
+
+    postDeleteTruck: createAsyncAction(
+        'postDeleteTruck/request',
+        'postDeleteTruck/success',
+        'postDeleteTruck/error'
+    )<number, void, AxiosError>(),
 };
 
 export type RootAction = ActionType<typeof actions>;

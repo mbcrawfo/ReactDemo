@@ -191,6 +191,22 @@ const selectedTruckId = (state: number | null = null, action: RootAction) =>
     }
 };
 
+const showConfirmDelete = (state = false, action: RootAction) =>
+{
+    switch (action.type)
+    {
+        case getType(actions.deleteTruck.request):
+            return true;
+
+        case getType(actions.deleteTruck.confirm):
+        case getType(actions.deleteTruck.cancel):
+            return false;
+
+        default:
+            return state;
+    }
+};
+
 export const rootReducer = combineReducers({
     entities: combineReducers({
         trucks,
@@ -203,6 +219,7 @@ export const rootReducer = combineReducers({
     truckRequestParams,
     truckPaging,
     selectedTruckId,
+    showConfirmDelete,
 });
 
 export type RootState = StateType<typeof rootReducer>;

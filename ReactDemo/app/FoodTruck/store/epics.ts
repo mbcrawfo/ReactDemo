@@ -1,7 +1,18 @@
 import { head } from 'lodash';
 import { combineEpics, Epic } from 'redux-observable';
 import { concat, empty, from, iif, of } from 'rxjs';
-import { auditTime, catchError, filter, map, mergeMap, switchMap, withLatestFrom } from 'rxjs/operators';
+import {
+    auditTime,
+    catchError,
+    filter,
+    map,
+    mapTo,
+    mergeMap,
+    switchMap,
+    take,
+    takeUntil,
+    withLatestFrom,
+} from 'rxjs/operators';
 import { isActionOf } from 'typesafe-actions';
 
 import { FoodTruckApi } from '../api';
@@ -94,10 +105,35 @@ const fetchTruckDetailsIfNeeded: Epic<RootAction, RootAction, RootState> = (acti
         )
     );
 
+const deleteTruckWhenConfirmed: Epic<RootAction, RootAction, RootState, IEpicServices> = (action$, state$, { api }) =>
+    action$.pipe(
+        filter(isActionOf(actions.deleteTruck.request)),
+        switchMap(() =>
+            action$.pipe(
+                filter(isActionOf(actions.deleteTruck.confirm)),
+                take(1),
+                withLatestFrom(state$),
+                map(([, state]) => state.selectedTruckId!),
+                mergeMap(truckId =>
+                    from(api.deleteTruck(truckId)).pipe(
+                        mapTo(actions.postDeleteTruck.success()),
+                        catchError(map(actions.postDeleteTruck.failure))
+                    )
+                ),
+                takeUntil(
+                    action$.pipe(
+                        filter(isActionOf(actions.deleteTruck.cancel))
+                    )
+                )
+            )
+        )
+    );
+
 export const rootEpic = combineEpics(
     fetchTrucks,
     fetchTruckMenu,
     fetchTruckSchedule,
     fetchTrucksOnRequestParamsChange,
-    fetchTruckDetailsIfNeeded
+    fetchTruckDetailsIfNeeded,
+    deleteTruckWhenConfirmed
 );
