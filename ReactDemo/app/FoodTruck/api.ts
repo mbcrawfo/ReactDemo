@@ -1,5 +1,4 @@
 import SortDirection from '@app/SortDirection';
-import { mapKeysToCamelCase } from '@app/utilities';
 import axios from 'axios';
 
 import { IFoodTruck, IFoodTruckMenuItem } from './models';
@@ -35,12 +34,12 @@ export class FoodTruckApi
     public readonly fetchTrucks = async (request: IFetchTruckRequest) =>
     {
         const response = await axios.get(this.routes.getFoodTrucks, { params: { ...request } });
-        return mapKeysToCamelCase(response.data) as IPagedData<IFoodTruck>;
+        return response.data as IPagedData<IFoodTruck>;
     }
 
     public readonly fetchMenu = async (foodTruckId: number) =>
     {
         const response = await axios.get(this.routes.getFoodTruckMenu, { params: { foodTruckId }});
-        return mapKeysToCamelCase(response.data) as IFoodTruckMenuItem[];
+        return response.data as IFoodTruckMenuItem[];
     }
 }

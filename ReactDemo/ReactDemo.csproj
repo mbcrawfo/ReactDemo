@@ -190,6 +190,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\BundleHelper.cs" />
+    <Compile Include="Helpers\JsonNetResult.cs" />
     <Compile Include="Models\FoodTruck.cs" />
     <Compile Include="Models\FoodTruckMenuItem.cs" />
     <Compile Include="Models\PagedData.cs" />
