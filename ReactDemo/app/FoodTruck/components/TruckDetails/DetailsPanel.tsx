@@ -34,7 +34,7 @@ const DetailsPanel = ({ truck, children }: IDetailsPanelProps) =>
                 </Panel.Title>
             </Panel.Heading>
             <Panel.Body style={{ minHeight: '70vh' }}>
-                {isActive && <p>{description}</p>}
+                <p style={{ minHeight: '10vh' }}>{description}</p>
                 {children}
             </Panel.Body>
         </Panel>

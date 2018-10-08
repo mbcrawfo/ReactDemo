@@ -15,7 +15,7 @@ const App = () => (
             <Col md={8}>
                 <Row>
                     <Col md={12}>
-                        <ButtonToolbar className="pull-right" style={{ paddingBottom: '2vh' }}>
+                        <ButtonToolbar className="pull-right" style={{ paddingBottom: '5vh' }}>
                             <Button disabled={true}>Placeholder 1</Button>
                             {' '}
                             <Button disabled={true}>Placeholder 2</Button>
