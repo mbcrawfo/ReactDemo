@@ -1,13 +1,13 @@
 import { head } from 'lodash';
 import { combineEpics, Epic } from 'redux-observable';
-import { concat, from, of } from 'rxjs';
+import { concat, empty, from, iif, of } from 'rxjs';
 import { auditTime, catchError, filter, map, mergeMap, switchMap, withLatestFrom } from 'rxjs/operators';
 import { isActionOf } from 'typesafe-actions';
 
 import { FoodTruckApi } from '../api';
 import { actions, RootAction } from './actions';
 import { RootState } from './reducers';
-import { getSelectedTruckMenu } from './selectors';
+import { getSelectedTruckMenu, getSelectedTruckSchedule } from './selectors';
 
 export interface IEpicServices
 {
@@ -40,10 +40,23 @@ const fetchTruckMenu: Epic<RootAction, RootAction, RootState, IEpicServices> = (
         filter(isActionOf(actions.fetchTruckMenu.request)),
         map(action => action.payload),
         switchMap(truckId =>
-            from(api.fetchMenu(truckId)).pipe(
-                map(menuItems => ({ foodTruckId: truckId, menuItems })),
+            from(api.fetchTruckMenu(truckId)).pipe(
+                map(items => ({ foodTruckId: truckId, items })),
                 map(actions.fetchTruckMenu.success),
                 catchError(map(actions.fetchTruckMenu.failure))
+            )
+        )
+    );
+
+const fetchTruckSchedule: Epic<RootAction, RootAction, RootState, IEpicServices> = (action$, state$, { api }) =>
+    action$.pipe(
+        filter(isActionOf(actions.fetchTruckSchedule.request)),
+        map(action => action.payload),
+        switchMap(truckId =>
+            from(api.fetchTruckSchedule(truckId)).pipe(
+                map(items => ({ foodTruckId: truckId, items })),
+                map(actions.fetchTruckSchedule.success),
+                catchError(map(actions.fetchTruckSchedule.failure))
             )
         )
     );
@@ -61,20 +74,30 @@ const fetchTrucksOnRequestParamsChange: Epic<RootAction, RootAction, RootState> 
         map(actions.fetchTrucks.request)
     );
 
-const fetchTruckMenuIfNeeded: Epic<RootAction, RootAction, RootState> = (action$, state$) =>
+const fetchTruckDetailsIfNeeded: Epic<RootAction, RootAction, RootState> = (action$, state$) =>
     action$.pipe(
         filter(isActionOf(actions.selectTruck)),
         filter(action => action.payload !== null),
         map(action => action.payload!),
         withLatestFrom(state$),
-        filter(([, state]) => getSelectedTruckMenu(state) === null),
-        map(([truckId]) => truckId),
-        map(actions.fetchTruckMenu.request)
+        mergeMap(([truckId, state]) =>
+            concat(
+                iif(() => getSelectedTruckMenu(state) === null,
+                    of(actions.fetchTruckMenu.request(truckId)),
+                    empty()
+                ),
+                iif(() => getSelectedTruckSchedule(state) === null,
+                    of(actions.fetchTruckSchedule.request(truckId)),
+                    empty()
+                )
+            )
+        )
     );
 
 export const rootEpic = combineEpics(
     fetchTrucks,
     fetchTruckMenu,
+    fetchTruckSchedule,
     fetchTrucksOnRequestParamsChange,
-    fetchTruckMenuIfNeeded
+    fetchTruckDetailsIfNeeded
 );

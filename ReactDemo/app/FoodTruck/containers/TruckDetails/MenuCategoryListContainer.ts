@@ -6,7 +6,7 @@ import { MenuCategoryList } from '../../components/TruckDetails/MenuCategoryList
 import { IFoodTruckMenuItem } from '../../models';
 import { getSelectedTruckMenu, RootState } from '../../store';
 
-interface IMutableCategoryMap
+interface ICategoryMap
 {
     [key: string]: IFoodTruckMenuItem[];
 }
@@ -15,31 +15,23 @@ const getGroupedAndOrderedMenuItems = createSelector(
     getSelectedTruckMenu,
     menuItems =>
     {
-        const categories = new Set<string>();
-        const categoryGroups = (menuItems || []).reduce((map, item) =>
+        const categoryMap = (menuItems || []).reduce((map, item) =>
         {
             const { category } = item;
-            if (!map[category])
-            {
-                map[category] = [];
-            }
-
-            categories.add(category);
+            map[category] = map[category] || [];
             map[category].push(item);
-
             return map;
-        }, {} as IMutableCategoryMap);
+        }, {} as ICategoryMap);
 
         const nameSelector = (i: IFoodTruckMenuItem) => i.name;
-        categories.forEach(category =>
+        for (const name of Object.getOwnPropertyNames(categoryMap))
         {
-            const items = categoryGroups[category];
-            categoryGroups[category] = sortBy(items, [nameSelector]);
-        });
+            categoryMap[name] = sortBy(categoryMap[name], nameSelector);
+        }
 
         return {
-            categories: Array.from(categories).sort(),
-            categoryMenuItems: categoryGroups,
+            categories: Object.getOwnPropertyNames(categoryMap).sort(),
+            menuItemsByCategory: categoryMap,
         };
     }
 );

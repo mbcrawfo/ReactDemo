@@ -1,12 +1,13 @@
 import SortDirection from '@app/SortDirection';
 import axios from 'axios';
 
-import { IFoodTruck, IFoodTruckMenuItem } from './models';
+import { IFoodTruck, IFoodTruckMenuItem, IFoodTruckScheduleEntry } from './models';
 
 export interface IFoodTruckApiRoutes
 {
     readonly getFoodTrucks: string;
     readonly getFoodTruckMenu: string;
+    readonly getFoodTruckSchedule: string;
 }
 
 export interface IFetchTruckRequest
@@ -33,13 +34,22 @@ export class FoodTruckApi
 
     public readonly fetchTrucks = async (request: IFetchTruckRequest) =>
     {
-        const response = await axios.get(this.routes.getFoodTrucks, { params: { ...request } });
+        const { getFoodTrucks } = this.routes;
+        const response = await axios.get(getFoodTrucks, { params: { ...request } });
         return response.data as IPagedData<IFoodTruck>;
     }
 
-    public readonly fetchMenu = async (foodTruckId: number) =>
+    public readonly fetchTruckMenu = async (foodTruckId: number) =>
     {
-        const response = await axios.get(this.routes.getFoodTruckMenu, { params: { foodTruckId }});
+        const { getFoodTruckMenu } = this.routes;
+        const response = await axios.get(getFoodTruckMenu, { params: { foodTruckId } });
         return response.data as IFoodTruckMenuItem[];
+    }
+
+    public readonly fetchTruckSchedule = async (foodTruckId: number) =>
+    {
+        const { getFoodTruckSchedule } = this.routes;
+        const response = await axios.get(getFoodTruckSchedule, { params: { foodTruckId } });
+        return response.data as IFoodTruckScheduleEntry[];
     }
 }

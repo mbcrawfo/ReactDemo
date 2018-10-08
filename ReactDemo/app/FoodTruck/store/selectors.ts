@@ -31,3 +31,15 @@ export const getSelectedTruckMenu = (state: RootState) =>
 
     return truckMenus[selectedTruckId] || null;
 };
+
+export const getSelectedTruckSchedule = (state: RootState) =>
+{
+    const { entities: { truckSchedules }, selectedTruckId } = state;
+
+    if (!selectedTruckId)
+    {
+        return null;
+    }
+
+    return truckSchedules[selectedTruckId] || null;
+};

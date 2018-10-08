@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import { getType, StateType } from 'typesafe-actions';
 
 import { IFetchTruckRequest } from '../api';
-import { IFoodTruck, IFoodTruckMenuItem } from '../models';
+import { IFoodTruck, IFoodTruckMenuItem, IFoodTruckScheduleEntry } from '../models';
 import { actions, RootAction } from './actions';
 
 interface IMap<T>
@@ -35,9 +35,27 @@ const truckMenus = (state: MenuItemMap = {}, action: RootAction) =>
     switch (action.type)
     {
         case getType(actions.fetchTruckMenu.success):
+            const { foodTruckId, items } = action.payload;
             return {
                 ...state,
-                [action.payload.foodTruckId]: action.payload.menuItems,
+                [foodTruckId]: items,
+            };
+
+        default:
+            return state;
+    }
+};
+
+type ScheduleMap = IMap<ReadonlyArray<IFoodTruckScheduleEntry>>;
+const truckSchedules = (state: ScheduleMap = {}, action: RootAction) =>
+{
+    switch (action.type)
+    {
+        case getType(actions.fetchTruckSchedule.success):
+            const { foodTruckId, items } = action.payload;
+            return {
+                ...state,
+                [foodTruckId]: items,
             };
 
         default:
@@ -61,7 +79,7 @@ const trucksLoading = (state = false, action: RootAction) =>
     }
 };
 
-const truckMenusLoading = (state = false, action: RootAction) =>
+const truckMenuLoading = (state = false, action: RootAction) =>
 {
     switch (action.type)
     {
@@ -70,6 +88,22 @@ const truckMenusLoading = (state = false, action: RootAction) =>
 
         case getType(actions.fetchTruckMenu.success):
         case getType(actions.fetchTruckMenu.failure):
+            return false;
+
+        default:
+            return state;
+    }
+};
+
+const truckScheduleLoading = (state = false, action: RootAction) =>
+{
+    switch (action.type)
+    {
+        case getType(actions.fetchTruckSchedule.request):
+            return true;
+
+        case getType(actions.fetchTruckSchedule.success):
+        case getType(actions.fetchTruckSchedule.failure):
             return false;
 
         default:
@@ -161,9 +195,11 @@ export const rootReducer = combineReducers({
     entities: combineReducers({
         trucks,
         truckMenus,
+        truckSchedules,
     }),
     trucksLoading,
-    truckMenusLoading,
+    truckMenuLoading,
+    truckScheduleLoading,
     truckRequestParams,
     truckPaging,
     selectedTruckId,

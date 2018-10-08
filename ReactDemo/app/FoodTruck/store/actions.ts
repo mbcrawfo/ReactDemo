@@ -3,12 +3,12 @@ import { AxiosError } from 'axios';
 import { ActionType, createAction, createAsyncAction } from 'typesafe-actions';
 
 import { IFetchTruckRequest, IPagedData } from '../api';
-import { IFoodTruck, IFoodTruckMenuItem } from '../models';
+import { IFoodTruck, IFoodTruckMenuItem, IFoodTruckScheduleEntry } from '../models';
 
-interface IFetchTruckMenuPayload
+interface ITruckPropertiesResult<T>
 {
     readonly foodTruckId: number;
-    readonly menuItems: ReadonlyArray<IFoodTruckMenuItem>;
+    readonly items: ReadonlyArray<T>;
 }
 
 export const actions =
@@ -23,7 +23,13 @@ export const actions =
         'fetchTruckMenu/request',
         'fetchTruckMenu/success',
         'fetchTruckMenu/failure'
-    )<number, IFetchTruckMenuPayload, AxiosError>(),
+    )<number, ITruckPropertiesResult<IFoodTruckMenuItem>, AxiosError>(),
+
+    fetchTruckSchedule: createAsyncAction(
+        'fetchTruckSchedule/request',
+        'fetchTruckSchedule/success',
+        'fetchTruckSchedule/failure'
+    )<number, ITruckPropertiesResult<IFoodTruckScheduleEntry>, AxiosError>(),
 
     selectTruck: createAction('selectTruck', resolve => {
         return (id: number | null) => resolve(id);

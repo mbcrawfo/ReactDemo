@@ -14,3 +14,12 @@ export interface IFoodTruckMenuItem
     readonly description: string;
     readonly price: number;
 }
+
+export interface IFoodTruckScheduleEntry
+{
+    readonly foodTruckId: number;
+    readonly locationName: string;
+    readonly address: string;
+    readonly start: string;
+    readonly end: string;
+}
