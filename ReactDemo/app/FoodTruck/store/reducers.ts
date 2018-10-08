@@ -1,5 +1,4 @@
 import SortDirection from '@app/SortDirection';
-import { head } from 'lodash';
 import { combineReducers } from 'redux';
 import { getType, StateType } from 'typesafe-actions';
 
@@ -152,15 +151,6 @@ const selectedTruckId = (state: number | null = null, action: RootAction) =>
     {
         case getType(actions.selectTruck):
             return action.payload;
-
-        // select first truck on page load
-        case getType(actions.fetchTrucks.success):
-            const { currentPage } = action.payload;
-            if (currentPage.length === 0)
-            {
-                return null;
-            }
-            return head(currentPage)!.id;
 
         default:
             return state;

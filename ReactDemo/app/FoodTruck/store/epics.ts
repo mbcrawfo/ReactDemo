@@ -1,6 +1,7 @@
+import { head } from 'lodash';
 import { combineEpics, Epic } from 'redux-observable';
-import { from } from 'rxjs';
-import { auditTime, catchError, filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { concat, from, of } from 'rxjs';
+import { auditTime, catchError, filter, map, mergeMap, switchMap, withLatestFrom } from 'rxjs/operators';
 import { isActionOf } from 'typesafe-actions';
 
 import { FoodTruckApi } from '../api';
@@ -20,7 +21,15 @@ const fetchTrucks: Epic<RootAction, RootAction, RootState, IEpicServices> = (act
         map(action => action.payload),
         switchMap(request =>
             from(api.fetchTrucks(request)).pipe(
-                map(actions.fetchTrucks.success),
+                mergeMap(response =>
+                {
+                    const { currentPage } = response;
+                    const firstTruckId = (head(currentPage) || { id: null }).id;
+                    return concat(
+                        of(actions.fetchTrucks.success(response)),
+                        of(actions.selectTruck(firstTruckId))
+                    );
+                }),
                 catchError(map(actions.fetchTrucks.failure))
             )
         )
