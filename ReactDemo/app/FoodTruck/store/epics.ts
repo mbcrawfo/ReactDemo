@@ -72,7 +72,7 @@ const fetchTruckSchedule: Epic<RootAction, RootAction, RootState, IEpicServices>
         )
     );
 
-const fetchTrucksOnRequestParamsChange: Epic<RootAction, RootAction, RootState> = (action$, state$) =>
+const fetchTrucksWhenParamsChange: Epic<RootAction, RootAction, RootState> = (action$, state$) =>
     action$.pipe(
         filter(isActionOf([
             actions.searchTrucks,
@@ -85,7 +85,7 @@ const fetchTrucksOnRequestParamsChange: Epic<RootAction, RootAction, RootState> 
         map(actions.fetchTrucks.request)
     );
 
-const fetchTruckDetailsIfNeeded: Epic<RootAction, RootAction, RootState> = (action$, state$) =>
+const fetchTruckDetailsWhenNeeded: Epic<RootAction, RootAction, RootState> = (action$, state$) =>
     action$.pipe(
         filter(isActionOf(actions.selectTruck)),
         filter(action => action.payload !== null),
@@ -107,22 +107,30 @@ const fetchTruckDetailsIfNeeded: Epic<RootAction, RootAction, RootState> = (acti
 
 const deleteTruckWhenConfirmed: Epic<RootAction, RootAction, RootState, IEpicServices> = (action$, state$, { api }) =>
     action$.pipe(
-        filter(isActionOf(actions.deleteTruck.request)),
+        filter(isActionOf(actions.deleteSelectedTruck.request)),
         switchMap(() =>
+            // subscribe to wait for the confirmation result
             action$.pipe(
-                filter(isActionOf(actions.deleteTruck.confirm)),
+                filter(isActionOf(actions.deleteSelectedTruck.confirm)),
+                // complete observable after confirmation
                 take(1),
                 withLatestFrom(state$),
                 map(([, state]) => state.selectedTruckId!),
-                mergeMap(truckId =>
-                    from(api.deleteTruck(truckId)).pipe(
-                        mapTo(actions.postDeleteTruck.success()),
-                        catchError(map(actions.postDeleteTruck.failure))
+                switchMap(truckId =>
+                    concat(
+                        // notify of the pending request
+                        of(actions.postDeleteTruck.request(truckId)),
+                        // make request
+                        from(api.deleteTruck(truckId)).pipe(
+                            mapTo(actions.postDeleteTruck.success()),
+                            catchError(error => of(actions.postDeleteTruck.failure(error)))
+                        )
                     )
                 ),
+                // complete observable on confirmation cancel
                 takeUntil(
                     action$.pipe(
-                        filter(isActionOf(actions.deleteTruck.cancel))
+                        filter(isActionOf(actions.deleteSelectedTruck.cancel))
                     )
                 )
             )
@@ -133,7 +141,7 @@ export const rootEpic = combineEpics(
     fetchTrucks,
     fetchTruckMenu,
     fetchTruckSchedule,
-    fetchTrucksOnRequestParamsChange,
-    fetchTruckDetailsIfNeeded,
+    fetchTrucksWhenParamsChange,
+    fetchTruckDetailsWhenNeeded,
     deleteTruckWhenConfirmed
 );

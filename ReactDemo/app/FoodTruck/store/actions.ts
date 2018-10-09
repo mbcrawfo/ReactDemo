@@ -31,28 +31,27 @@ export const actions =
         'fetchTruckSchedule/failure'
     )<number, ITruckPropertiesResult<IFoodTruckScheduleEntry>, AxiosError>(),
 
-    selectTruck: createAction('selectTruck', resolve => {
-        return (id: number | null) => resolve(id);
-    }),
+    selectTruck: createAction('selectTruck',
+        resolve => (id: number | null) => resolve(id)
+    ),
 
-    searchTrucks: createAction('searchTrucks', resolve => {
-        return (searchTerm: string) => resolve(searchTerm);
-    }),
+    searchTrucks: createAction('searchTrucks',
+        resolve => (searchTerm: string) => resolve(searchTerm)
+    ),
 
-    sortTrucks: createAction('sortTrucks', resolve => {
-        return (sortName: string, sortDirection: SortDirection) =>
-            resolve({ sortName, sortDirection });
-    }),
+    sortTrucks: createAction('sortTrucks',
+        resolve => (sortName: string, sortDirection: SortDirection) => resolve({ sortName, sortDirection })
+    ),
 
-    setTruckPage: createAction('setTruckPage', resolve => {
-        return (page: number) => resolve(page);
-    }),
+    setTruckPage: createAction('setTruckPage',
+        resolve => (page: number) => resolve(page)
+    ),
 
-    setTruckPageSize: createAction('setTruckPageSize', resolve => {
-        return (pageSize: number) => resolve(pageSize);
-    }),
+    setTruckPageSize: createAction('setTruckPageSize',
+        resolve => (pageSize: number) => resolve(pageSize)
+    ),
 
-    deleteTruck: {
+    deleteSelectedTruck: {
         request: createAction('deleteTruck/request'),
         confirm: createAction('deleteTruck/confirm'),
         cancel: createAction('deleteTruck/cancel'),

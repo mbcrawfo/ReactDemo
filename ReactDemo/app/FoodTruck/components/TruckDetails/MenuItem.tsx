@@ -21,7 +21,7 @@ const MenuItem = ({ menuItem: { name, description, price } }: IMenuItemProps) =>
 
     return (
         <ListGroupItem header={header}>
-            <p>{description}</p>
+            {description}
         </ListGroupItem>
     );
 };

@@ -8,6 +8,7 @@ export interface IFoodTruckApiRoutes
     readonly getFoodTrucks: string;
     readonly getFoodTruckMenu: string;
     readonly getFoodTruckSchedule: string;
+    readonly deleteFoodTruck: string;
 }
 
 export interface IFetchTruckRequest
@@ -55,6 +56,7 @@ export class FoodTruckApi
 
     public readonly deleteTruck = async (foodTruckId: number) =>
     {
-        await axios.post('', {});
+        const { deleteFoodTruck } = this.routes;
+        await axios.post(deleteFoodTruck, { foodTruckId });
     }
 }

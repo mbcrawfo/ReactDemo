@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using Newtonsoft.Json;
@@ -57,6 +58,12 @@ namespace ReactDemo.Controllers
         {
             var data = GetTruckData(page, pageSize, sortDirection, sortName, searchTerm);
             return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteTruck(int foodTruckId)
+        {
+            throw new NotImplementedException();
         }
 
         [HttpGet]

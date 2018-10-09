@@ -9,7 +9,7 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
-    onClick: actions.deleteTruck.request,
+    onClick: actions.deleteSelectedTruck.request,
 }, dispatch);
 
 const DeleteButtonContainer = connect(mapStateToProps, mapDispatchToProps)(Button);

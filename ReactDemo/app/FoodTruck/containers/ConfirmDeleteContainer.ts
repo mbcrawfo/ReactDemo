@@ -10,8 +10,8 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
-    confirm: actions.deleteTruck.confirm,
-    cancel: actions.deleteTruck.cancel,
+    confirm: actions.deleteSelectedTruck.confirm,
+    cancel: actions.deleteSelectedTruck.cancel,
 }, dispatch);
 
 const ConfirmDeleteContainer = connect(mapStateToProps, mapDispatchToProps)(ConfirmDelete);

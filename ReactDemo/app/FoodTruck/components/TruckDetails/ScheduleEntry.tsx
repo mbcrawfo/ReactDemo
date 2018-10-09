@@ -17,10 +17,8 @@ const ScheduleEntry = ({ entry: { locationName, address, start, end } }: ISchedu
 
     return (
         <ListGroupItem header={header}>
-            <p>
-                <strong>{locationName}</strong><br />
-                {address}
-            </p>
+            <strong>{locationName}</strong><br />
+            {address}
         </ListGroupItem>
     );
 };

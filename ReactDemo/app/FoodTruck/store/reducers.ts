@@ -195,11 +195,11 @@ const showConfirmDelete = (state = false, action: RootAction) =>
 {
     switch (action.type)
     {
-        case getType(actions.deleteTruck.request):
+        case getType(actions.deleteSelectedTruck.request):
             return true;
 
-        case getType(actions.deleteTruck.confirm):
-        case getType(actions.deleteTruck.cancel):
+        case getType(actions.deleteSelectedTruck.confirm):
+        case getType(actions.deleteSelectedTruck.cancel):
             return false;
 
         default:
