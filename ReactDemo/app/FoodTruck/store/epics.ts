@@ -86,7 +86,7 @@ const triggerFetchTrucks: Epic<RootAction, RootAction, RootState> = (action$, st
         map(actions.fetchTrucks.request)
     );
 
-const triggerFetchTruckDetailsWhenSelected: Epic<RootAction, RootAction, RootState> = (action$, state$) =>
+const triggerTruckDetailsFetch: Epic<RootAction, RootAction, RootState> = (action$, state$) =>
     action$.pipe(
         filter(isActionOf(actions.selectTruck)),
         filter(action => action.payload !== null),
@@ -106,10 +106,10 @@ const triggerFetchTruckDetailsWhenSelected: Epic<RootAction, RootAction, RootSta
         )
     );
 
-const deleteTruckWhenConfirmed: Epic<RootAction, RootAction, RootState, IEpicServices> = (action$, state$, { api }) =>
+const confirmAndDeleteTruck: Epic<RootAction, RootAction, RootState, IEpicServices> = (action$, state$, { api }) =>
     action$.pipe(
         filter(isActionOf(actions.deleteTruck.initiate)),
-        switchMap(({ payload: initialTruckId }) =>
+        mergeMap(({ payload: initialTruckId }) =>
             // subscribe to wait for the confirmation result
             action$.pipe(
                 filter(isActionOf(actions.deleteTruck.confirm)),
@@ -145,6 +145,6 @@ export const rootEpic = combineEpics(
     fetchTruckMenu,
     fetchTruckSchedule,
     triggerFetchTrucks,
-    triggerFetchTruckDetailsWhenSelected,
-    deleteTruckWhenConfirmed
+    triggerTruckDetailsFetch,
+    confirmAndDeleteTruck
 );

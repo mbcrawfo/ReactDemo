@@ -21,10 +21,14 @@ const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
     cancel: actions.deleteTruck.cancel,
 }, dispatch);
 
-type SP = ReturnType<typeof mapStateToProps>;
-type DP = ReturnType<typeof mapDispatchToProps>;
-const mergeProps = ({ selectedTruckId, ...stateProps }: SP, { confirm, cancel }: DP, ownProps: any) => ({
+const mergeProps = (
+    { selectedTruckId, ...stateProps }: ReturnType<typeof mapStateToProps>,
+    { confirm, cancel, ...dispatchProps }: ReturnType<typeof mapDispatchToProps>,
+    ownProps: any
+) =>
+({
     ...ownProps,
+    ...dispatchProps,
     confirm: () => selectedTruckId && confirm(selectedTruckId),
     cancel: () => selectedTruckId && cancel(selectedTruckId),
     ...stateProps,

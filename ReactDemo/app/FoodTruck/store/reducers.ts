@@ -17,8 +17,9 @@ const trucks = (state: TruckMap = {}, action: RootAction) =>
     switch (action.type)
     {
         case getType(actions.fetchTrucks.success):
+            const { payload: { currentPage } } = action;
             // replace the existing map, since we never need trucks that aren't on the current page
-            return action.payload.currentPage.reduce((map, truck) =>
+            return currentPage.reduce((map, truck) =>
                 {
                     map[truck.id] = truck;
                     return map;
@@ -43,7 +44,7 @@ const truckMenus = (state: MenuItemMap = {}, action: RootAction) =>
 
         case getType(actions.deleteTruck.commit.success):
             const { payload: truckId } = action;
-            const { [truckId]: deleted, ...rest } = state;
+            const { [truckId]: removedMenu, ...rest } = state;
             return {
                 ...rest,
             };
@@ -67,7 +68,7 @@ const truckSchedules = (state: ScheduleMap = {}, action: RootAction) =>
 
         case getType(actions.deleteTruck.commit.success):
             const { payload: truckId } = action;
-            const { [truckId]: deleted, ...rest } = state;
+            const { [truckId]: removedSchedule, ...rest } = state;
             return {
                 ...rest,
             };
@@ -125,7 +126,8 @@ const truckScheduleLoading = (state = false, action: RootAction) =>
     }
 };
 
-const defaultRequest: IFetchTruckRequest = {
+const defaultRequest: IFetchTruckRequest =
+{
     searchTerm: '',
     sortDirection: SortDirection.Asc,
     sortName: 'name',

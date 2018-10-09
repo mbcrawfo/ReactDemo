@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 
-interface IConfirmDeleteProps
+export interface IConfirmDeleteProps
 {
     readonly show: boolean;
     readonly truckName: string;

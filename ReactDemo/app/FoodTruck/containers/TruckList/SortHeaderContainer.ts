@@ -1,7 +1,7 @@
 import { SortHeader } from '@app/components/SortHeader';
 import { SortDirection } from '@app/SortDirection';
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { bindActionCreators, Dispatch } from 'redux';
 
 import { actions, RootState } from '../../store';
 
@@ -10,18 +10,39 @@ interface IOwnProps
     readonly sortName: string;
 }
 
-const mapStateToProps = (state: RootState, { sortName }: IOwnProps) => ({
-    sort: state.truckRequestParams.sortName === sortName
-        ? state.truckRequestParams.sortDirection
-        : null,
-});
+const getSortDirection = (state: RootState, componentSortName: string) =>
+{
+    const { truckRequestParams: { sortDirection, sortName } } = state;
 
-const mapDispatchToProps = (dispatch: Dispatch, { sortName }: IOwnProps) => ({
-    setSort: (sortDirection: SortDirection) =>
+    if (sortName !== componentSortName)
     {
-        dispatch(actions.sortTrucks(sortName, sortDirection));
-    },
+        return null;
+    }
+
+    return sortDirection;
+};
+
+const mapStateToProps = (state: RootState, { sortName }: IOwnProps) => ({
+    sort: getSortDirection(state, sortName),
 });
 
-const SortHeaderContainer = connect(mapStateToProps, mapDispatchToProps)(SortHeader);
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
+    setSort: actions.sortTrucks,
+}, dispatch);
+
+const mergeProps = (
+    { sort, ...stateProps }: ReturnType<typeof mapStateToProps>,
+    { setSort, ...dispatchProps }: ReturnType<typeof mapDispatchToProps>,
+    { sortName, ...ownProps }: IOwnProps
+) =>
+({
+    ...ownProps,
+    sortName,
+    ...dispatchProps,
+    setSort: (sortDirection: SortDirection) => setSort(sortName, sortDirection),
+    sort,
+    ...stateProps,
+});
+
+const SortHeaderContainer = connect(mapStateToProps, mapDispatchToProps, mergeProps)(SortHeader);
 export { SortHeaderContainer };
