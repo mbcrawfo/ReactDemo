@@ -79,9 +79,15 @@ namespace ReactDemo.Controllers
         [HttpGet]
         public ActionResult GetMenu(int foodTruckId)
         {
-            if (!FoodTruckMenuItems.TryGetValue(foodTruckId, out var menu))
+            var index = FoodTrucks.FindIndex(t => t.Id == foodTruckId);
+            if (index == -1)
             {
                 return HttpNotFound();
+            }
+
+            if (!FoodTruckMenuItems.TryGetValue(foodTruckId, out var menu))
+            {
+                menu = new List<FoodTruckMenuItem>();
             }
 
             return Json(menu, JsonRequestBehavior.AllowGet);
@@ -90,9 +96,15 @@ namespace ReactDemo.Controllers
         [HttpGet]
         public ActionResult GetSchedule(int foodTruckId)
         {
-            if (!FoodTruckSchedules.TryGetValue(foodTruckId, out var schedule))
+            var index = FoodTrucks.FindIndex(t => t.Id == foodTruckId);
+            if (index == -1)
             {
                 return HttpNotFound();
+            }
+
+            if (!FoodTruckSchedules.TryGetValue(foodTruckId, out var schedule))
+            {
+                schedule = new List<FoodTruckScheduleEntry>();
             }
 
             return Json(schedule, JsonRequestBehavior.AllowGet);
