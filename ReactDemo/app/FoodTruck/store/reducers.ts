@@ -41,6 +41,13 @@ const truckMenus = (state: MenuItemMap = {}, action: RootAction) =>
                 [foodTruckId]: items,
             };
 
+        case getType(actions.deleteTruck.commit.success):
+            const { payload: truckId } = action;
+            const { [truckId]: deleted, ...rest } = state;
+            return {
+                ...rest,
+            };
+
         default:
             return state;
     }
@@ -56,6 +63,13 @@ const truckSchedules = (state: ScheduleMap = {}, action: RootAction) =>
             return {
                 ...state,
                 [foodTruckId]: items,
+            };
+
+        case getType(actions.deleteTruck.commit.success):
+            const { payload: truckId } = action;
+            const { [truckId]: deleted, ...rest } = state;
+            return {
+                ...rest,
             };
 
         default:
@@ -186,6 +200,9 @@ const selectedTruckId = (state: number | null = null, action: RootAction) =>
         case getType(actions.selectTruck):
             return action.payload;
 
+        case getType(actions.deleteTruck.commit.success):
+            return null;
+
         default:
             return state;
     }
@@ -195,11 +212,11 @@ const showConfirmDelete = (state = false, action: RootAction) =>
 {
     switch (action.type)
     {
-        case getType(actions.deleteSelectedTruck.request):
+        case getType(actions.deleteTruck.initiate):
             return true;
 
-        case getType(actions.deleteSelectedTruck.confirm):
-        case getType(actions.deleteSelectedTruck.cancel):
+        case getType(actions.deleteTruck.confirm):
+        case getType(actions.deleteTruck.cancel):
             return false;
 
         default:

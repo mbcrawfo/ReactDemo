@@ -63,7 +63,17 @@ namespace ReactDemo.Controllers
         [HttpPost]
         public ActionResult DeleteTruck(int foodTruckId)
         {
-            throw new NotImplementedException();
+            var index = FoodTrucks.FindIndex(t => t.Id == foodTruckId);
+            if (index == -1)
+            {
+                return HttpNotFound();
+            }
+
+            FoodTrucks.RemoveAt(index);
+            FoodTruckMenuItems.Remove(foodTruckId);
+            FoodTruckSchedules.Remove(foodTruckId);
+
+            return new EmptyResult();
         }
 
         [HttpGet]

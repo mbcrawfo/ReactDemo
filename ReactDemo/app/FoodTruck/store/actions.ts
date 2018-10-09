@@ -51,17 +51,24 @@ export const actions =
         resolve => (pageSize: number) => resolve(pageSize)
     ),
 
-    deleteSelectedTruck: {
-        request: createAction('deleteTruck/request'),
-        confirm: createAction('deleteTruck/confirm'),
-        cancel: createAction('deleteTruck/cancel'),
-    },
+    deleteTruck:
+    {
+        initiate: createAction('deleteTruck/initiate',
+            resolve => (truckId: number) => resolve(truckId)
+        ),
+        confirm: createAction('deleteTruck/confirm',
+            resolve => (truckId: number) => resolve(truckId)
+        ),
+        cancel: createAction('deleteTruck/cancel',
+            resolve => (truckId: number) => resolve(truckId)
+        ),
 
-    postDeleteTruck: createAsyncAction(
-        'postDeleteTruck/request',
-        'postDeleteTruck/success',
-        'postDeleteTruck/error'
-    )<number, void, AxiosError>(),
+        commit: createAsyncAction(
+            'deleteTruck/commit/request',
+            'deleteTruck/commit/success',
+            'deleteTruck/commit/error'
+        )<number, number, AxiosError>(),
+    },
 };
 
 export type RootAction = ActionType<typeof actions>;

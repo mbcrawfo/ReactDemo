@@ -6,11 +6,20 @@ import { actions, RootState } from '../store';
 
 const mapStateToProps = (state: RootState) => ({
     disabled: state.selectedTruckId === null,
+    selectedTruckId: state.selectedTruckId,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
-    onClick: actions.deleteSelectedTruck.request,
+    initiate: actions.deleteTruck.initiate,
 }, dispatch);
 
-const DeleteButtonContainer = connect(mapStateToProps, mapDispatchToProps)(Button);
+type SP = ReturnType<typeof mapStateToProps>;
+type DP = ReturnType<typeof mapDispatchToProps>;
+const mergeProps = ({ selectedTruckId, ...stateProps }: SP, { initiate }: DP, ownProps: any) => ({
+    ...ownProps,
+    onClick: () => selectedTruckId && initiate(selectedTruckId),
+    ...stateProps,
+});
+
+const DeleteButtonContainer = connect(mapStateToProps, mapDispatchToProps, mergeProps)(Button);
 export { DeleteButtonContainer };
