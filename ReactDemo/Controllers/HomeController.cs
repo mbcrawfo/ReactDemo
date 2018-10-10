@@ -32,6 +32,11 @@ namespace ReactDemo.Controllers
             return View();
         }
 
+        public ActionResult Redux()
+        {
+            return View();
+        }
+
         public ActionResult Todo()
         {
             return View();

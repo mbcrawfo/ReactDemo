@@ -5,5 +5,19 @@
         "**/node_modules": true,
         "**/obj": true
     },
-    "typescript.tsdk": "node_modules\\typescript\\lib"
+    "typescript.tsdk": "node_modules\\typescript\\lib",
+    "files.trimTrailingWhitespace": true,
+    "typescript.preferences.quoteStyle": "single",
+    "javascript.preferences.quoteStyle": "single",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "typescriptHero.imports.multiLineWrapThreshold": 120,
+    "typescriptHero.imports.organizeOnSave": true,
+    "javascript.preferences.importModuleSpecifier": "relative",
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "todo-tree.globs": [
+        "!**/bin",
+        "!**/dist",
+        "!**/node_modules",
+        "!**/obj",
+    ]
 }

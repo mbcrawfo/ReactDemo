@@ -1,7 +1,7 @@
 import React from 'react';
 
 // The most basic React component is a function that returns elements to display.
-// This is called a stateless functional component.  It can optionally take parameters
+// This is called a Stateless Functional Component.  It can optionally take parameters
 // via a props (properties) object.  SFC's should always be the first choice for structuring
 // a component.
 export const BasicComponent = () => <p>I'm a component.</p>;

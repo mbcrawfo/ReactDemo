@@ -232,6 +232,7 @@
     <Content Include="Views\Home\Lorem.cshtml" />
     <Content Include="Views\Home\Todo.cshtml" />
     <Content Include="Views\FoodTrucks\Index.cshtml" />
+    <Content Include="Views\Home\Redux.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
