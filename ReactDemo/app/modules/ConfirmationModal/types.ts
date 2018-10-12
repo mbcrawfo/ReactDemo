@@ -2,7 +2,7 @@ import { AnyAction } from 'redux';
 
 import { ConfirmationModalState } from './reducers';
 
-export interface IConfimationModalData
+export interface IConfirmationModalData
 {
     readonly title: string;
     readonly text: string;
@@ -12,7 +12,7 @@ export interface IConfimationModalData
     readonly cancelButtonText?: string;
 }
 
-export const DefaultConfirmationModalData: IConfimationModalData =
+export const DefaultConfirmationModalData: IConfirmationModalData =
 {
     title: '',
     text: '',

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { DefaultConfirmationModalData, IConfimationModalData } from '../../modules/ConfirmationModal';
+import { DefaultConfirmationModalData, IConfirmationModalData } from '../../modules/ConfirmationModal';
 import { actions } from './actions';
 import { RootState } from './reducers';
 
@@ -48,7 +48,7 @@ export const getSelectedTruckSchedule = (state: RootState) =>
 
 export const getConfirmationModalState = (state: RootState) => state.confirmationModal;
 
-export const getDeleteConfirmationModalData = (state: RootState): IConfimationModalData =>
+export const getDeleteConfirmationModalData = (state: RootState): IConfirmationModalData =>
 {
     const truck = getSelectedTruck(state);
     if (!truck)

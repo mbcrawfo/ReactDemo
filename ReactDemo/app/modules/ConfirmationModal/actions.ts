@@ -1,12 +1,12 @@
 import { AnyAction } from 'redux';
 import { ActionType, createAction } from 'typesafe-actions';
 
-import { IConfimationModalData } from './types';
+import { IConfirmationModalData } from './types';
 
 export const confirmationModalActions =
 {
     show: createAction('confirmationModal/show',
-        resolve => (data: IConfimationModalData) => resolve(data)
+        resolve => (data: IConfirmationModalData) => resolve(data)
     ),
 
     accept: createAction('confirmationModal/accept',
