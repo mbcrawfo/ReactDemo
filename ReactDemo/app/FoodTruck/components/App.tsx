@@ -4,7 +4,7 @@ import React from 'react';
 import { Button, ButtonToolbar, Col, Grid, Row } from 'react-bootstrap';
 
 import { DeleteButtonContainer } from '../containers/DeleteButtonContainer';
-import { ConfirmationModalContainer } from '../containers/reusable';
+import { ConfirmationModalContainer } from '../containers/modules';
 import { TruckDetails } from './TruckDetails';
 import { TruckList } from './TruckList';
 

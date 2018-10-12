@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { DefaultConfirmationModalData, IConfimationModalData } from '../../reusable-containers/ConfirmationModal';
+import { DefaultConfirmationModalData, IConfimationModalData } from '../../modules/ConfirmationModal';
 import { actions } from './actions';
 import { RootState } from './reducers';
 

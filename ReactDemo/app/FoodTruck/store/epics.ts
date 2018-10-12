@@ -16,7 +16,7 @@ import {
 } from 'rxjs/operators';
 import { isActionOf } from 'typesafe-actions';
 
-import { confirmationModalActions, makeConfirmationModalEpics } from '../../reusable-containers/ConfirmationModal';
+import { confirmationModalActions, makeConfirmationModalEpics } from '../../modules/ConfirmationModal';
 import { FoodTruckApi } from '../api';
 import { actions, RootAction } from './actions';
 import { RootState } from './reducers';

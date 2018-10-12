@@ -2,7 +2,7 @@ import SortDirection from '@app/SortDirection';
 import { combineReducers } from 'redux';
 import { getType, StateType } from 'typesafe-actions';
 
-import { confirmationModalReducer } from '../../reusable-containers/ConfirmationModal';
+import { confirmationModalReducer } from '../../modules/ConfirmationModal';
 import { IFetchTruckRequest } from '../api';
 import { IFoodTruck, IFoodTruckMenuItem, IFoodTruckScheduleEntry } from '../models';
 import { actions, RootAction } from './actions';

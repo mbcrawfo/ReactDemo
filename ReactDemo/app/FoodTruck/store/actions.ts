@@ -2,7 +2,7 @@ import SortDirection from '@app/SortDirection';
 import { AxiosError } from 'axios';
 import { ActionType, createAction, createAsyncAction } from 'typesafe-actions';
 
-import { ConfirmationModalAction } from '../../reusable-containers/ConfirmationModal';
+import { ConfirmationModalAction } from '../../modules/ConfirmationModal';
 import { IFetchTruckRequest, IPagedData } from '../api';
 import { IFoodTruck, IFoodTruckMenuItem, IFoodTruckScheduleEntry } from '../models';
 
