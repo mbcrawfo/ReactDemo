@@ -3,8 +3,8 @@ import '@bootstrap-css';
 import React from 'react';
 import { Button, ButtonToolbar, Col, Grid, Row } from 'react-bootstrap';
 
-import { ConfirmDeleteContainer } from '../containers/ConfirmDeleteContainer';
 import { DeleteButtonContainer } from '../containers/DeleteButtonContainer';
+import { ConfirmationModalContainer } from '../containers/reusable';
 import { TruckDetails } from './TruckDetails';
 import { TruckList } from './TruckList';
 
@@ -35,7 +35,7 @@ const App = () => (
                 </Col>
             </Row>
         </Grid>
-        <ConfirmDeleteContainer />
+        <ConfirmationModalContainer />
     </div>
 );
 

@@ -2,6 +2,7 @@ import SortDirection from '@app/SortDirection';
 import { combineReducers } from 'redux';
 import { getType, StateType } from 'typesafe-actions';
 
+import { confirmationModalReducer } from '../../reusable-containers/ConfirmationModal';
 import { IFetchTruckRequest } from '../api';
 import { IFoodTruck, IFoodTruckMenuItem, IFoodTruckScheduleEntry } from '../models';
 import { actions, RootAction } from './actions';
@@ -210,22 +211,6 @@ const selectedTruckId = (state: number | null = null, action: RootAction) =>
     }
 };
 
-const showConfirmDelete = (state = false, action: RootAction) =>
-{
-    switch (action.type)
-    {
-        case getType(actions.deleteTruck.initiate):
-            return true;
-
-        case getType(actions.deleteTruck.confirm):
-        case getType(actions.deleteTruck.cancel):
-            return false;
-
-        default:
-            return state;
-    }
-};
-
 export const rootReducer = combineReducers({
     entities: combineReducers({
         trucks,
@@ -238,7 +223,7 @@ export const rootReducer = combineReducers({
     truckRequestParams,
     truckPaging,
     selectedTruckId,
-    showConfirmDelete,
+    confirmationModal: confirmationModalReducer,
 });
 
 export type RootState = StateType<typeof rootReducer>;

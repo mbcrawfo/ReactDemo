@@ -8,6 +8,7 @@ import {
     map,
     mapTo,
     mergeMap,
+    startWith,
     switchMap,
     take,
     takeUntil,
@@ -15,10 +16,16 @@ import {
 } from 'rxjs/operators';
 import { isActionOf } from 'typesafe-actions';
 
+import { confirmationModalActions, makeConfirmationModalEpics } from '../../reusable-containers/ConfirmationModal';
 import { FoodTruckApi } from '../api';
 import { actions, RootAction } from './actions';
 import { RootState } from './reducers';
-import { getSelectedTruckMenu, getSelectedTruckSchedule } from './selectors';
+import {
+    getConfirmationModalState,
+    getDeleteConfirmationModalData,
+    getSelectedTruckMenu,
+    getSelectedTruckSchedule,
+} from './selectors';
 
 export interface IEpicServices
 {
@@ -106,19 +113,23 @@ const triggerTruckDetailsFetch: Epic<RootAction, RootAction, RootState> = (actio
         )
     );
 
-const confirmAndDeleteTruck: Epic<RootAction, RootAction, RootState, IEpicServices> = (action$, state$, { api }) =>
+const deleteTruckWhenConfirmed: Epic<RootAction, RootAction, RootState, IEpicServices> = (action$, state$, { api }) =>
     action$.pipe(
-        filter(isActionOf(actions.deleteTruck.initiate)),
-        mergeMap(({ payload: initialTruckId }) =>
+        filter(isActionOf(actions.deleteTruck.begin)),
+        withLatestFrom(state$),
+        map(([action, state]) => ({
+            truckId: action.payload,
+            modalData: getDeleteConfirmationModalData(state),
+        })),
+        mergeMap(({ truckId, modalData }) =>
             // subscribe to wait for the confirmation result
             action$.pipe(
                 filter(isActionOf(actions.deleteTruck.confirm)),
-                map(({ payload }) => payload),
                 // possibly redundant sanity checking?
-                filter(truckId => truckId === initialTruckId),
+                filter(action => action.payload === truckId),
                 // complete observable after confirmation
                 take(1),
-                switchMap(truckId =>
+                switchMap(() =>
                     concat(
                         // notify of the pending request
                         of(actions.deleteTruck.commit.request(truckId)),
@@ -133,9 +144,11 @@ const confirmAndDeleteTruck: Epic<RootAction, RootAction, RootState, IEpicServic
                 takeUntil(
                     action$.pipe(
                         filter(isActionOf(actions.deleteTruck.cancel)),
-                        filter(({ payload }) => payload === initialTruckId)
+                        filter(action => action.payload === truckId)
                     )
-                )
+                ),
+                // trigger the modal
+                startWith(confirmationModalActions.show(modalData))
             )
         )
     );
@@ -146,5 +159,6 @@ export const rootEpic = combineEpics(
     fetchTruckSchedule,
     triggerFetchTrucks,
     triggerTruckDetailsFetch,
-    confirmAndDeleteTruck
+    deleteTruckWhenConfirmed,
+    ...makeConfirmationModalEpics(getConfirmationModalState)
 );

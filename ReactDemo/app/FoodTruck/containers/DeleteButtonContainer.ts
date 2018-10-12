@@ -4,20 +4,23 @@ import { bindActionCreators, Dispatch } from 'redux';
 
 import { actions, RootState } from '../store';
 
-const mapStateToProps = (state: RootState) => ({
-    disabled: state.selectedTruckId === null,
-    selectedTruckId: state.selectedTruckId,
+const mapStateToProps = ({ selectedTruckId }: RootState) => ({
+    disabled: selectedTruckId === null,
+    selectedTruckId,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
-    initiate: actions.deleteTruck.initiate,
+    begin: actions.deleteTruck.begin,
 }, dispatch);
 
-type SP = ReturnType<typeof mapStateToProps>;
-type DP = ReturnType<typeof mapDispatchToProps>;
-const mergeProps = ({ selectedTruckId, ...stateProps }: SP, { initiate }: DP, ownProps: any) => ({
+const mergeProps = (
+    { selectedTruckId, ...stateProps }: ReturnType<typeof mapStateToProps>,
+    { begin }: ReturnType<typeof mapDispatchToProps>,
+    ownProps: any
+) =>
+({
     ...ownProps,
-    onClick: () => selectedTruckId && initiate(selectedTruckId),
+    onClick: () => selectedTruckId && begin(selectedTruckId),
     ...stateProps,
 });
 

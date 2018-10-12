@@ -2,6 +2,7 @@ import SortDirection from '@app/SortDirection';
 import { AxiosError } from 'axios';
 import { ActionType, createAction, createAsyncAction } from 'typesafe-actions';
 
+import { ConfirmationModalAction } from '../../reusable-containers/ConfirmationModal';
 import { IFetchTruckRequest, IPagedData } from '../api';
 import { IFoodTruck, IFoodTruckMenuItem, IFoodTruckScheduleEntry } from '../models';
 
@@ -53,12 +54,13 @@ export const actions =
 
     deleteTruck:
     {
-        initiate: createAction('deleteTruck/initiate',
-            resolve => (truckId: number) => resolve(truckId)
-        ),
+        begin: createAction('deleteTruck/begin',
+            resolve => (truckId: number) => resolve(truckId)),
+
         confirm: createAction('deleteTruck/confirm',
             resolve => (truckId: number) => resolve(truckId)
         ),
+
         cancel: createAction('deleteTruck/cancel',
             resolve => (truckId: number) => resolve(truckId)
         ),
@@ -71,4 +73,4 @@ export const actions =
     },
 };
 
-export type RootAction = ActionType<typeof actions>;
+export type RootAction = ActionType<typeof actions> | ConfirmationModalAction;

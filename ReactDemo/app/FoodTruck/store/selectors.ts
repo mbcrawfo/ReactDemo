@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect';
 
+import { DefaultConfirmationModalData, IConfimationModalData } from '../../reusable-containers/ConfirmationModal';
+import { actions } from './actions';
 import { RootState } from './reducers';
 
 export const getSortedVisibleTrucks = createSelector(
@@ -42,4 +44,24 @@ export const getSelectedTruckSchedule = (state: RootState) =>
     }
 
     return truckSchedules[selectedTruckId] || null;
+};
+
+export const getConfirmationModalState = (state: RootState) => state.confirmationModal;
+
+export const getDeleteConfirmationModalData = (state: RootState): IConfimationModalData =>
+{
+    const truck = getSelectedTruck(state);
+    if (!truck)
+    {
+        return DefaultConfirmationModalData;
+    }
+
+    const { id, name } = truck;
+
+    return {
+        title: 'Delete Food Truck?',
+        text: `Are you sure you want to delete '${name}'?`,
+        acceptAction: actions.deleteTruck.confirm(id),
+        cancelAction: actions.deleteTruck.cancel(id),
+    };
 };

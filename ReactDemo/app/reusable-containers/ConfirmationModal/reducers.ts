@@ -2,13 +2,13 @@ import { combineReducers } from 'redux';
 import { getType, StateType } from 'typesafe-actions';
 
 import { ConfirmationModalAction, confirmationModalActions } from './actions';
-import { IConfimationModalData } from './types';
+import { DefaultConfirmationModalData } from './types';
 
-const showModal = (state = false, action: ConfirmationModalAction) =>
+const show = (state = false, action: ConfirmationModalAction) =>
 {
     switch (action.type)
     {
-        case getType(confirmationModalActions.initiate):
+        case getType(confirmationModalActions.show):
             return true;
 
         case getType(confirmationModalActions.accept):
@@ -26,7 +26,7 @@ const confirmationId = (state = 0, action: ConfirmationModalAction) =>
 {
     switch (action.type)
     {
-        case getType(confirmationModalActions.initiate):
+        case getType(confirmationModalActions.show):
             return nextId++;
 
         case getType(confirmationModalActions.accept):
@@ -38,23 +38,16 @@ const confirmationId = (state = 0, action: ConfirmationModalAction) =>
     }
 };
 
-const defaultData: IConfimationModalData =
-{
-    title: '',
-    text: '',
-    acceptAction: { type: '' },
-    cancelAction: { type: '' },
-};
-const data = (state = defaultData, action: ConfirmationModalAction) =>
+const data = (state = DefaultConfirmationModalData, action: ConfirmationModalAction) =>
 {
     switch (action.type)
     {
-        case getType(confirmationModalActions.initiate):
+        case getType(confirmationModalActions.show):
             return action.payload;
 
         case getType(confirmationModalActions.accept):
         case getType(confirmationModalActions.cancel):
-            return defaultData;
+            return DefaultConfirmationModalData;
 
         default:
             return state;
@@ -62,7 +55,7 @@ const data = (state = defaultData, action: ConfirmationModalAction) =>
 };
 
 export const confirmationModalReducer = combineReducers({
-    showModal,
+    show,
     confirmationId,
     data,
 });

@@ -6,8 +6,8 @@ import { confirmationModalActions } from './actions';
 import { ConfirmationModalState } from './reducers';
 import { StateSelector } from './types';
 
-const mapStateToProps = ({ showModal, confirmationId, data }: ConfirmationModalState) => ({
-    show: showModal,
+const mapStateToProps = ({ show, confirmationId, data }: ConfirmationModalState) => ({
+    show,
     confirmationId,
     ...data,
 });
@@ -18,19 +18,19 @@ const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
 }, dispatch);
 
 const mergeProps = (
-    { confirmationId, ...stateProps }: ReturnType<typeof mapStateToProps>,
+    { confirmationId, acceptAction, cancelAction, ...stateProps }: ReturnType<typeof mapStateToProps>,
     { onAccept, onCancel, ...dispatchProps }: ReturnType<typeof mapDispatchToProps>,
     ownProps: any
 ) =>
 ({
     ...ownProps,
     ...dispatchProps,
-    onAccept: () => onAccept(confirmationId),
-    onCancel: () => onCancel(confirmationId),
+    onAccept: () => onAccept(confirmationId, acceptAction),
+    onCancel: () => onCancel(confirmationId, cancelAction),
     ...stateProps,
 });
 
-export const makeConfirmationModalContainer = <TRootState>(stateSelector: StateSelector) =>
+export const makeConfirmationModalContainer = <TRootState>(stateSelector: StateSelector<TRootState>) =>
 {
     const wrappedMapStateToProps = (state: TRootState) => mapStateToProps(stateSelector(state));
     return connect(wrappedMapStateToProps, mapDispatchToProps, mergeProps)(ConfirmationModal);

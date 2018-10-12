@@ -12,4 +12,12 @@ export interface IConfimationModalData
     readonly cancelButtonText?: string;
 }
 
-export type StateSelector = <TRootState>(state: TRootState) => ConfirmationModalState;
+export const DefaultConfirmationModalData: IConfimationModalData =
+{
+    title: '',
+    text: '',
+    acceptAction: { type: '' },
+    cancelAction: { type: '' },
+};
+
+export type StateSelector<TRootState> = (state: TRootState) => ConfirmationModalState;

@@ -1,64 +1,62 @@
 import { AnyAction } from 'redux';
 import { Epic } from 'redux-observable';
-import { concat } from 'rxjs';
+import { merge } from 'rxjs';
 import { filter, map, mergeMap, take, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { isActionOf } from 'typesafe-actions';
 
 import { confirmationModalActions } from './actions';
 import { StateSelector } from './types';
 
-const emitAcceptAction = <TRootState>(
-    stateSelector: StateSelector,
-    confirmationId: number
-): Epic<AnyAction, AnyAction, TRootState> =>
-    (action$, state$) =>
+const emitAcceptAction = (targetId: number): Epic<AnyAction, AnyAction> =>
+    (action$) =>
         action$.pipe(
             filter(isActionOf(confirmationModalActions.accept)),
-            filter(action => action.payload === confirmationId),
+            map(action => action.payload),
+            filter(({ confirmationId }) => confirmationId === targetId),
             take(1),
-            withLatestFrom(state$),
-            map(([, state]) => stateSelector(state).data.acceptAction),
+            map(({ resultAction }) => resultAction),
             takeUntil(
                 action$.pipe(
                     filter(isActionOf(confirmationModalActions.cancel)),
-                    filter(action => action.payload === confirmationId)
+                    map(action => action.payload.confirmationId),
+                    filter(confirmationId => confirmationId === targetId)
                 )
             )
         );
 
-const emitCancelAction = <TRootState>(
-    stateSelector: StateSelector,
-    confirmationId: number
-): Epic<AnyAction, AnyAction, TRootState> =>
-    (action$, state$) =>
+const emitCancelAction = (targetId: number): Epic<AnyAction, AnyAction> =>
+    action$ =>
         action$.pipe(
             filter(isActionOf(confirmationModalActions.cancel)),
-            filter(action => action.payload === confirmationId),
+            map(action => action.payload),
+            filter(({ confirmationId }) => confirmationId === targetId),
             take(1),
-            withLatestFrom(state$),
-            map(([, state]) => stateSelector(state).data.cancelAction),
+            map(({ resultAction }) => resultAction),
             takeUntil(
                 action$.pipe(
                     filter(isActionOf(confirmationModalActions.accept)),
-                    filter(action => action.payload === confirmationId)
+                    map(action => action.payload.confirmationId),
+                    filter(confirmationId => confirmationId === targetId)
                 )
             )
         );
 
-const emitActionsOnModalComplete = <TRootState>(stateSelector: StateSelector): Epic<AnyAction, AnyAction, TRootState> =>
+const emitActionsOnModalComplete = <TRootState>(
+    stateSelector: StateSelector<TRootState>
+): Epic<AnyAction, AnyAction, TRootState> =>
     (action$, state$) =>
         action$.pipe(
-            filter(isActionOf(confirmationModalActions.initiate)),
+            filter(isActionOf(confirmationModalActions.show)),
             withLatestFrom(state$),
             map(([, state]) => stateSelector(state).confirmationId),
             mergeMap(confirmationId =>
-                concat(
-                    emitAcceptAction<TRootState>(stateSelector, confirmationId)(action$, state$, undefined),
-                    emitCancelAction<TRootState>(stateSelector, confirmationId)(action$, state$, undefined)
+                merge(
+                    emitAcceptAction(confirmationId)(action$, state$, undefined),
+                    emitCancelAction(confirmationId)(action$, state$, undefined)
                 )
             )
         );
 
-export const makeConfirmationModalEpics = (stateSelector: StateSelector) => [
+export const makeConfirmationModalEpics = <TRootState>(stateSelector: StateSelector<TRootState>) => [
     emitActionsOnModalComplete(stateSelector),
 ];
