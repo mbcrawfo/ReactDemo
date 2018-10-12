@@ -1,7 +1,7 @@
-import { ConfirmationModal } from '@app/components/ConfirmationModal';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
+import { ConfirmationModal } from './component';
 import { ConfirmationModalState } from './reducers';
 import { StateSelector } from './types';
 
