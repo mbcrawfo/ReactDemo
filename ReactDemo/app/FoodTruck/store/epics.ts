@@ -16,16 +16,11 @@ import {
 } from 'rxjs/operators';
 import { isActionOf } from 'typesafe-actions';
 
-import { confirmationModalActions, makeConfirmationModalEpics } from '../../modules/ConfirmationModal';
+import { confirmationModalActions } from '../../modules/ConfirmationModal';
 import { FoodTruckApi } from '../api';
 import { actions, RootAction } from './actions';
 import { RootState } from './reducers';
-import {
-    getConfirmationModalState,
-    getDeleteConfirmationModalData,
-    getSelectedTruckMenu,
-    getSelectedTruckSchedule,
-} from './selectors';
+import { getDeleteConfirmationModalData, getSelectedTruckMenu, getSelectedTruckSchedule } from './selectors';
 
 export interface IEpicServices
 {
@@ -159,6 +154,5 @@ export const rootEpic = combineEpics(
     fetchTruckSchedule,
     triggerFetchTrucks,
     triggerTruckDetailsFetch,
-    deleteTruckWhenConfirmed,
-    ...makeConfirmationModalEpics(getConfirmationModalState)
+    deleteTruckWhenConfirmed
 );

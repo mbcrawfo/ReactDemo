@@ -1,63 +1,35 @@
-import { combineReducers } from 'redux';
+import { AnyAction } from 'redux';
 import { getType, StateType } from 'typesafe-actions';
 
-import { ConfirmationModalAction, confirmationModalActions } from './actions';
-import { DefaultConfirmationModalData } from './types';
+import { confirmationModalActions } from './actions';
+import { DefaultConfirmationModalData, IConfirmationModalData } from './types';
 
-const show = (state = false, action: ConfirmationModalAction) =>
+const defaultState =
 {
-    switch (action.type)
-    {
-        case getType(confirmationModalActions.show):
-            return true;
-
-        case getType(confirmationModalActions.accept):
-        case getType(confirmationModalActions.cancel):
-            return false;
-
-        default:
-            return state;
-    }
+    show: false,
+    data: DefaultConfirmationModalData,
 };
 
-// should probably be guid or something
-let nextId = 1;
-const confirmationId = (state = 0, action: ConfirmationModalAction) =>
+export const confirmationModalReducer = (state = defaultState, action: AnyAction): typeof defaultState =>
 {
-    switch (action.type)
+    const { type, payload } = action;
+
+    if (getType(confirmationModalActions.show) === type)
     {
-        case getType(confirmationModalActions.show):
-            return nextId++;
-
-        case getType(confirmationModalActions.accept):
-        case getType(confirmationModalActions.cancel):
-            return 0;
-
-        default:
-            return state;
+        return {
+            show: true,
+            data: payload! as IConfirmationModalData,
+        };
     }
-};
 
-const data = (state = DefaultConfirmationModalData, action: ConfirmationModalAction) =>
-{
-    switch (action.type)
+    const { data: { acceptAction, cancelAction } } = state;
+
+    if (acceptAction.type === type || cancelAction.type === type)
     {
-        case getType(confirmationModalActions.show):
-            return action.payload;
-
-        case getType(confirmationModalActions.accept):
-        case getType(confirmationModalActions.cancel):
-            return DefaultConfirmationModalData;
-
-        default:
-            return state;
+        return defaultState;
     }
-};
 
-export const confirmationModalReducer = combineReducers({
-    show,
-    confirmationId,
-    data,
-});
+    return state;
+};
 
 export type ConfirmationModalState = StateType<typeof confirmationModalReducer>;
