@@ -2,7 +2,15 @@ import { AnyAction } from 'redux';
 import { getType, StateType } from 'typesafe-actions';
 
 import { confirmationModalActions } from './actions';
-import { DefaultConfirmationModalData, IConfirmationModalData } from './types';
+import { IConfirmationModalData } from './types';
+
+export const DefaultConfirmationModalData: IConfirmationModalData =
+{
+    title: '',
+    text: '',
+    acceptAction: { type: '' },
+    cancelAction: { type: '' },
+};
 
 const defaultState =
 {

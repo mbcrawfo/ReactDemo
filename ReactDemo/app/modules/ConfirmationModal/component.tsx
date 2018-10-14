@@ -21,26 +21,19 @@ const ConfirmationModal = ({
     acceptButtonText = 'Ok',
     cancelButtonText = 'Cancel',
 }: IProps) =>
-{
-    if (!show)
-    {
-        return null;
-    }
+(
+    <Modal show={show} onHide={onCancel}>
+        <Modal.Header closeButton={true}>
+            <Modal.Title>{title}</Modal.Title>
+        </Modal.Header>
 
-    return (
-        <Modal show={true} onHide={onCancel}>
-            <Modal.Header closeButton={true}>
-                <Modal.Title>{title}</Modal.Title>
-            </Modal.Header>
+        <Modal.Body>{text}</Modal.Body>
 
-            <Modal.Body>{text}</Modal.Body>
-
-            <Modal.Footer>
-                <Button onClick={onCancel}>{cancelButtonText}</Button>
-                <Button onClick={onAccept}>{acceptButtonText}</Button>
-            </Modal.Footer>
-        </Modal>
-    );
-};
+        <Modal.Footer>
+            <Button onClick={onCancel}>{cancelButtonText}</Button>
+            <Button bsStyle="primary" onClick={onAccept}>{acceptButtonText}</Button>
+        </Modal.Footer>
+    </Modal>
+);
 
 export { ConfirmationModal };
