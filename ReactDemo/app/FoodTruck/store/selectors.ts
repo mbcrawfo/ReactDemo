@@ -65,3 +65,5 @@ export const getDeleteConfirmationModalData = (state: RootState): IConfirmationM
         cancelAction: actions.deleteTruck.cancel(id),
     };
 };
+
+export const getTruckEditorState = (state: RootState) => state.truckEditor;

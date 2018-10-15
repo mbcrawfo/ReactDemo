@@ -3,13 +3,15 @@ import '@bootstrap-css';
 import React from 'react';
 import { Button, ButtonToolbar, Col, Grid, Row } from 'react-bootstrap';
 
-import { DeleteButtonContainer } from '../containers/DeleteButtonContainer';
-import { ConfirmationModalContainer } from '../containers/modules';
+import { truckEditorActions } from '../../modules/TruckEditor';
+import { ConfirmationModalContainer, TruckEditorContainer } from '../containers/modules';
+import { SelectedTruckButton } from '../containers/SelectedTruckButton';
+import { actions } from '../store';
 import { TruckDetails } from './TruckDetails';
 import { TruckList } from './TruckList';
 
 const App = () => (
-    <div>
+    <React.Fragment>
         <Grid>
             <Row>
                 <Col md={4}>
@@ -20,10 +22,12 @@ const App = () => (
                         <Col md={12}>
                             <ButtonToolbar className="pull-right" style={{ paddingBottom: '5vh' }}>
                                 <Button disabled={true}>Placeholder 1</Button>
-                                <Button disabled={true}>Placeholder 2</Button>
-                                <DeleteButtonContainer bsStyle="danger">
+                                <SelectedTruckButton bsStyle="primary" actionCreator={truckEditorActions.show}>
+                                    Edit
+                                </SelectedTruckButton>
+                                <SelectedTruckButton bsStyle="danger" actionCreator={actions.deleteTruck.begin}>
                                     Delete
-                                </DeleteButtonContainer>
+                                </SelectedTruckButton>
                             </ButtonToolbar>
                         </Col>
                     </Row>
@@ -36,7 +40,8 @@ const App = () => (
             </Row>
         </Grid>
         <ConfirmationModalContainer />
-    </div>
+        <TruckEditorContainer />
+    </React.Fragment>
 );
 
 export { App };

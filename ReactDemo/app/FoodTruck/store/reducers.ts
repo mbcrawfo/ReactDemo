@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import { getType, StateType } from 'typesafe-actions';
 
 import { confirmationModalReducer } from '../../modules/ConfirmationModal';
+import { truckEditorReducer } from '../../modules/TruckEditor';
 import { IFetchTruckRequest } from '../api';
 import { IFoodTruck, IFoodTruckMenuItem, IFoodTruckScheduleEntry } from '../models';
 import { actions, RootAction } from './actions';
@@ -224,6 +225,7 @@ export const rootReducer = combineReducers({
     truckPaging,
     selectedTruckId,
     confirmationModal: confirmationModalReducer,
+    truckEditor: truckEditorReducer,
 });
 
 export type RootState = StateType<typeof rootReducer>;

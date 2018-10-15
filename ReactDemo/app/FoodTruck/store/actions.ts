@@ -3,6 +3,7 @@ import { AxiosError } from 'axios';
 import { ActionType, createAction, createAsyncAction } from 'typesafe-actions';
 
 import { ConfirmationModalAction } from '../../modules/ConfirmationModal';
+import { TruckEditorAction } from '../../modules/TruckEditor';
 import { IFetchTruckRequest, IPagedData } from '../api';
 import { IFoodTruck, IFoodTruckMenuItem, IFoodTruckScheduleEntry } from '../models';
 
@@ -52,8 +53,7 @@ export const actions =
         resolve => (pageSize: number) => resolve(pageSize)
     ),
 
-    deleteTruck:
-    {
+    deleteTruck: {
         begin: createAction('deleteTruck/begin',
             resolve => (truckId: number) => resolve(truckId)),
 
@@ -73,4 +73,4 @@ export const actions =
     },
 };
 
-export type RootAction = ActionType<typeof actions> | ConfirmationModalAction;
+export type RootAction = ActionType<typeof actions> | ConfirmationModalAction | TruckEditorAction;

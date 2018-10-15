@@ -35,6 +35,7 @@ const truckId = (state: number | null = null, action: TruckEditorAction) =>
 
 export const truckEditorReducer = combineReducers({
     show,
+    truckId,
 });
 
 export type TruckEditorState = StateType<typeof truckEditorReducer>;

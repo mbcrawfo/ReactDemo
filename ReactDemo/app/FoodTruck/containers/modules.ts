@@ -1,4 +1,7 @@
 import { makeConfirmationModalContainer } from '../../modules/ConfirmationModal';
-import { getConfirmationModalState } from '../store';
+import { makeTruckEditorContainer } from '../../modules/TruckEditor';
+import { getConfirmationModalState, getTruckEditorState } from '../store';
 
 export const ConfirmationModalContainer = makeConfirmationModalContainer(getConfirmationModalState);
+
+export const TruckEditorContainer = makeTruckEditorContainer(getTruckEditorState);
