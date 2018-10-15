@@ -30,5 +30,12 @@ React/Typescript Demo App
 2. Run `npm ci` to restore packages.
 3. Run `npm run build-dev` to build the frontend.  If you're going to make changes, use `npm run watch` to have webpack continue running and auto compile on save.
 
-## Project
-*
+## Reading List
+* [Typescript Reference](https://www.typescriptlang.org/docs/handbook/basic-types.html)
+* [React Docs](https://reactjs.org/docs/hello-world.html) - Has tutorial, some advanced usage info, and API reference.
+* [Redux Docs](https://redux.js.org/basics) - Basics and advanced make up the Redux tutorial, introduction section is also recommended reading.
+* [typesafe-actions library](https://github.com/piotrwitek/typesafe-actions) - leveraging the TS type system with Redux actions.
+* [react-redux library](https://github.com/reduxjs/react-redux) - provides the glue between the two (containers).
+* [react-redux-typescript guide](https://github.com/piotrwitek/react-redux-typescript-guide) - collection of good info for working with React & Redux in TS.
+* [redux-observables](https://redux-observable.js.org/docs/basics/Epics.html)
+* [RxJS Observables Overview](https://rxjs-dev.firebaseapp.com/guide/overview)
