@@ -1,10 +1,11 @@
-import { actions, App, configureStore, FoodTruckApi, IFoodTruckApiRoutes, RootState } from '@app/FoodTruck';
+import { actions, App, configureStore, FoodTruckApi, RootState } from '@app/FoodTruck';
 import { has, head, isEmpty } from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-declare var routes: IFoodTruckApiRoutes;
+import routes from '../../routes';
+
 declare var preloadedState: RootState;
 
 const store = configureStore(preloadedState, {

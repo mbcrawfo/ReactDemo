@@ -5,6 +5,7 @@ using System.Threading;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using Newtonsoft.Json;
+using ReactDemo.Attributes;
 using ReactDemo.Models;
 using IOFile = System.IO.File;
 
@@ -54,6 +55,7 @@ namespace ReactDemo.Controllers
         }
 
         [HttpGet]
+        [ExportJsRoute("getFoodTrucks")]
         public JsonResult GetTrucks(int page, int pageSize, string sortDirection, string sortName, string searchTerm)
         {
             var data = GetTruckData(page, pageSize, sortDirection, sortName, searchTerm);
@@ -61,6 +63,7 @@ namespace ReactDemo.Controllers
         }
 
         [HttpPost]
+        [ExportJsRoute("deleteFoodTruck")]
         public ActionResult DeleteTruck(int foodTruckId)
         {
             var index = FoodTrucks.FindIndex(t => t.Id == foodTruckId);
@@ -77,6 +80,7 @@ namespace ReactDemo.Controllers
         }
 
         [HttpGet]
+        [ExportJsRoute("getFoodTruckMenu")]
         public ActionResult GetMenu(int foodTruckId)
         {
             var index = FoodTrucks.FindIndex(t => t.Id == foodTruckId);
@@ -94,6 +98,7 @@ namespace ReactDemo.Controllers
         }
 
         [HttpGet]
+        [ExportJsRoute("getFoodTruckSchedule")]
         public ActionResult GetSchedule(int foodTruckId)
         {
             var index = FoodTrucks.FindIndex(t => t.Id == foodTruckId);

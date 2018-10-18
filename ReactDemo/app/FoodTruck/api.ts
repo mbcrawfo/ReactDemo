@@ -1,15 +1,8 @@
 import SortDirection from '@app/SortDirection';
 import axios from 'axios';
 
+import { IRouteTable } from '../routes';
 import { IFoodTruck, IFoodTruckMenuItem, IFoodTruckScheduleEntry } from './models';
-
-export interface IFoodTruckApiRoutes
-{
-    readonly getFoodTrucks: string;
-    readonly getFoodTruckMenu: string;
-    readonly getFoodTruckSchedule: string;
-    readonly deleteFoodTruck: string;
-}
 
 export interface IFetchTruckRequest
 {
@@ -29,7 +22,7 @@ export interface IPagedData<T>
 
 export class FoodTruckApi
 {
-    constructor(private readonly routes: IFoodTruckApiRoutes)
+    constructor(private readonly routes: IRouteTable)
     {
     }
 

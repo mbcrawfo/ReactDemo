@@ -10,6 +10,10 @@ namespace ReactDemo
         {
             filters.Add(new JsonNetActionFilter());
             filters.Add(new HandleErrorAttribute());
+
+            #if DEBUG
+            filters.Add(new ExportRoutesActionFilterAttribute("~/app/routes.ts", "IRouteTable", "routes"));
+            #endif
         }
 
         private class JsonNetActionFilter : ActionFilterAttribute

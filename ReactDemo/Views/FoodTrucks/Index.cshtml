@@ -30,12 +30,12 @@
 @section scriptdata
 {
     <script type="text/javascript">
-        var routes = {
+        @*var routes = {
             getFoodTrucks: '@Url.Action("GetTrucks", "FoodTrucks")',
             getFoodTruckMenu: '@Url.Action("GetMenu", "FoodTrucks")',
             getFoodTruckSchedule: '@Url.Action("GetSchedule", "FoodTrucks")',
             deleteFoodTruck: '@Url.Action("DeleteTruck", "FoodTrucks")',
-        };
+        };*@
 
         var preloadedState = @Html.Raw(stateJson);
     </script>
