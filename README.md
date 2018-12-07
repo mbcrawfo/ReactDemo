@@ -7,22 +7,21 @@ React/Typescript Demo App
 3. Add the following extensions to VS Code:
     * Debugger for Chrome
     * TSLint
-    * TypeScript Hero
+    * Prettier - Code formatter
+    * TypeScript Import Sorter
 4. Set the following settings in VS Code.  You can paste them directly into the user settings json file.
 
 ```
 "files.trimTrailingWhitespace": true,
 "breadcrumbs.enabled": true,
-"typescript.preferences.quoteStyle": "single",
-"javascript.preferences.quoteStyle": "single",
+"typescript.preferences.quoteStyle": "double",
 "typescript.updateImportsOnFileMove.enabled": "always",
-"typescriptHero.codeOutline.enabled": false,
-"typescriptHero.imports.multiLineWrapThreshold": 120,
-"typescriptHero.imports.organizeOnSave": true,
-"javascript.preferences.importModuleSpecifier": "relative",
 "typescript.preferences.importModuleSpecifier": "relative",
-"debug.inlineValues": true,
-"editor.tabCompletion": "on",
+"[typescript]": {
+    "editor.formatOnSave": true
+},
+"importSorter.importStringConfiguration.quoteMark": "double",
+"importSorter.generalConfiguration.sortOnBeforeSave": true
 ```
 
 ## Build
@@ -37,5 +36,7 @@ React/Typescript Demo App
 * [typesafe-actions library](https://github.com/piotrwitek/typesafe-actions) - leveraging the TS type system with Redux actions.
 * [react-redux library](https://github.com/reduxjs/react-redux) - provides the glue between the two (containers).
 * [react-redux-typescript guide](https://github.com/piotrwitek/react-redux-typescript-guide) - collection of good info for working with React & Redux in TS.
+* [redux-thunk](https://github.com/reduxjs/redux-thunk)
+* **NOTE** This demo uses observables instead of thunk
 * [redux-observables](https://redux-observable.js.org/docs/basics/Epics.html)
 * [RxJS Observables Overview](https://rxjs-dev.firebaseapp.com/guide/overview)
